@@ -4,7 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class DebugPanel extends JFrame{
-    private static final int WIDTH = 550;
+    private static final int WIDTH = 600;
     private static final int HEIGHT = 720;
     private JPanel MainForm;
     private JPanel Controller;
@@ -48,8 +48,8 @@ public class DebugPanel extends JFrame{
     private JLabel PC_label;
     private JLabel IR_label;
     private JLabel CC_label;
-    private JList MemoryList;
-    private JScrollPane MemoryLIstScroll;
+    private JList MemoryAddressList;
+    private JScrollPane MemoryListScroll;
     private JLabel R0_value;
     private JLabel R1_value;
     private JLabel R2_value;
@@ -67,6 +67,15 @@ public class DebugPanel extends JFrame{
     private JLabel MFR;
     private JTextField MFR_textField;
     private JLabel MFR_value;
+    private JButton wButton;
+    private JButton wButton1;
+    private JList MemoryValueList;
+    private JList MemoryHexValueList;
+    private JList MemoryAssembleCodeList;
+    private JLabel MemoryAddressLabel;
+    private JLabel MemoryValueLabel;
+    private JLabel MemoryHexValue;
+    private JLabel MemoryAssembleCode;
 
     public DebugPanel () {
         super("Machine Simulator");
@@ -76,7 +85,7 @@ public class DebugPanel extends JFrame{
         getContentPane().add(MainForm);
         setVisible(true);
 
-        MemoryList.addMouseListener(new MouseAdapter() {
+        MemoryAddressList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
