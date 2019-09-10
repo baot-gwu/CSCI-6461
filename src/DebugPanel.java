@@ -60,6 +60,13 @@ public class DebugPanel extends JFrame{
     private JLabel MAR_value;
     private JLabel PC_value;
     private JLabel CC_value;
+    private JTextField Instruction_textField;
+    private JButton importButton;
+    private JButton pauseButton;
+    private JLabel Instruction_label;
+    private JLabel MFR;
+    private JTextField MFR_textField;
+    private JLabel MFR_value;
 
     public DebugPanel () {
         super("Machine Simulator");
