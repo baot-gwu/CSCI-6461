@@ -26,7 +26,6 @@ CSCI 6461
     - [ ] `SMR` (05):
     - [ ] `AIR` (06):
     - [ ] `SIR` (07):
-    - [ ] `` ():
     - [ ] `JZ` (10): Jump if Zero
     - [ ] `JNE` (11): Jump if not equal
     - [ ] `JCC` (12): Jump if Condition Code
