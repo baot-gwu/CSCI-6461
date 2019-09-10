@@ -420,7 +420,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="000000000000"/>
+                  <text value="0000000000000000"/>
                 </properties>
               </component>
               <component id="5cc90" class="javax.swing.JLabel" binding="CC_label">
