@@ -18,7 +18,7 @@ CSCI 6461
     - [ ] `MFR` (4 bits)
     - [ ] `X1`...`X3` (16 bits) 
     - [ ] `Memory` (2048 words, expandable to 4096 words)
-- Instructions (Opcode)
+- instruction.Instructions (Opcode)
     - [ ] `LDR` (01): Load Memory to Register
     - [ ] `STR` (02): Store Register to Memory
     - [ ] `LDA` (03): Load Address to Register
