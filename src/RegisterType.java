@@ -5,7 +5,10 @@
 public enum RegisterType {
 
     GENERAL_PURPOSE("R"),
-    INDEX("IX");
+    INDEX("IX"),
+    INSTRUCTION_REGISTER("IR"),
+    MEMORY_ADDRESS_REGISTER("MAR"),
+    MEMORY_BUFFER_REGISTER("MBR");
 
     private String symbol;
 

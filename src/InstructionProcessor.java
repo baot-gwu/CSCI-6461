@@ -4,42 +4,41 @@
  */
 public class InstructionProcessor {
 
-    public void parseAndProcessInstruction(CiscComputer ciscComputer, String encodedInstruction) {
-        String opcodeInBinary = encodedInstruction.substring(0, 6);
+    public void processInstruction(CiscComputer ciscComputer) {
+        String binaryInstruction = ciscComputer.getInstructionRegister().getBinaryInstruction();
+
+        String opcodeInBinary = binaryInstruction.substring(0, 6);
         InstructionType type = InstructionType.getType(opcodeInBinary);
 
-        String generalPurposeRegisterNumberInBinary = encodedInstruction.substring(6, 8);
+        String generalPurposeRegisterNumberInBinary = binaryInstruction.substring(6, 8);
 
-        GeneralPurposeRegister generalPurposeRegister = ciscComputer.getGeneralPurposeRegister(Utils.binaryToDecimal(generalPurposeRegisterNumberInBinary));
+        GeneralPurposeRegister generalPurposeRegister = null;
+        if (type != InstructionType.LDX && type != InstructionType.STX) {
+            generalPurposeRegister = ciscComputer.getGeneralPurposeRegister(Utils.binaryToDecimal(generalPurposeRegisterNumberInBinary));
+        }
 
-        String indexRegisterNumberInBinary = encodedInstruction.substring(8, 10);
+        String indexRegisterNumberInBinary = binaryInstruction.substring(8, 10);
         IndexRegister indexRegister = null;
         if (!indexRegisterNumberInBinary.equals("00")) {
             indexRegister = ciscComputer.getIndexRegister(Utils.binaryToDecimal(indexRegisterNumberInBinary));
         }
 
-        boolean indirect = encodedInstruction.substring(10, 11).equals("1");
-        int effectiveAddress = Utils.binaryToDecimal(encodedInstruction.substring(11, 16));
+        boolean indirect = binaryInstruction.substring(10, 11).equals("1");
+        int effectiveAddress = Utils.binaryToDecimal(binaryInstruction.substring(11, 16));
 
-        System.out.println(symbolicForm(generalPurposeRegister, indexRegister, type, effectiveAddress, indirect));
+        System.out.print(symbolicForm(generalPurposeRegister, indexRegister, type, effectiveAddress, indirect));
 
-        processInstruction(generalPurposeRegister, indexRegister, type, effectiveAddress, indirect);
+        processInstruction(ciscComputer, generalPurposeRegister, indexRegister, type, effectiveAddress, indirect);
+
+        System.out.println(" -> " + new Display(ciscComputer).toString());
     }
 
-    private void processInstruction(GeneralPurposeRegister generalPurposeRegister, IndexRegister indexRegister,
-                                    InstructionType type, int effectiveAddress, boolean indirect) {
+    private void processInstruction(CiscComputer ciscComputer, GeneralPurposeRegister generalPurposeRegister,
+                                    IndexRegister indexRegister, InstructionType type, int effectiveAddress, boolean indirect) {
 
-        if (indexRegister == null) {
-            if (type == InstructionType.LDX || type == InstructionType.STX) {
-                throw new IllegalArgumentException("Invalid Index Register");
-            }
-        } else {
-            effectiveAddress += Integer.parseInt(indexRegister.getValue());
-        }
+        effectiveAddress = calculateEffectiveAddress(generalPurposeRegister, indexRegister, type, effectiveAddress, indirect);
 
-        if (indirect) {
-            effectiveAddress = Integer.valueOf(Memory.memoryMap.get(effectiveAddress));
-        }
+        ciscComputer.getMemoryAddressRegister().setValue(Utils.decimalToBinary(effectiveAddress));
 
         switch (type) {
             case LDR:
@@ -59,6 +58,25 @@ public class InstructionProcessor {
                 break;
         }
 
+        ciscComputer.getMemoryBufferRegister().setValue(Memory.memoryMap.get(effectiveAddress));
+    }
+
+    private int calculateEffectiveAddress(GeneralPurposeRegister generalPurposeRegister, IndexRegister indexRegister,
+                                          InstructionType type, int effectiveAddress, boolean indirect) {
+
+        if (indexRegister == null) {
+            if (type == InstructionType.LDX || type == InstructionType.STX) {
+                throw new IllegalArgumentException("Invalid Index Register");
+            }
+        } else if (generalPurposeRegister != null) {
+            effectiveAddress += Integer.parseInt(indexRegister.getValue());
+        }
+
+        if (indirect) {
+            effectiveAddress = Integer.valueOf(Memory.memoryMap.get(effectiveAddress));
+        }
+
+        return effectiveAddress;
     }
 
     private void storeIndexRegisterFromMemory(IndexRegister indexRegister, int effectiveAddress) {
@@ -88,8 +106,9 @@ public class InstructionProcessor {
     public String symbolicForm(GeneralPurposeRegister generalPurposeRegister, IndexRegister indexRegister,
                                InstructionType type, int addressInDecimal, boolean indirect) {
 
-        String symbolicForm = type.name() + " " + generalPurposeRegister.getRegisterNumber()
-                + "," + (indexRegister == null ? "0" : indexRegister.getRegisterNumber()) +
+        String symbolicForm = type.name() + " "
+                + (generalPurposeRegister == null ? "" : generalPurposeRegister.getRegisterNumber() + ",")
+                + (indexRegister == null ? "0" : indexRegister.getRegisterNumber()) +
                 "," + addressInDecimal;
 
         if (indirect) {

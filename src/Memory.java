@@ -24,7 +24,7 @@ public class Memory {
         try {
             List<String> list = Files.readAllLines(path);
 
-            for (int i = 1; i <= 2048; i++) {
+            for (int i = 1; i <= MAX_MEMORY_SIZE; i++) {
                 memoryMap.put(i, list.get(i - 1));
             }
         } catch (IOException e) {
@@ -38,6 +38,8 @@ public class Memory {
         try {
             Files.write(path, memoryMap.values(), StandardOpenOption.CREATE);
         } catch (IOException e) {
+            e.printStackTrace();
+
             System.err.println("Cannot write file");
         }
     }

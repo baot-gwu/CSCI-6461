@@ -18,10 +18,14 @@ public class Display {
     private String pc;
     private String mar;
     private String mbr;
+    private String ir;
 
     public Display(CiscComputer ciscComputer) {
         setGeneralPurposeRegisters(ciscComputer.getGeneralPurposeRegisters());
         setIndexRegisters(ciscComputer.getIndexRegisters());
+        setMar(ciscComputer.getMemoryAddressRegister().getValue());
+        setMbr(ciscComputer.getMemoryBufferRegister().getValue());
+        setIr(ciscComputer.getInstructionRegister().getValue());
     }
 
     private void setIndexRegisters(List<IndexRegister> indexRegisters) {
@@ -117,19 +121,26 @@ public class Display {
         this.mbr = mbr;
     }
 
+    public String getIr() {
+        return ir;
+    }
+
+    public void setIr(String ir) {
+        this.ir = ir;
+    }
+
     @Override
     public String toString() {
-        return "Display{" +
-                "r0=" + r0 + '\n' +
-                ", r1=" + r1 + '\n' +
-                ", r2=" + r2 + '\n' +
-                ", r3=" + r3 + '\n' +
-                ", ix1=" + ix1 + '\n' +
-                ", ix2=" + ix2 + '\n' +
-                ", ix3=" + ix3 + '\n' +
-                ", pc=" + pc + '\n' +
-                ", mar=" + mar + '\n' +
-                ", mbr=" + mbr + '\n' +
-                '}';
+        return "r0=" + (r0 == null ? "" : r0)
+                + ", r1=" + (r1 == null ? "" : r1)
+                + ", r2=" + (r2 == null ? "" : r2)
+                + ", r3=" + (r3 == null ? "" : r3)
+                + ", ix1=" + (ix1 == null ? "" : ix1)
+                + ", ix2=" + (ix2 == null ? "" : ix2)
+                + ", ix3=" + (ix3 == null ? "" : ix3)
+                + ", pc=" + (pc == null ? "" : pc)
+                + ", ir=" + (ir == null ? "" : ir)
+                + ", mar=" + (mar == null ? "" : mar)
+                + ", mbr=" + (mbr == null ? "" : mbr);
     }
 }

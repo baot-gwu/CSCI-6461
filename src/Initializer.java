@@ -17,13 +17,13 @@ public class Initializer {
 
         ciscComputer.setGeneralPurposeRegisters(createGeneralPurposeRegisters());
 
-        return ciscComputer;
-    }
+        ciscComputer.setInstructionRegister(new InstructionRegister());
 
-    protected void initializeIndexRegister(List<IndexRegister> indexRegisters, String[] ixValues) {
-        for (IndexRegister indexRegister : indexRegisters) {
-            indexRegister.setValue(ixValues[indexRegisters.indexOf(indexRegister)]);
-        }
+        ciscComputer.setMemoryAddressRegister(new MemoryAddressRegister());
+
+        ciscComputer.setMemoryBufferRegister(new MemoryBufferRegister());
+
+        return ciscComputer;
     }
 
     private List<GeneralPurposeRegister> createGeneralPurposeRegisters() {
