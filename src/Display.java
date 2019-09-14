@@ -20,25 +20,25 @@ public class Display {
     private String mbr;
     private String ir;
 
-    public Display(CiscComputer ciscComputer) {
-        setGeneralPurposeRegisters(ciscComputer.getGeneralPurposeRegisters());
-        setIndexRegisters(ciscComputer.getIndexRegisters());
-        setMar(ciscComputer.getMemoryAddressRegister().getValue());
-        setMbr(ciscComputer.getMemoryBufferRegister().getValue());
-        setIr(ciscComputer.getInstructionRegister().getValue());
+    public Display(CiscComputer ciscComputer, boolean binary) {
+        setGeneralPurposeRegisters(ciscComputer.getGeneralPurposeRegisters(), binary);
+        setIndexRegisters(ciscComputer.getIndexRegisters(), binary);
+        setMar(ciscComputer.getMemoryAddressRegister().getValue(binary));
+        setMbr(ciscComputer.getMemoryBufferRegister().getValue(binary));
+        setIr(ciscComputer.getInstructionRegister().getValue(binary));
     }
 
-    private void setIndexRegisters(List<IndexRegister> indexRegisters) {
-        setIx1(indexRegisters.get(0).getValue());
-        setIx2(indexRegisters.get(1).getValue());
-        setIx3(indexRegisters.get(2).getValue());
+    private void setIndexRegisters(List<IndexRegister> indexRegisters, boolean binary) {
+        setIx1(indexRegisters.get(0).getValue(binary));
+        setIx2(indexRegisters.get(1).getValue(binary));
+        setIx3(indexRegisters.get(2).getValue(binary));
     }
 
-    private void setGeneralPurposeRegisters(List<GeneralPurposeRegister> generalPurposeRegisters) {
-        setR0(generalPurposeRegisters.get(0).getValue());;
-        setR1(generalPurposeRegisters.get(1).getValue());;
-        setR2(generalPurposeRegisters.get(2).getValue());;
-        setR3(generalPurposeRegisters.get(3).getValue());;
+    private void setGeneralPurposeRegisters(List<GeneralPurposeRegister> generalPurposeRegisters, boolean binary) {
+        setR0(generalPurposeRegisters.get(0).getValue(binary));;
+        setR1(generalPurposeRegisters.get(1).getValue(binary));;
+        setR2(generalPurposeRegisters.get(2).getValue(binary));;
+        setR3(generalPurposeRegisters.get(3).getValue(binary));;
     }
 
     public String getR0() {
@@ -131,16 +131,16 @@ public class Display {
 
     @Override
     public String toString() {
-        return "r0=" + (r0 == null ? "" : r0)
-                + ", r1=" + (r1 == null ? "" : r1)
-                + ", r2=" + (r2 == null ? "" : r2)
-                + ", r3=" + (r3 == null ? "" : r3)
-                + ", ix1=" + (ix1 == null ? "" : ix1)
-                + ", ix2=" + (ix2 == null ? "" : ix2)
-                + ", ix3=" + (ix3 == null ? "" : ix3)
-                + ", pc=" + (pc == null ? "" : pc)
-                + ", ir=" + (ir == null ? "" : ir)
-                + ", mar=" + (mar == null ? "" : mar)
-                + ", mbr=" + (mbr == null ? "" : mbr);
+        return "R0=" + (r0 == null ? "" : r0)
+                + ", R1=" + (r1 == null ? "" : r1)
+                + ", R2=" + (r2 == null ? "" : r2)
+                + ", R3=" + (r3 == null ? "" : r3)
+                + ", IX1=" + (ix1 == null ? "" : ix1)
+                + ", IX2=" + (ix2 == null ? "" : ix2)
+                + ", IX3=" + (ix3 == null ? "" : ix3)
+                + ", PC=" + (pc == null ? "" : pc)
+                + ", IR=" + (ir == null ? "" : ir)
+                + ", MAR=" + (mar == null ? "" : mar)
+                + ", MBR=" + (mbr == null ? "" : mbr);
     }
 }

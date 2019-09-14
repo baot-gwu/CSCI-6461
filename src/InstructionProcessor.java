@@ -24,83 +24,85 @@ public class InstructionProcessor {
         }
 
         boolean indirect = binaryInstruction.substring(10, 11).equals("1");
-        int effectiveAddress = Utils.binaryToDecimal(binaryInstruction.substring(11, 16));
+        int effectiveAddressInDecimal = Utils.binaryToDecimal(binaryInstruction.substring(11, 16));
 
-        System.out.print(symbolicForm(generalPurposeRegister, indexRegister, type, effectiveAddress, indirect));
+        System.out.println(symbolicForm(generalPurposeRegister, indexRegister, type, effectiveAddressInDecimal, indirect));
 
-        processInstruction(ciscComputer, generalPurposeRegister, indexRegister, type, effectiveAddress, indirect);
+        processInstruction(ciscComputer, generalPurposeRegister, indexRegister, type, effectiveAddressInDecimal, indirect);
 
-        System.out.println(" -> " + new Display(ciscComputer).toString());
+        System.out.println("In Binary  -> " + new Display(ciscComputer, true).toString());
+        System.out.println("In Decimal -> " + new Display(ciscComputer, false).toString());
     }
 
     private void processInstruction(CiscComputer ciscComputer, GeneralPurposeRegister generalPurposeRegister,
-                                    IndexRegister indexRegister, InstructionType type, int effectiveAddress, boolean indirect) {
+                                    IndexRegister indexRegister, InstructionType type, int effectiveAddressInDecimal,
+                                    boolean indirect) {
 
-        effectiveAddress = calculateEffectiveAddress(generalPurposeRegister, indexRegister, type, effectiveAddress, indirect);
+        effectiveAddressInDecimal = calculateEffectiveAddress(generalPurposeRegister, indexRegister, type, effectiveAddressInDecimal, indirect);
 
-        ciscComputer.getMemoryAddressRegister().setValue(Utils.decimalToBinary(effectiveAddress));
+        ciscComputer.getMemoryAddressRegister().setDecimalValue(effectiveAddressInDecimal);
 
         switch (type) {
             case LDR:
-                loadRegisterFromMemory(generalPurposeRegister, effectiveAddress);
+                loadRegisterFromMemory(generalPurposeRegister, effectiveAddressInDecimal);
                 break;
             case STR:
-                storeRegisterToMemory(generalPurposeRegister, effectiveAddress);
+                storeRegisterToMemory(generalPurposeRegister, effectiveAddressInDecimal);
                 break;
             case LDA:
-                loadRegisterWithAddress(generalPurposeRegister, effectiveAddress);
+                loadRegisterWithAddress(generalPurposeRegister, effectiveAddressInDecimal);
                 break;
             case LDX:
-                loadIndexRegisterFromMemory(indexRegister, effectiveAddress);
+                loadIndexRegisterFromMemory(indexRegister, effectiveAddressInDecimal);
                 break;
             case STX:
-                storeIndexRegisterFromMemory(indexRegister, effectiveAddress);
+                storeIndexRegisterFromMemory(indexRegister, effectiveAddressInDecimal);
                 break;
         }
 
-        ciscComputer.getMemoryBufferRegister().setValue(Memory.memoryMap.get(effectiveAddress));
+        ciscComputer.getMemoryBufferRegister().setDecimalValue(Integer.valueOf(Memory.memoryMap.get(effectiveAddressInDecimal)));
     }
 
     private int calculateEffectiveAddress(GeneralPurposeRegister generalPurposeRegister, IndexRegister indexRegister,
-                                          InstructionType type, int effectiveAddress, boolean indirect) {
+                                          InstructionType type, int effectiveAddressInDecimal, boolean indirect) {
 
         if (indexRegister == null) {
             if (type == InstructionType.LDX || type == InstructionType.STX) {
                 throw new IllegalArgumentException("Invalid Index Register");
             }
         } else if (generalPurposeRegister != null) {
-            effectiveAddress += Integer.parseInt(indexRegister.getValue());
+            effectiveAddressInDecimal += indexRegister.getDecimalValue();
         }
 
         if (indirect) {
-            effectiveAddress = Integer.valueOf(Memory.memoryMap.get(effectiveAddress));
+            effectiveAddressInDecimal = Integer.valueOf(Memory.memoryMap.get(effectiveAddressInDecimal));
         }
 
-        return effectiveAddress;
+        return effectiveAddressInDecimal;
     }
 
-    private void storeIndexRegisterFromMemory(IndexRegister indexRegister, int effectiveAddress) {
-        Memory.memoryMap.put(effectiveAddress, indexRegister.getValue());
+    private void storeIndexRegisterFromMemory(IndexRegister indexRegister, int effectiveAddressInDecimal) {
+        Memory.memoryMap.put(effectiveAddressInDecimal, String.valueOf(indexRegister.getDecimalValue()));
     }
 
-    private void loadIndexRegisterFromMemory(IndexRegister indexRegister, int effectiveAddress) {
-        indexRegister.setValue(Memory.memoryMap.get(effectiveAddress));
+    private void loadIndexRegisterFromMemory(IndexRegister indexRegister, int effectiveAddressInDecimal) {
+        indexRegister.setDecimalValue(Integer.valueOf(Memory.memoryMap.get(effectiveAddressInDecimal)));
     }
 
-    private void loadRegisterWithAddress(GeneralPurposeRegister generalPurposeRegister, int effectiveAddress) {
-        generalPurposeRegister.setValue(String.valueOf(effectiveAddress));
+    private void loadRegisterWithAddress(GeneralPurposeRegister generalPurposeRegister, int effectiveAddressInDecimal) {
+        generalPurposeRegister.setDecimalValue(effectiveAddressInDecimal);
     }
 
-    private void storeRegisterToMemory(GeneralPurposeRegister generalPurposeRegister, int effectiveAddress) {
-        String value = generalPurposeRegister.getValue();
+    private void storeRegisterToMemory(GeneralPurposeRegister generalPurposeRegister, int effectiveAddressInDecimal) {
+        String value = String.valueOf(generalPurposeRegister.getDecimalValue());
 
-        Memory.memoryMap.put(effectiveAddress, value);
+        Memory.memoryMap.put(effectiveAddressInDecimal, value);
     }
 
-    private void loadRegisterFromMemory(GeneralPurposeRegister generalPurposeRegister, int effectiveAddress) {
-        String value = Memory.memoryMap.get(effectiveAddress);
+    private void loadRegisterFromMemory(GeneralPurposeRegister generalPurposeRegister, int effectiveAddressInDecimal) {
+        Integer value = Integer.valueOf(Memory.memoryMap.get(effectiveAddressInDecimal));
 
-        generalPurposeRegister.setValue(value);
+        generalPurposeRegister.setDecimalValue(value);
     }
 
     public String symbolicForm(GeneralPurposeRegister generalPurposeRegister, IndexRegister indexRegister,

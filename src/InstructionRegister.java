@@ -10,14 +10,14 @@ public class InstructionRegister extends Register {
     }
 
     public void setBinaryInstruction(String instruction) {
-        setValue(instruction);
+        setBinaryValue(instruction);
     }
 
     public void setOctalInstruction(String instruction) {
-        setValue(Utils.octalToBinary(instruction));
+        setBinaryValue(Utils.octalToBinary(instruction));
     }
 
     public String getBinaryInstruction() {
-        return getValue();
+        return getBinaryValue();
     }
 }

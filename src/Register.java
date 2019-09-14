@@ -7,7 +7,8 @@ public abstract class Register {
     public static final int SIZE = 16;
 
     int registerNumber;
-    private String value;
+    private String binaryValue;
+    private int decimalValue;
 
     abstract RegisterType getType();
 
@@ -15,11 +16,25 @@ public abstract class Register {
         return registerNumber;
     }
 
-    public String getValue() {
-        return value;
+    public String getValue(boolean binary) {
+        return binary ? getBinaryValue() : String.valueOf(getDecimalValue());
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    protected String getBinaryValue() {
+        return binaryValue;
+    }
+
+    public void setBinaryValue(String binaryValue) {
+        this.binaryValue = binaryValue;
+        this.decimalValue = Utils.binaryToDecimal(binaryValue);
+    }
+
+    protected int getDecimalValue() {
+        return decimalValue;
+    }
+
+    public void setDecimalValue(int decimalValue) {
+        this.decimalValue = decimalValue;
+        this.binaryValue = Utils.decimalToBinary(decimalValue);
     }
 }
