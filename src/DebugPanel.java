@@ -11,7 +11,7 @@ public class DebugPanel extends JFrame{
     private JButton autoRunButton;
     private JButton singleRunButton;
     private JButton loadButton;
-    private JButton startButton;
+    private JButton stopButton;
     private JButton restartButton;
     private JButton program1Button;
     private JButton program2Button;
@@ -61,7 +61,7 @@ public class DebugPanel extends JFrame{
     private JLabel PC_value;
     private JLabel CC_value;
     private JTextField Instruction_textField;
-    private JButton importButton;
+    private JButton storeButton;
     private JButton pauseButton;
     private JLabel Instruction_label;
     private JLabel MFR;
