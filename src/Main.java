@@ -4,45 +4,29 @@ public class Main {
 
         Initializer initializer = new Initializer();
 
-        // Values of IX registers
+        // Initialize all classes
         CiscComputer ciscComputer = initializer.initialize();
-
         InstructionProcessor instructionProcessor = new InstructionProcessor();
-
         InstructionRegister instructionRegister = ciscComputer.getInstructionRegister();
+        ProgramCounter programCounter = ciscComputer.getProgramCounter();
 
-        instructionRegister.setBinaryInstruction("1010010001010100");  // LDX 1, 20
-        // instructionRegister.setOctalInstruction("122124"); //You can also set this as octal instruction
-        instructionProcessor.processInstruction(ciscComputer);
+        // On address 30 have instruction: LDX 1, 20, in binary format: 1010010001010100
+        for (int address = 30; address <= 39; address++) {
+            programCounter.setDecimalValue(address + 1);
 
-        instructionRegister.setBinaryInstruction("1010010010010110"); // LDX 2, 22
-        instructionProcessor.processInstruction(ciscComputer);
+            instructionRegister.setBinaryInstruction(Memory.memoryMap.get(address));
 
-        instructionRegister.setBinaryInstruction("1010010011111000"); // LDX 3, 24, 1
-        instructionProcessor.processInstruction(ciscComputer);
+            instructionProcessor.processInstruction(ciscComputer);
 
-        instructionRegister.setBinaryInstruction("0000011100001011"); // LDR 3, 0, 11
-        instructionProcessor.processInstruction(ciscComputer);
-
-        instructionRegister.setBinaryInstruction("0000010000101011"); // LDR 0, 0, 11, 1
-        instructionProcessor.processInstruction(ciscComputer);
-
-        instructionRegister.setBinaryInstruction("0000010111000011"); // LDR 1, 3, 3
-        instructionProcessor.processInstruction(ciscComputer);
-
-        instructionRegister.setBinaryInstruction("0000011011100011"); // LDR 2, 3, 3, 1
-        instructionProcessor.processInstruction(ciscComputer);
-
-        instructionRegister.setBinaryInstruction("0000101000000001"); // STR 2, 0, 1
-        instructionProcessor.processInstruction(ciscComputer);
-
-        instructionRegister.setBinaryInstruction("1010100011010000"); // STX 3, 0, 16
-        instructionProcessor.processInstruction(ciscComputer);
-
-        instructionRegister.setBinaryInstruction("0000110100000100"); // LDA 1, 0, 4
-        instructionProcessor.processInstruction(ciscComputer);
+            printValues(ciscComputer);
+        }
 
         // Save all changes before quit
         ciscComputer.getMemory().writeContent();
+    }
+
+    private static void printValues(CiscComputer ciscComputer) {
+        System.out.println("In Binary  -> " + new Display(ciscComputer, true).toString());
+        System.out.println("In Decimal -> " + new Display(ciscComputer, false).toString());
     }
 }

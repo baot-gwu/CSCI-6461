@@ -23,6 +23,8 @@ public class Initializer {
 
         ciscComputer.setMemoryBufferRegister(new MemoryBufferRegister());
 
+        ciscComputer.setProgramCounter(new ProgramCounter());
+
         return ciscComputer;
     }
 

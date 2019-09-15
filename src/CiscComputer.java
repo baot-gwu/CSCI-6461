@@ -12,6 +12,7 @@ public class CiscComputer {
     private MemoryAddressRegister memoryAddressRegister;
     private MemoryBufferRegister memoryBufferRegister;
     private InstructionRegister instructionRegister;
+    private ProgramCounter programCounter;
     private Memory memory;
 
     public List<GeneralPurposeRegister> getGeneralPurposeRegisters() {
@@ -52,6 +53,14 @@ public class CiscComputer {
 
     public void setInstructionRegister(InstructionRegister instructionRegister) {
         this.instructionRegister = instructionRegister;
+    }
+
+    public ProgramCounter getProgramCounter() {
+        return programCounter;
+    }
+
+    public void setProgramCounter(ProgramCounter programCounter) {
+        this.programCounter = programCounter;
     }
 
     public Memory getMemory() {

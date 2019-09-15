@@ -13,8 +13,8 @@ public class InstructionRegister extends Register {
         setBinaryValue(instruction);
     }
 
-    public void setOctalInstruction(String instruction) {
-        setBinaryValue(Utils.octalToBinary(instruction));
+    public void setOctalInstruction(String instruction, int registerSize) {
+        setBinaryValue(Utils.octalToBinary(instruction, registerSize));
     }
 
     public String getBinaryInstruction() {

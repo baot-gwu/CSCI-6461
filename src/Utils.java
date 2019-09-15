@@ -8,10 +8,10 @@ public class Utils {
         return Integer.parseInt(binary, 2);
     }
 
-    public static String octalToBinary(String octal) {
+    public static String octalToBinary(String octal, int registerSize) {
         String binary = Integer.toBinaryString(Integer.parseInt(octal, 8));
 
-        int prefixZeroCount = Register.SIZE - binary.length();
+        int prefixZeroCount = registerSize - binary.length();
 
         if (prefixZeroCount > 0) {
             binary = String.format("%0" + prefixZeroCount + "d", 0) + binary;

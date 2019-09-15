@@ -29,9 +29,6 @@ public class InstructionProcessor {
         System.out.println(symbolicForm(generalPurposeRegister, indexRegister, type, effectiveAddressInDecimal, indirect));
 
         processInstruction(ciscComputer, generalPurposeRegister, indexRegister, type, effectiveAddressInDecimal, indirect);
-
-        System.out.println("In Binary  -> " + new Display(ciscComputer, true).toString());
-        System.out.println("In Decimal -> " + new Display(ciscComputer, false).toString());
     }
 
     private void processInstruction(CiscComputer ciscComputer, GeneralPurposeRegister generalPurposeRegister,

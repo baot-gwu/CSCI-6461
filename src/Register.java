@@ -4,8 +4,6 @@
  */
 public abstract class Register {
 
-    public static final int SIZE = 16;
-
     int registerNumber;
     private String binaryValue;
     private int decimalValue;
