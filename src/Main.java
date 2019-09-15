@@ -1,6 +1,6 @@
 public class Main {
     public static void main (String[] args){
-        //new DebugPanel();
+        DebugPanel dp = new DebugPanel();
 
         Initializer initializer = new Initializer();
 
@@ -19,6 +19,12 @@ public class Main {
             instructionProcessor.processInstruction(ciscComputer);
 
             printValues(ciscComputer);
+            dp.setData(new Display(ciscComputer, true));
+            try {
+                Thread.sleep(250);
+            } catch(InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
         // Save all changes before quit
@@ -26,6 +32,7 @@ public class Main {
     }
 
     private static void printValues(CiscComputer ciscComputer) {
+
         System.out.println("In Binary  -> " + new Display(ciscComputer, true).toString());
         System.out.println("In Decimal -> " + new Display(ciscComputer, false).toString());
     }

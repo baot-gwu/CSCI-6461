@@ -23,4 +23,40 @@ public class Utils {
     public static String decimalToBinary(int decimal) {
         return Integer.toBinaryString(decimal);
     }
+
+    public static String decimalToHex(int decimal) {
+        return Integer.toHexString(decimal).toUpperCase();
+    }
+
+    public static String binaryToHex(String binary) {
+        return autoFill(Integer.toHexString(Integer.parseInt(binary, 2)).toUpperCase(), (binary.length() / 4));
+    }
+
+    public static String hexToBinary(String hex) {
+        return autoFill(Integer.toBinaryString(Integer.parseInt(hex, 16)) , (hex.length() * 4));
+    }
+
+    public static String autoFill(String instruction, int size){
+        if (instruction == null) instruction = "0";
+        instruction.replace(" ","");
+        for (int i = instruction.length(); i < size; i++) {
+            instruction = "0" + instruction;
+        }
+
+        if (instruction.length() > size) {
+            instruction = instruction.substring(instruction.length() - size);
+        }
+
+        return instruction;
+    }
+
+    public static boolean binaryValid(String binary) {
+        String pattern = "^[01]+$";
+        return java.util.regex.Pattern.compile(pattern).matcher(binary).matches();
+    }
+
+    public static boolean hexValid(String hex) {
+        String pattern = "^[0-9A-F]+$";
+        return java.util.regex.Pattern.compile(pattern).matcher(hex).matches();
+    }
 }
