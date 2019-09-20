@@ -1,11 +1,12 @@
 public class Main {
-    public static void main (String[] args){
+    public static void main(String[] args) {
 
         Initializer initializer = new Initializer();
 
         // Initialize all classes
         CiscComputer ciscComputer = initializer.initialize();
         InstructionProcessor instructionProcessor = new InstructionProcessor();
+        InstructionDecoder instructionDecoder = new InstructionDecoder();
         InstructionRegister instructionRegister = ciscComputer.getInstructionRegister();
         ProgramCounter programCounter = ciscComputer.getProgramCounter();
         DebugPanel dp = new DebugPanel();
@@ -17,22 +18,25 @@ public class Main {
 //
 //            instructionRegister.setBinaryInstruction(Memory.memoryMap.get(address));
 //
-//            instructionProcessor.processInstruction(ciscComputer);
+//            Instruction instruction = instructionDecoder.decode(ciscComputer);
+//
+//            System.out.println(Utils.symbolicForm(instruction));
+//
+//            instructionProcessor.processInstruction(ciscComputer, instruction);
 //
 //            printValues(ciscComputer);
-//            dp.setData(ciscComputer);
-//            try {
-//                Thread.sleep(250);
-//            } catch(InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//            }
 //        }
 //
-//        // Save all changes before quit
+
+        //new Memory().clear();  clear all memory
+        //new Memory().loadBackupContent(); // load the memory with backup
+        //System.out.println(Utils.symbolicForm(instruction));
+        // to Halt just break the loop here.
+
 //        ciscComputer.getMemory().writeContent();
     }
 
-    protected static void printValues(CiscComputer ciscComputer) {
+    private static void printValues(CiscComputer ciscComputer) {
         System.out.println("In Binary  -> " + new Display(ciscComputer, true).toString());
         System.out.println("In Decimal -> " + new Display(ciscComputer, false).toString());
     }
