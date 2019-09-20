@@ -1,5 +1,5 @@
 public class Main {
-    public static void main (String[] args){
+    public static void main(String[] args) {
         //new DebugPanel();
 
         Initializer initializer = new Initializer();
@@ -7,6 +7,7 @@ public class Main {
         // Initialize all classes
         CiscComputer ciscComputer = initializer.initialize();
         InstructionProcessor instructionProcessor = new InstructionProcessor();
+        InstructionDecoder instructionDecoder = new InstructionDecoder();
         InstructionRegister instructionRegister = ciscComputer.getInstructionRegister();
         ProgramCounter programCounter = ciscComputer.getProgramCounter();
 
@@ -16,12 +17,21 @@ public class Main {
 
             instructionRegister.setBinaryInstruction(Memory.memoryMap.get(address));
 
-            instructionProcessor.processInstruction(ciscComputer);
+            Instruction instruction = instructionDecoder.decode(ciscComputer);
+
+            System.out.println(Utils.symbolicForm(instruction));
+
+            instructionProcessor.processInstruction(ciscComputer, instruction);
 
             printValues(ciscComputer);
         }
 
-        // Save all changes before quit
+
+        //new Memory().clear();  clear all memory
+        //new Memory().loadBackupContent(); // load the memory with backup
+        //System.out.println(Utils.symbolicForm(instruction));
+        // to Halt just break the loop here.
+
         ciscComputer.getMemory().writeContent();
     }
 

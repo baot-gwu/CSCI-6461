@@ -23,4 +23,20 @@ public class Utils {
     public static String decimalToBinary(int decimal) {
         return Integer.toBinaryString(decimal);
     }
+
+    public static String symbolicForm(Instruction instruction) {
+        GeneralPurposeRegister generalPurposeRegister = instruction.getGeneralPurposeRegister();
+        IndexRegister indexRegister = instruction.getIndexRegister();
+
+        String symbolicForm = instruction.getType().name() + " "
+                + (generalPurposeRegister == null ? "" : generalPurposeRegister.getRegisterNumber() + ",")
+                + (indexRegister == null ? "0" : indexRegister.getRegisterNumber()) +
+                "," + instruction.getEffectiveAddressInDecimal();
+
+        if (instruction.isIndirect()) {
+            symbolicForm += ",1";
+        }
+
+        return symbolicForm;
+    }
 }
