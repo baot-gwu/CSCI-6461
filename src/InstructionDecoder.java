@@ -3,12 +3,16 @@ public class InstructionDecoder {
     public Instruction decode(CiscComputer ciscComputer) {
         String binaryInstruction = ciscComputer.getInstructionRegister().getBinaryInstruction();
 
-        if (binaryInstruction == null) {
+        if (binaryInstruction == null || binaryInstruction.length() < 6) {
             return null;
         }
 
         String opcodeInBinary = binaryInstruction.substring(0, 6);
         InstructionType type = InstructionType.getType(opcodeInBinary);
+
+        if (type == null) {
+            return null;
+        }
 
         String generalPurposeRegisterNumberInBinary = binaryInstruction.substring(6, 8);
 
