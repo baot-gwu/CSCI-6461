@@ -1,6 +1,10 @@
 /**
  * @author jalal
  * @since 12/9/19
+ *
+ * This class process and instruction.
+ *
+ * Based on instruction type. LDR, STR, LDA, LDX, STX
  */
 public class InstructionProcessor {
 

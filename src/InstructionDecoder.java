@@ -1,5 +1,20 @@
 public class InstructionDecoder {
 
+    /**
+     * Method to decode an instruction, if not proper instruction return null
+     *
+     * Takes binary instruction from {@link InstructionRegister} then
+     * validate by type. If first 6 bit represent a valid instruction then
+     * define the type of the instruction
+     *
+     * Then fetch general purpose register from next two bit (7 and 8)
+     *
+     * Then fetch index register from next two bit (9 and 10)
+     *
+     * Then check direct or indirect from bit 11
+     *
+     * Then 12 to 16 bit parsed as address in memory
+     */
     public Instruction decode(CiscComputer ciscComputer) {
         String binaryInstruction = ciscComputer.getInstructionRegister().getBinaryInstruction();
 

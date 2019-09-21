@@ -10,6 +10,12 @@ import java.util.Map;
 /**
  * @author jalal
  * @since 12/9/19
+ *
+ * This is the class to represent memory.
+ *
+ * Its a LinkedHashMap with contains 2048 entries, Each entry present a word with line number.
+ *
+ * Key is line number and value is word
  */
 public class Memory {
 

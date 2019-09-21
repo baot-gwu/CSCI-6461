@@ -3,6 +3,8 @@ import java.util.List;
 /**
  * @author jalal
  * @since 12/9/19
+ *
+ * The class to display current values of CISC computer
  */
 public class Display {
 

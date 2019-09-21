@@ -1,6 +1,8 @@
 /**
  * @author jalal
  * @since 12/9/19
+ *
+ * Enum to represent types of instruction, their Symbolic form and binary values
  */
 public enum InstructionType {
 

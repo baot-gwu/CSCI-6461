@@ -1,6 +1,8 @@
 /**
  * @author jalal
  * @since 14/9/19
+ *
+ * Class to represent instruction register
  */
 public class InstructionRegister extends Register {
 

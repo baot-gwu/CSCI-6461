@@ -4,6 +4,15 @@ import java.util.List;
 /**
  * @author jalal
  * @since 12/9/19
+ *
+ *
+ * Class is to represent CISC computer with all necessary attributes
+ *
+ * 4 General purpose register
+ * 3 Index register
+ * 1 Instruction register
+ * 1 Program Counter
+ * and Memory with length of 2048 words
  */
 public class CiscComputer {
 

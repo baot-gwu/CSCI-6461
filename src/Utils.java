@@ -1,6 +1,8 @@
 /**
  * @author jalal
  * @since 12/9/19
+ *
+ * Common utils to calculate and check common operations
  */
 public class Utils {
 

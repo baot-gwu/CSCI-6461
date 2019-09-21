@@ -1,6 +1,8 @@
 /**
  * @author jalal
  * @since 12/9/19
+ *
+ * Enum defines types of register and number of bits in the register
  */
 public enum RegisterType {
 

@@ -1,6 +1,8 @@
 /**
  * @author jalal
  * @since 12/9/19
+ *
+ * Class to represent general purpose register
  */
 public class GeneralPurposeRegister extends Register {
 

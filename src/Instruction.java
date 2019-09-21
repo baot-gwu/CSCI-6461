@@ -1,3 +1,9 @@
+/**
+ * @author jalal
+ * @since 12/9/19
+ *
+ * This is the class to to represent an instruction
+ */
 public class Instruction {
 
     private GeneralPurposeRegister generalPurposeRegister;
