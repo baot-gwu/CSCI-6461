@@ -1,7 +1,7 @@
 /**
  * @author jalal
  * @since 12/9/19
- *
+ * <p>
  * Common utils to calculate and check common operations
  */
 public class Utils {
@@ -35,12 +35,12 @@ public class Utils {
     }
 
     public static String hexToBinary(String hex) {
-        return autoFill(Integer.toBinaryString(Integer.parseInt(hex, 16)) , (hex.length() * 4));
+        return autoFill(Integer.toBinaryString(Integer.parseInt(hex, 16)), (hex.length() * 4));
     }
 
-    public static String autoFill(String instruction, int size){
+    public static String autoFill(String instruction, int size) {
         if (instruction == null) instruction = "0";
-        instruction.replace(" ","");
+        instruction.replace(" ", "");
         for (int i = instruction.length(); i < size; i++) {
             instruction = "0" + instruction;
         }
