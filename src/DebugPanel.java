@@ -93,6 +93,8 @@ public class DebugPanel extends JFrame{
     private JLabel MBR_value;
     private JLabel IR_value;
     private CiscComputer ciscComputer;
+    private InstructionDecoder instructionDecoder = new InstructionDecoder();
+    private InstructionRegister instructionRegister;
     private Memory memory;
     private boolean pause = true;
     private String r0,r1,r2,r3,ix1,ix2,ix3,mar,mbr,pc,ir,cc,mfr;
@@ -410,10 +412,9 @@ public class DebugPanel extends JFrame{
                     int index = MemoryValueList.getSelectedIndex();
                     data = JOptionPane.showInputDialog("Input binary value").toString();
                     if (!data.isEmpty() && Utils.binaryValid(data)){
-//                        InstructionProcessor ip = new InstructionProcessor();
                         memoryValue[index] = Utils.autoFill(data, 16);
                         memoryHexValue[index] = "x" + Utils.binaryToHex(memoryValue[index]);
-//                        memoryAssembleCode[index] = ip.getsymbolicForm(memoryValue[index]);
+                        memoryAssembleCode[index] = getSymbolicForm(memoryValue[index]);
                         MemoryValueList.setListData(memoryValue);
                         MemoryHexValueList.setListData(memoryHexValue);
                         MemoryAssembleCodeList.setListData(memoryAssembleCode);
@@ -433,10 +434,9 @@ public class DebugPanel extends JFrame{
                     int index = MemoryHexValueList.getSelectedIndex();
                     data = JOptionPane.showInputDialog("Input Hex value").toString();
                     if (!data.isEmpty() && Utils.hexValid(data)){
-//                        InstructionProcessor ip = new InstructionProcessor();
                         memoryHexValue[index] = "x" + data;
                         memoryValue[index] = Utils.autoFill(Utils.hexToBinary(data), 16);
-//                        memoryAssembleCode[index] = ip.getsymbolicForm(memoryValue[index]);
+                        memoryAssembleCode[index] = getSymbolicForm(memoryValue[index]);
                         MemoryValueList.setListData(memoryValue);
                         MemoryHexValueList.setListData(memoryHexValue);
                         MemoryAssembleCodeList.setListData(memoryAssembleCode);
@@ -474,10 +474,9 @@ public class DebugPanel extends JFrame{
             value = value.replace(" ","");
 //            System.err.println("Key: " + index + ", Value: " + value);
             if (value.length() != 0){
-//            InstructionProcessor ip = new InstructionProcessor();
                 memoryValue[index] = (Utils.binaryValid(value) && value.length() == 16) ? Utils.autoFill(value, 16) : Utils.autoFill(Utils.decimalToBinary(Integer.parseInt(value)), 16);
                 memoryHexValue[index] = "x" + Utils.binaryToHex(memoryValue[index]);
-//            memoryAssembleCode[index] = ip.getsymbolicForm(memoryValue[index]);
+                memoryAssembleCode[index] = getSymbolicForm(memoryValue[index]);
                 MemoryValueList.setListData(memoryValue);
                 MemoryHexValueList.setListData(memoryHexValue);
                 MemoryAssembleCodeList.setListData(memoryAssembleCode);
@@ -595,7 +594,9 @@ public class DebugPanel extends JFrame{
         int address = Integer.parseInt(pc, 2);
         ciscComputer.getProgramCounter().setDecimalValue(address + 1);
         ciscComputer.getInstructionRegister().setBinaryInstruction(memory.memoryMap.get(address));
-        new InstructionProcessor().processInstruction(ciscComputer);
+        Instruction instruction = new InstructionDecoder().decode(ciscComputer);
+        System.out.println(Utils.symbolicForm(instruction));
+        new InstructionProcessor().processInstruction(ciscComputer, instruction);
 
         setData(ciscComputer);
         Main.printValues(ciscComputer);
@@ -624,5 +625,15 @@ public class DebugPanel extends JFrame{
 
     private void save() {
         ciscComputer.getMemory().writeContent();
+    }
+
+    private String getSymbolicForm(String binaryInstruction){
+        if (binaryInstruction == null || binaryInstruction.trim().toString() == "")
+            binaryInstruction = "0";
+        Utils.autoFill(binaryInstruction, 16);
+        instructionRegister = ciscComputer.getInstructionRegister();
+        instructionRegister.setBinaryInstruction(binaryInstruction);
+        Instruction instruction = instructionDecoder.decode(ciscComputer);
+        return Utils.symbolicForm(instruction);
     }
 }
