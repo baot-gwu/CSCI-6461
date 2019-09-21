@@ -116,7 +116,7 @@ public class DebugPanel extends JFrame {
 
     DebugPanel() {
         // create windows
-        super("Machine Simulator");
+        super("CISC Machine Simulator");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setSize(WIDTH, HEIGHT);
@@ -258,7 +258,7 @@ public class DebugPanel extends JFrame {
                     PC_textField.setText(pc);
                     PC_value.setText("x" + Utils.binaryToHex(pc));
                     getData();
-                    syncListSelect(Integer.parseInt(pc, 2));
+                    syncListSelect(Integer.parseInt(pc, 2), true);
                 } else {
                     System.err.println("PC is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
@@ -382,28 +382,28 @@ public class DebugPanel extends JFrame {
         MemoryAddressList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                syncListSelect(MemoryAddressList.getSelectedIndex());
+                syncListSelect(MemoryAddressList.getSelectedIndex(), false);
             }
         });
 
         MemoryValueList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                syncListSelect(MemoryValueList.getSelectedIndex());
+                syncListSelect(MemoryValueList.getSelectedIndex(), false);
             }
         });
 
         MemoryHexValueList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                syncListSelect(MemoryHexValueList.getSelectedIndex());
+                syncListSelect(MemoryHexValueList.getSelectedIndex(), false);
             }
         });
 
         MemoryAssembleCodeList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                syncListSelect(MemoryAssembleCodeList.getSelectedIndex());
+                syncListSelect(MemoryAssembleCodeList.getSelectedIndex(), false);
             }
         });
 
@@ -413,12 +413,20 @@ public class DebugPanel extends JFrame {
                 String data;
                 if (!MemoryValueList.isSelectionEmpty() && e.getClickCount() == 2) { // when double click
                     int index = MemoryValueList.getSelectedIndex();
-                    data = JOptionPane.showInputDialog("Input binary value").toString();
-                    if (!data.isEmpty() && Utils.binaryValid(data)) {
+                    data = String.valueOf(JOptionPane.showInputDialog("Input binary value"));
+                    if (String.valueOf(data) == "null") {
+
+                    } else if (String.valueOf(data).trim().length() == 0){
+                        data = "0";
                         setMemory(index, Utils.autoFill(data, 16)); // set memory
-                        getMemory(); // refresh memory list
-                    } else
+                    } else if (!Utils.binaryValid(data)){
                         JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        setMemory(index, Utils.autoFill(data, 16)); // set memory
+                    }
+
+                    getMemory(); // refresh memory list
+                    syncListSelect(index, false);
                 }
             }
         });
@@ -429,12 +437,20 @@ public class DebugPanel extends JFrame {
                 String data;
                 if (!MemoryHexValueList.isSelectionEmpty() && e.getClickCount() == 2) {
                     int index = MemoryHexValueList.getSelectedIndex();
-                    data = JOptionPane.showInputDialog("Input Hex value").toString();
-                    if (!data.isEmpty() && Utils.hexValid(data)) {
-                        setMemory(index, Utils.autoFill(Utils.hexToBinary(data), 16));
-                        getMemory();
-                    } else
-                        JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
+                    data = String.valueOf(JOptionPane.showInputDialog("Input Hex value"));
+                    if (String.valueOf(data) == "null") {
+
+                    } else if (String.valueOf(data).trim().length() == 0){
+                        data = "0";
+                        setMemory(index, Utils.autoFill(Utils.hexToBinary(data), 16)); // set memory
+                    } else if (!Utils.hexValid(data)){
+                        JOptionPane.showMessageDialog(null, "Input is not hex", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        setMemory(index, Utils.autoFill(Utils.hexToBinary(data), 16)); // set memory
+                    }
+
+                    getMemory(); // refresh memory list
+                    syncListSelect(index, false);
                 }
             }
         });
@@ -445,7 +461,7 @@ public class DebugPanel extends JFrame {
         getMemory();
     }
 
-    private void syncListSelect(int selectedIndex) { // synchronize four memory list selected index
+    private void syncListSelect(int selectedIndex, boolean jump) { // synchronize four memory list selected index
         if (MemoryAddressList.getSelectedIndex() != selectedIndex)
             MemoryAddressList.setSelectedIndex(selectedIndex);
         if (MemoryValueList.getSelectedIndex() != selectedIndex)
@@ -454,10 +470,13 @@ public class DebugPanel extends JFrame {
             MemoryHexValueList.setSelectedIndex(selectedIndex);
         if (MemoryAssembleCodeList.getSelectedIndex() != selectedIndex)
             MemoryAssembleCodeList.setSelectedIndex(selectedIndex);
-        // jump the list to the position of selected index
-        JScrollBar place = MemoryListScroll.getVerticalScrollBar();
-        int place_value = place.getMaximum() * selectedIndex / Main.MAX_MEMORY_SIZE - 50;
-        place.setValue((place_value < 0) ? 0 : place_value);
+
+        if (jump) {
+            // jump the list to the position of selected index
+            JScrollBar place = MemoryListScroll.getVerticalScrollBar();
+            int place_value = place.getMaximum() * selectedIndex / Main.MAX_MEMORY_SIZE - 50;
+            place.setValue((place_value < 0) ? 0 : place_value);
+        }
     }
 
     private void getMemory() { // fetch memory and show on the memory lists
@@ -569,7 +588,7 @@ public class DebugPanel extends JFrame {
         new InstructionProcessor().processInstruction(ciscComputer, instruction); // execute instruction
 
         setData(ciscComputer); // update front-end
-        syncListSelect(address + 1); // memory selected index jump to the pc
+        syncListSelect(address + 1, true); // memory selected index jump to the pc
 
         // print the log to console
         System.out.println(Utils.symbolicForm(instruction));
