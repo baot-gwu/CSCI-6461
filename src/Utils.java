@@ -61,6 +61,10 @@ public class Utils {
     }
 
     public static String symbolicForm(Instruction instruction) {
+        if (instruction == null) {
+            return null;
+        }
+
         GeneralPurposeRegister generalPurposeRegister = instruction.getGeneralPurposeRegister();
         IndexRegister indexRegister = instruction.getIndexRegister();
 
@@ -74,5 +78,13 @@ public class Utils {
         }
 
         return symbolicForm;
+    }
+
+    public static boolean isValidBinaryInstruction(String instruction) {
+        return instruction != null && instruction.matches("[0-1]+");
+    }
+
+    public static boolean isValidOctalInstruction(String instruction) {
+        return instruction != null && instruction.matches("[0-7]+");
     }
 }

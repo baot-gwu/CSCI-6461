@@ -10,11 +10,15 @@ public class InstructionRegister extends Register {
     }
 
     public void setBinaryInstruction(String instruction) {
-        setBinaryValue(instruction);
+        if (Utils.isValidBinaryInstruction(instruction)) {
+            setBinaryValue(instruction);
+        }
     }
 
     public void setOctalInstruction(String instruction, int registerSize) {
-        setBinaryValue(Utils.octalToBinary(instruction, registerSize));
+        if (Utils.isValidOctalInstruction(instruction)) {
+            setBinaryValue(Utils.octalToBinary(instruction, registerSize));
+        }
     }
 
     public String getBinaryInstruction() {
