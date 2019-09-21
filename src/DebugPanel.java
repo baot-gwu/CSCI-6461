@@ -2,11 +2,21 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.Map;
 
-public class DebugPanel extends JFrame{
+/**
+ * @author baot
+ * @since 9/10/19
+ *
+ * Class is to represent and operate CISC computer with all necessary attributes
+ */
+
+public class DebugPanel extends JFrame {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 720;
     private JPanel MainForm;
@@ -97,15 +107,15 @@ public class DebugPanel extends JFrame{
     private InstructionRegister instructionRegister;
     private Memory memory;
     private boolean pause = true;
-    private String r0,r1,r2,r3,ix1,ix2,ix3,mar,mbr,pc,ir,cc,mfr;
+    private String r0, r1, r2, r3, ix1, ix2, ix3, mar, mbr, pc, ir, cc, mfr;
 
-    public static final int MAX_MEMORY_SIZE = 2048;
-    private String memoryAddress[] = new String[MAX_MEMORY_SIZE];
-    private String memoryValue[] = new String[MAX_MEMORY_SIZE];
-    private String memoryHexValue[] = new String[MAX_MEMORY_SIZE];
-    private String memoryAssembleCode[] = new String[MAX_MEMORY_SIZE];
+    private String memoryAddress[] = new String[Main.MAX_MEMORY_SIZE];
+    private String memoryValue[] = new String[Main.MAX_MEMORY_SIZE];
+    private String memoryHexValue[] = new String[Main.MAX_MEMORY_SIZE];
+    private String memoryAssembleCode[] = new String[Main.MAX_MEMORY_SIZE];
 
     DebugPanel() {
+        // create windows
         super("Machine Simulator");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
@@ -113,10 +123,11 @@ public class DebugPanel extends JFrame{
         getContentPane().add(MainForm);
         setVisible(true);
 
+        // Initialize memory lists
         Arrays.fill(memoryValue, "0000000000000000");
         Arrays.fill(memoryHexValue, "x0000");
         Arrays.fill(memoryAssembleCode, "null");
-        for (int i = 0; i < memoryAddress.length; i++){
+        for (int i = 0; i < memoryAddress.length; i++) {
             memoryAddress[i] = "x" + Utils.autoFill(Utils.decimalToHex(i).toUpperCase(), 4);
         }
 
@@ -125,17 +136,17 @@ public class DebugPanel extends JFrame{
         MemoryHexValueList.setListData(memoryHexValue);
         MemoryAssembleCodeList.setListData(memoryAssembleCode);
 
+        // set register = the value in the register_textfield
         R0_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = R0_textField.getText();
-                if (Utils.binaryValid(register)){
-                    r0 = Utils.autoFill(register, 16);
-                    R0_textField.setText(r0);
-                    R0_value.setText("x" + Utils.binaryToHex(r0));
-                    getData();
-                }
-                else{
+                if (Utils.binaryValid(register)) { // check if the input is binary
+                    r0 = Utils.autoFill(register, 16); // auto fill 0 at the beginning of the string
+                    R0_textField.setText(r0); // refresh textfield
+                    R0_value.setText("x" + Utils.binaryToHex(r0)); // convert binary to hex value
+                    getData(); // refresh the back end machine
+                } else { // invalid input warning
                     System.err.println("R0 is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -146,13 +157,12 @@ public class DebugPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = R1_textField.getText();
-                if (Utils.binaryValid(register)){
+                if (Utils.binaryValid(register)) {
                     r1 = Utils.autoFill(register, 16);
                     R1_textField.setText(r1);
                     R1_value.setText("x" + Utils.binaryToHex(r1));
                     getData();
-                }
-                else{
+                } else {
                     System.err.println("R1 is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -163,13 +173,12 @@ public class DebugPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = R2_textField.getText();
-                if (Utils.binaryValid(register)){
+                if (Utils.binaryValid(register)) {
                     r2 = Utils.autoFill(register, 16);
                     R2_textField.setText(r2);
                     R2_value.setText("x" + Utils.binaryToHex(r2));
                     getData();
-                }
-                else{
+                } else {
                     System.err.println("R2 is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -180,13 +189,12 @@ public class DebugPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = R3_textField.getText();
-                if (Utils.binaryValid(register)){
+                if (Utils.binaryValid(register)) {
                     r3 = Utils.autoFill(register, 16);
                     R3_textField.setText(r3);
                     R3_value.setText("x" + Utils.binaryToHex(r3));
                     getData();
-                }
-                else{
+                } else {
                     System.err.println("R3 is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -197,13 +205,12 @@ public class DebugPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = IX1_textField.getText();
-                if (Utils.binaryValid(register)){
+                if (Utils.binaryValid(register)) {
                     ix1 = Utils.autoFill(register, 16);
                     IX1_textField.setText(ix1);
                     IX1_value.setText("x" + Utils.binaryToHex(ix1));
                     getData();
-                }
-                else{
+                } else {
                     System.err.println("IX1 is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -214,13 +221,12 @@ public class DebugPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = IX2_textField.getText();
-                if (Utils.binaryValid(register)){
+                if (Utils.binaryValid(register)) {
                     ix2 = Utils.autoFill(register, 16);
                     IX2_textField.setText(ix2);
                     IX2_value.setText("x" + Utils.binaryToHex(ix2));
                     getData();
-                }
-                else{
+                } else {
                     System.err.println("IX2 is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -231,13 +237,12 @@ public class DebugPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = IX3_textField.getText();
-                if (Utils.binaryValid(register)){
+                if (Utils.binaryValid(register)) {
                     ix3 = Utils.autoFill(register, 16);
                     IX3_textField.setText(ix3);
                     IX3_value.setText("x" + Utils.binaryToHex(ix3));
                     getData();
-                }
-                else{
+                } else {
                     System.err.println("IX3 is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -248,14 +253,13 @@ public class DebugPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = PC_textField.getText();
-                if (Utils.binaryValid(register)){
+                if (Utils.binaryValid(register)) {
                     pc = Utils.autoFill(register, 12);
                     PC_textField.setText(pc);
                     PC_value.setText("x" + Utils.binaryToHex(pc));
                     getData();
                     syncListSelect(Integer.parseInt(pc, 2));
-                }
-                else{
+                } else {
                     System.err.println("PC is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -266,13 +270,12 @@ public class DebugPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = IR_textField.getText();
-                if (Utils.binaryValid(register)){
+                if (Utils.binaryValid(register)) {
                     ir = Utils.autoFill(register, 16);
                     IR_textField.setText(ir);
                     IR_value.setText("x" + Utils.binaryToHex(ir));
                     getData();
-                }
-                else{
+                } else {
                     System.err.println("IR is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -283,13 +286,12 @@ public class DebugPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = MAR_textField.getText();
-                if (Utils.binaryValid(register)){
+                if (Utils.binaryValid(register)) {
                     mar = Utils.autoFill(register, 16);
                     MAR_textField.setText(mar);
                     MAR_value.setText("x" + Utils.binaryToHex(mar));
                     getData();
-                }
-                else{
+                } else {
                     System.err.println("MAR is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -300,20 +302,19 @@ public class DebugPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String register = MBR_textField.getText();
-                if (Utils.binaryValid(register)){
-                    mbr = Utils.autoFill(register, 16);
-                    MBR_textField.setText(mbr);
-                    MBR_value.setText("x" + Utils.binaryToHex(mbr));
-                    writeMemory(mar, mbr);
-                    mar = Utils.autoFill(Utils.decimalToBinary(Utils.binaryToDecimal(mar) + 1), 16);
-                    mbr = Utils.autoFill("0", 16);
-                    MAR_textField.setText(mar);
-                    MAR_value.setText("x" + Utils.binaryToHex(mar));
-                    MBR_textField.setText(mbr);
-                    MBR_value.setText("x" + Utils.binaryToHex(mbr));
-                    getData();
-                }
-                else{
+                if (Utils.binaryValid(register)) {
+                    mbr = Utils.autoFill(register, 16); // format mbr value
+                    MBR_textField.setText(mbr); // refresh mbr textfield
+                    MBR_value.setText("x" + Utils.binaryToHex(mbr)); // refresh mbr hex label
+                    writeMemory(mar, mbr); // set memory
+                    mar = Utils.autoFill(Utils.decimalToBinary(Utils.binaryToDecimal(mar) + 1), 16); // mar++
+                    mbr = Utils.autoFill("0", 16); // clean mbr
+                    MAR_textField.setText(mar); // refresh mar textfield
+                    MAR_value.setText("x" + Utils.binaryToHex(mar)); // refresh mar hex label
+                    MBR_textField.setText(mbr); // refresh mbr textfield
+                    MBR_value.setText("x" + Utils.binaryToHex(mbr)); // refresh mbr hex label
+                    getData(); // refresh the back end machine
+                } else {
                     System.err.println("MBR is not binary");
                     JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
@@ -377,6 +378,7 @@ public class DebugPanel extends JFrame{
             }
         });
 
+        // synchronize four memory list selected index
         MemoryAddressList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
@@ -409,21 +411,13 @@ public class DebugPanel extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 String data;
-                if (!MemoryValueList.isSelectionEmpty() && e.getClickCount() == 2){
+                if (!MemoryValueList.isSelectionEmpty() && e.getClickCount() == 2) { // when double click
                     int index = MemoryValueList.getSelectedIndex();
                     data = JOptionPane.showInputDialog("Input binary value").toString();
-                    if (!data.isEmpty() && Utils.binaryValid(data)){
-//                        memoryValue[index] = Utils.autoFill(data, 16);
-//                        memoryHexValue[index] = "x" + Utils.binaryToHex(memoryValue[index]);
-//                        memoryAssembleCode[index] = getSymbolicForm(memoryValue[index]);
-//                        MemoryValueList.setListData(memoryValue);
-//                        MemoryHexValueList.setListData(memoryHexValue);
-//                        MemoryAssembleCodeList.setListData(memoryAssembleCode);
-//                        setMemory(index, memoryValue[index]);
-                        setMemory(index, Utils.autoFill(data, 16));
-                        getMemory();
-                    }
-                    else
+                    if (!data.isEmpty() && Utils.binaryValid(data)) {
+                        setMemory(index, Utils.autoFill(data, 16)); // set memory
+                        getMemory(); // refresh memory list
+                    } else
                         JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -433,33 +427,25 @@ public class DebugPanel extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 String data;
-                if (!MemoryHexValueList.isSelectionEmpty() && e.getClickCount() == 2){
+                if (!MemoryHexValueList.isSelectionEmpty() && e.getClickCount() == 2) {
                     int index = MemoryHexValueList.getSelectedIndex();
                     data = JOptionPane.showInputDialog("Input Hex value").toString();
-                    if (!data.isEmpty() && Utils.hexValid(data)){
-//                        memoryHexValue[index] = "x" + data;
-//                        memoryValue[index] = Utils.autoFill(Utils.hexToBinary(data), 16);
-//                        memoryAssembleCode[index] = getSymbolicForm(memoryValue[index]);
-//                        MemoryValueList.setListData(memoryValue);
-//                        MemoryHexValueList.setListData(memoryHexValue);
-//                        MemoryAssembleCodeList.setListData(memoryAssembleCode);
-//                        setMemory(index, memoryValue[index]);
+                    if (!data.isEmpty() && Utils.hexValid(data)) {
                         setMemory(index, Utils.autoFill(Utils.hexToBinary(data), 16));
                         getMemory();
-                    }
-                    else
+                    } else
                         JOptionPane.showMessageDialog(null, "Input is not binary", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
     }
 
-    private void writeMemory(String mar, String mbr) {
+    private void writeMemory(String mar, String mbr) { // Load MBR to MEM[MAR]
         setMemory(Utils.binaryToDecimal(mar), mbr);
         getMemory();
     }
 
-    private void syncListSelect(int selectedIndex) {
+    private void syncListSelect(int selectedIndex) { // synchronize four memory list selected index
         if (MemoryAddressList.getSelectedIndex() != selectedIndex)
             MemoryAddressList.setSelectedIndex(selectedIndex);
         if (MemoryValueList.getSelectedIndex() != selectedIndex)
@@ -468,21 +454,21 @@ public class DebugPanel extends JFrame{
             MemoryHexValueList.setSelectedIndex(selectedIndex);
         if (MemoryAssembleCodeList.getSelectedIndex() != selectedIndex)
             MemoryAssembleCodeList.setSelectedIndex(selectedIndex);
+        // jump the list to the position of selected index
         JScrollBar place = MemoryListScroll.getVerticalScrollBar();
-        int place_value = place.getMaximum() * selectedIndex / MAX_MEMORY_SIZE - 50;
+        int place_value = place.getMaximum() * selectedIndex / Main.MAX_MEMORY_SIZE - 50;
         place.setValue((place_value < 0) ? 0 : place_value);
     }
 
-    private void getMemory() {
+    private void getMemory() { // fetch memory and show on the memory lists
         int index;
         String value;
         clearMemory();
         for (Map.Entry<Integer, String> entry : memory.memoryMap.entrySet()) {
             index = entry.getKey();
             value = entry.getValue();
-            value = value.replace(" ","");
-//            System.err.println("Key: " + index + ", Value: " + value);
-            if (value.length() != 0){
+            value = value.replace(" ", "");
+            if (value.length() != 0) {
                 memoryValue[index] = (Utils.binaryValid(value) && value.length() == 16) ? Utils.autoFill(value, 16) : Utils.autoFill(Utils.decimalToBinary(Integer.parseInt(value)), 16);
                 memoryHexValue[index] = "x" + Utils.binaryToHex(memoryValue[index]);
                 memoryAssembleCode[index] = getSymbolicForm(memoryValue[index]);
@@ -494,14 +480,14 @@ public class DebugPanel extends JFrame{
         }
     }
 
-    private void setMemory(int key, String value) {
+    private void setMemory(int key, String value) { // set MEM[key] = value
         if (memory.memoryMap.containsKey(key))
             memory.memoryMap.replace(key, value);
         else
             memory.memoryMap.put(key, value);
     }
 
-    public void setData(CiscComputer ciscComputer) {
+    public void setData(CiscComputer ciscComputer) { // update front-end from back-end
         this.ciscComputer = ciscComputer;
         memory = ciscComputer.getMemory();
         Display data = new Display(ciscComputer, true);
@@ -517,23 +503,22 @@ public class DebugPanel extends JFrame{
         mar = (String.valueOf(data.getMar()) == "null" || data.getMar().length() == 0) ? "0" : data.getMar();
         mbr = (String.valueOf(data.getMbr()) == "null" || data.getMbr().length() == 0) ? "0" : data.getMbr();
 
-        R0_textField.setText(Utils.autoFill(r0,16));
-        R1_textField.setText(Utils.autoFill(r1,16));
-        R2_textField.setText(Utils.autoFill(r2,16));
-        R3_textField.setText(Utils.autoFill(r3,16));
-        IX1_textField.setText(Utils.autoFill(ix1,16));
-        IX2_textField.setText(Utils.autoFill(ix2,16));
-        IX3_textField.setText(Utils.autoFill(ix3,16));
-        MAR_textField.setText(Utils.autoFill(mar,16));
-        MBR_textField.setText(Utils.autoFill(mbr,16));
-        PC_textField.setText(Utils.autoFill(pc,12));
-        IR_textField.setText(Utils.autoFill(ir,16));
+        R0_textField.setText(Utils.autoFill(r0, 16));
+        R1_textField.setText(Utils.autoFill(r1, 16));
+        R2_textField.setText(Utils.autoFill(r2, 16));
+        R3_textField.setText(Utils.autoFill(r3, 16));
+        IX1_textField.setText(Utils.autoFill(ix1, 16));
+        IX2_textField.setText(Utils.autoFill(ix2, 16));
+        IX3_textField.setText(Utils.autoFill(ix3, 16));
+        MAR_textField.setText(Utils.autoFill(mar, 16));
+        MBR_textField.setText(Utils.autoFill(mbr, 16));
+        PC_textField.setText(Utils.autoFill(pc, 12));
+        IR_textField.setText(Utils.autoFill(ir, 16));
         getMemory();
         binaryToHex();
-        System.err.println("Set");
     }
 
-    public void getData() {
+    public void getData() { // update back-end from front-end
         Display data = new Display(this.ciscComputer, true);
         data.setR0(r0);
         data.setR1(r1);
@@ -548,33 +533,7 @@ public class DebugPanel extends JFrame{
         data.setIr(ir);
     }
 
-    public boolean isModified(Display data) {
-        if (R0_textField.getText() != null ? !R0_textField.getText().equals(data.getR0()) : data.getR0() != null)
-            return true;
-        if (R1_textField.getText() != null ? !R1_textField.getText().equals(data.getR1()) : data.getR1() != null)
-            return true;
-        if (R2_textField.getText() != null ? !R2_textField.getText().equals(data.getR2()) : data.getR2() != null)
-            return true;
-        if (R3_textField.getText() != null ? !R3_textField.getText().equals(data.getR3()) : data.getR3() != null)
-            return true;
-        if (IX1_textField.getText() != null ? !IX1_textField.getText().equals(data.getIx1()) : data.getIx1() != null)
-            return true;
-        if (IX2_textField.getText() != null ? !IX2_textField.getText().equals(data.getIx2()) : data.getIx2() != null)
-            return true;
-        if (IX3_textField.getText() != null ? !IX3_textField.getText().equals(data.getIx3()) : data.getIx3() != null)
-            return true;
-        if (MAR_textField.getText() != null ? !MAR_textField.getText().equals(data.getMar()) : data.getMar() != null)
-            return true;
-        if (MBR_textField.getText() != null ? !MBR_textField.getText().equals(data.getMbr()) : data.getMbr() != null)
-            return true;
-        if (PC_textField.getText() != null ? !PC_textField.getText().equals(data.getPc()) : data.getPc() != null)
-            return true;
-        if (IR_textField.getText() != null ? !IR_textField.getText().equals(data.getIr()) : data.getIr() != null)
-            return true;
-        return false;
-    }
-
-    private void binaryToHex() {
+    private void binaryToHex() { // convert binary code to hex code
         R0_value.setText("x" + Utils.binaryToHex(Utils.autoFill(r0, 16)));
         R1_value.setText("x" + Utils.binaryToHex(Utils.autoFill(r1, 16)));
         R2_value.setText("x" + Utils.binaryToHex(Utils.autoFill(r2, 16)));
@@ -603,82 +562,88 @@ public class DebugPanel extends JFrame{
     }
 
     private void singleRun() {
-        int address = Integer.parseInt(pc, 2);
-        ciscComputer.getProgramCounter().setDecimalValue(address + 1);
-        ciscComputer.getInstructionRegister().setBinaryInstruction(memory.memoryMap.get(address));
-        Instruction instruction = new InstructionDecoder().decode(ciscComputer);
+        int address = Integer.parseInt(pc, 2); // get current counter
+        ciscComputer.getProgramCounter().setDecimalValue(address + 1); // set pc
+        ciscComputer.getInstructionRegister().setBinaryInstruction(memory.memoryMap.get(address)); // set ir
+        Instruction instruction = new InstructionDecoder().decode(ciscComputer); // decode instruction
+        new InstructionProcessor().processInstruction(ciscComputer, instruction); // execute instruction
+
+        setData(ciscComputer); // update front-end
+        syncListSelect(address + 1); // memory selected index jump to the pc
+
+        // print the log to console
         System.out.println(Utils.symbolicForm(instruction));
-        new InstructionProcessor().processInstruction(ciscComputer, instruction);
-
-        setData(ciscComputer);
-        syncListSelect(address + 1);
-
         Main.printValues(ciscComputer);
+
+        // HALT when address is 39 (HALT instruction is NOT REQUIRED in PHASE I)
         if (address >= 39)
             pause = true;
-
     }
 
     private void autoRun() {
+        // multi-thread the back-end from main thread (front-end)
         Thread backEnd = new Thread(new BackEnd());
         backEnd.start();
     }
 
-    private void ipl() {
+    private void ipl() { // import instructions from file (not available not)
         ciscComputer.getMemory().loadContent();
         getMemory();
     }
 
-    private void reload() {
+    private void reload() { // reload the memory file
         ciscComputer.getMemory().loadContent();
         getMemory();
     }
 
-    private void save() {
+    private void save() { // save the memory file
         ciscComputer.getMemory().writeContent();
         getMemory();
     }
 
-    private String getSymbolicForm(String binaryInstruction){
+    private String getSymbolicForm(String binaryInstruction) { // convert binary instruction to assemble code
+        // format input binary code
         if (String.valueOf(binaryInstruction) == "null" || binaryInstruction.trim().toString() == "")
             binaryInstruction = "0";
         Utils.autoFill(binaryInstruction, 16);
+        // Initialize instruction decoder
         instructionRegister = ciscComputer.getInstructionRegister();
         instructionRegister.setBinaryInstruction(binaryInstruction);
         Instruction instruction = instructionDecoder.decode(ciscComputer);
-//        return Utils.symbolicForm(instruction); // Uncomment this line
-        return binaryInstruction; // Comment this line
-        // TODO: revise line 649 & 650
+
+        String symbolicForm = Utils.symbolicForm(instruction);
+        return (symbolicForm == null) ? "null" : symbolicForm;
     }
 
 
-    private void clear() {
+    private void clear() { // reset machine and front-end (except memory)
         ciscComputer = new Initializer().initialize();
         setData(ciscComputer);
     }
 
-    private void clearMemory() {
-        memoryAddress = new String[MAX_MEMORY_SIZE];
-        memoryValue = new String[MAX_MEMORY_SIZE];
-        memoryHexValue = new String[MAX_MEMORY_SIZE];
-        memoryAssembleCode = new String[MAX_MEMORY_SIZE];
+    private void clearMemory() { // reset the memory
+        memoryAddress = new String[Main.MAX_MEMORY_SIZE];
+        memoryValue = new String[Main.MAX_MEMORY_SIZE];
+        memoryHexValue = new String[Main.MAX_MEMORY_SIZE];
+        memoryAssembleCode = new String[Main.MAX_MEMORY_SIZE];
 
         Arrays.fill(memoryValue, "0000000000000000");
         Arrays.fill(memoryHexValue, "x0000");
         Arrays.fill(memoryAssembleCode, "null");
-        for (int i = 0; i < memoryAddress.length; i++){
+        for (int i = 0; i < memoryAddress.length; i++) {
             memoryAddress[i] = "x" + Utils.autoFill(Utils.decimalToHex(i).toUpperCase(), 4);
         }
     }
 
-    class BackEnd extends Thread{
+    class BackEnd extends Thread {
+        // delay AUTORUN_DELAY ms after execute a singleRun
         @Override
         public void run() {
-            while (!pause){
+            while (!pause) {
                 singleRun();
                 try {
-                    Thread.sleep(1000);
-                } catch(InterruptedException e) {
+                    Thread.sleep(Main.AUTORUN_DELAY);
+                } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
             }

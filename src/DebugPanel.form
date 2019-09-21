@@ -358,7 +358,9 @@
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <toolTipText value="Not Avaliable"/>
+            </properties>
             <border type="none" title="Basic Indicators"/>
             <children>
               <component id="de832" class="javax.swing.JLabel" binding="PC_label">
@@ -404,6 +406,7 @@
                 <properties>
                   <enabled value="false"/>
                   <text value="CC"/>
+                  <toolTipText value="Not Avaliable"/>
                 </properties>
               </component>
               <component id="97ad7" class="javax.swing.JTextField" binding="CC_textField3">
@@ -415,6 +418,7 @@
                 <properties>
                   <enabled value="false"/>
                   <text value="0000"/>
+                  <toolTipText value="Not Avaliable"/>
                 </properties>
               </component>
               <component id="853ad" class="javax.swing.JLabel" binding="PC_value">
@@ -456,6 +460,7 @@
                 <properties>
                   <enabled value="false"/>
                   <text value="W"/>
+                  <toolTipText value="Not Avaliable"/>
                 </properties>
               </component>
               <component id="967" class="javax.swing.JLabel" binding="MFR">
@@ -465,6 +470,34 @@
                 <properties>
                   <enabled value="false"/>
                   <text value="MFR"/>
+                  <toolTipText value="Not Avaliable"/>
+                </properties>
+              </component>
+              <component id="7f721" class="javax.swing.JLabel" binding="MFR_value">
+                <constraints>
+                  <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="0"/>
+                  <toolTipText value="Not Avaliable"/>
+                </properties>
+              </component>
+              <component id="ab94a" class="javax.swing.JButton" binding="MFR_Button">
+                <constraints>
+                  <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="false"/>
+                  <text value="W"/>
+                  <toolTipText value="Not Avaliable"/>
+                </properties>
+              </component>
+              <component id="1b0f2" class="javax.swing.JLabel" binding="IR_value">
+                <constraints>
+                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="x0000"/>
                 </properties>
               </component>
               <component id="37ec7" class="javax.swing.JTextField" binding="MFR_textField">
@@ -476,31 +509,7 @@
                 <properties>
                   <enabled value="false"/>
                   <text value="0000"/>
-                </properties>
-              </component>
-              <component id="7f721" class="javax.swing.JLabel" binding="MFR_value">
-                <constraints>
-                  <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="0"/>
-                </properties>
-              </component>
-              <component id="ab94a" class="javax.swing.JButton" binding="MFR_Button">
-                <constraints>
-                  <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <enabled value="false"/>
-                  <text value="W"/>
-                </properties>
-              </component>
-              <component id="1b0f2" class="javax.swing.JLabel" binding="IR_value">
-                <constraints>
-                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="x0000"/>
+                  <toolTipText value="Not Avaliable"/>
                 </properties>
               </component>
             </children>
@@ -834,6 +843,7 @@
             <properties>
               <enabled value="false"/>
               <text value="Vector Test"/>
+              <toolTipText value="Not Avaliable"/>
             </properties>
           </component>
           <component id="f7cff" class="javax.swing.JButton" binding="floatingTestButton" default-binding="true">
@@ -843,6 +853,7 @@
             <properties>
               <enabled value="false"/>
               <text value="Floating Test"/>
+              <toolTipText value="Not Avaliable"/>
             </properties>
           </component>
           <component id="caa3a" class="javax.swing.JButton" binding="program2Button" default-binding="true">
@@ -852,6 +863,7 @@
             <properties>
               <enabled value="false"/>
               <text value="Program 2"/>
+              <toolTipText value="Not Avaliable"/>
             </properties>
           </component>
           <component id="2e67c" class="javax.swing.JButton" binding="program1Button" default-binding="true">
@@ -861,6 +873,7 @@
             <properties>
               <enabled value="false"/>
               <text value="Program 1"/>
+              <toolTipText value="Not Avaliable"/>
             </properties>
           </component>
           <component id="37c40" class="javax.swing.JButton" binding="IPLButton" default-binding="true">
@@ -878,6 +891,7 @@
             <properties>
               <enabled value="false"/>
               <text value="Instruction"/>
+              <toolTipText value="Not Avaliable"/>
             </properties>
           </component>
           <component id="2fc85" class="javax.swing.JTextField" binding="Instruction_textField">
@@ -889,6 +903,7 @@
             <properties>
               <enabled value="false"/>
               <text value="0000000000000000"/>
+              <toolTipText value="Not Avaliable"/>
             </properties>
           </component>
           <component id="d6e09" class="javax.swing.JButton" binding="reloadButton" default-binding="true">
