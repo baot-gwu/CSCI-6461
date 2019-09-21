@@ -25,7 +25,7 @@ public class Memory {
 
     public static Map<Integer, String> memoryMap = new LinkedHashMap<>(MAX_MEMORY_SIZE);
 
-    Path path = Paths.get(FILE_NAME);
+    Path path = Paths.get(FILE_NAME).toAbsolutePath();
 
     protected void clear() {
         for (int i = 1; i <= MAX_MEMORY_SIZE; i++) {
@@ -37,7 +37,7 @@ public class Memory {
 
     protected void loadBackupContent() {
         try {
-            List<String> list = Files.readAllLines(Paths.get(BACK_UP_FILE_NAME));
+            List<String> list = Files.readAllLines(Paths.get(BACK_UP_FILE_NAME).toAbsolutePath());
 
             for (int i = 1; i <= MAX_MEMORY_SIZE; i++) {
                 memoryMap.put(i, list.get(i - 1));
