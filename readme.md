@@ -2,26 +2,26 @@
 CSCI 6461
 
 ## Progress
-- [ ] Phase I (In Progress)
+- [x] Phase I (Complete)
 - [ ] Phase II (Not Start)
 - [ ] Phase III (Not Start)
 - [ ] Phase IV (Not Start)
 
 ## Functions
 - Characteristics
-    - [ ] `R0`...`R3` (16 bits) General Purpose Registers (GPRs)
-    - [ ] `PC` (12 bits)
+    - [x] `R0`...`R3` (16 bits) General Purpose Registers (GPRs)
+    - [x] `PC` (12 bits)
     - [ ] `CC` (4 bits)
-    - [ ] `IR` (16 bits)
-    - [ ] `MAR` (16 bits)
-    - [ ] `MBR` (16 bits)
+    - [x] `IR` (16 bits)
+    - [x] `MAR` (16 bits)
+    - [x] `MBR` (16 bits)
     - [ ] `MFR` (4 bits)
-    - [ ] `X1`...`X3` (16 bits) 
-    - [ ] `Memory` (2048 words, expandable to 4096 words)
+    - [x] `X1`...`X3` (16 bits) 
+    - [x] `Memory` (2048 words, expandable to 4096 words)
 - instruction.Instructions (Opcode)
-    - [ ] `LDR` (01): Load Memory to Register
-    - [ ] `STR` (02): Store Register to Memory
-    - [ ] `LDA` (03): Load Address to Register
+    - [x] `LDR` (01): Load Memory to Register
+    - [x] `STR` (02): Store Register to Memory
+    - [x] `LDA` (03): Load Address to Register
     - [ ] `AMR` (04):
     - [ ] `SMR` (05):
     - [ ] `AIR` (06):
@@ -47,8 +47,8 @@ CSCI 6461
     - [ ] `VADD` (35):
     - [ ] `VSUB` (36):
     - [ ] `CNVRT` (37):
-    - [ ] `LDX` (41): Load Index Register from Memory
-    - [ ] `STX` (42): Store Index Register to Memory
+    - [x] `LDX` (41): Load Index Register from Memory
+    - [x] `STX` (42): Store Index Register to Memory
     - [ ] `LDFR` (50):
     - [ ] `STFR` (51):
     - [ ] `IN` (61):
