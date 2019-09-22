@@ -1,3 +1,5 @@
 /.idea/
 /out/
+/production/
+.DS_Store
 CSCI-6461.iml
