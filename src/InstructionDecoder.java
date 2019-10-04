@@ -1,3 +1,10 @@
+/**
+ * @author jalal
+ * @since 12/9/19
+ *
+ * This class decode instruction.
+ *
+ */
 public class InstructionDecoder {
 
     /**
@@ -18,13 +25,7 @@ public class InstructionDecoder {
     public Instruction decode(CiscComputer ciscComputer) {
         String binaryInstruction = ciscComputer.getInstructionRegister().getBinaryInstruction();
 
-        if (binaryInstruction == null || binaryInstruction.length() < 6) {
-            return null;
-        }
-
-        String opcodeInBinary = binaryInstruction.substring(0, 6);
-        InstructionType type = InstructionType.getType(opcodeInBinary);
-
+        InstructionType type = getInstructionType(binaryInstruction);
         if (type == null) {
             return null;
         }
@@ -46,6 +47,16 @@ public class InstructionDecoder {
         int effectiveAddressInDecimal = Utils.binaryToDecimal(binaryInstruction.substring(11, 16));
 
         return new Instruction(generalPurposeRegister, indexRegister, type, effectiveAddressInDecimal, indirect);
+    }
+
+    private InstructionType getInstructionType(String binaryInstruction) {
+        if (binaryInstruction == null || binaryInstruction.length() < 6) {
+            return null;
+        }
+
+        String opcodeInBinary = binaryInstruction.substring(0, 6);
+
+        return InstructionType.getType(opcodeInBinary);
     }
 
 }

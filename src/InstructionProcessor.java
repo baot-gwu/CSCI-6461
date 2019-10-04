@@ -1,9 +1,9 @@
 /**
  * @author jalal
  * @since 12/9/19
- *
+ * <p>
  * This class process and instruction.
- *
+ * <p>
  * Based on instruction type. LDR, STR, LDA, LDX, STX
  */
 public class InstructionProcessor {
@@ -16,28 +16,29 @@ public class InstructionProcessor {
 
         int effectiveAddressInDecimal = calculateEffectiveAddress(generalPurposeRegister, indexRegister, type,
                 instruction.getEffectiveAddressInDecimal(), instruction.isIndirect());
+        Address address = new Address(effectiveAddressInDecimal);
 
-        ciscComputer.getMemoryAddressRegister().setDecimalValue(effectiveAddressInDecimal);
+        ciscComputer.getMemoryAddressRegister().setDecimalValue(address.getEffectiveAddress());
 
         switch (instruction.getType()) {
             case LDR:
-                loadRegisterFromMemory(generalPurposeRegister, effectiveAddressInDecimal);
+                loadRegisterFromMemory(generalPurposeRegister, address);
                 break;
             case STR:
-                storeRegisterToMemory(generalPurposeRegister, effectiveAddressInDecimal);
+                storeRegisterToMemory(generalPurposeRegister, address);
                 break;
             case LDA:
                 loadRegisterWithAddress(generalPurposeRegister, effectiveAddressInDecimal);
                 break;
             case LDX:
-                loadIndexRegisterFromMemory(indexRegister, effectiveAddressInDecimal);
+                loadIndexRegisterFromMemory(indexRegister, address);
                 break;
             case STX:
-                storeIndexRegisterFromMemory(indexRegister, effectiveAddressInDecimal);
+                storeIndexRegisterFromMemory(indexRegister, address);
                 break;
         }
 
-        ciscComputer.getMemoryBufferRegister().setDecimalValue(Integer.valueOf(Memory.memoryMap.get(effectiveAddressInDecimal)));
+        ciscComputer.getMemoryBufferRegister().setDecimalValue(Cache.getWordDecimalValue(address));
     }
 
     private int calculateEffectiveAddress(GeneralPurposeRegister generalPurposeRegister, IndexRegister indexRegister,
@@ -52,34 +53,30 @@ public class InstructionProcessor {
         }
 
         if (indirect) {
-            effectiveAddressInDecimal = Integer.valueOf(Memory.memoryMap.get(effectiveAddressInDecimal));
+            effectiveAddressInDecimal = Cache.getWordDecimalValue(new Address(effectiveAddressInDecimal));
         }
 
         return effectiveAddressInDecimal;
     }
 
-    private void storeIndexRegisterFromMemory(IndexRegister indexRegister, int effectiveAddressInDecimal) {
-        Memory.memoryMap.put(effectiveAddressInDecimal, String.valueOf(indexRegister.getDecimalValue()));
+    private void storeIndexRegisterFromMemory(IndexRegister indexRegister, Address address) {
+        Cache.writeToMemory(address, new Word(indexRegister.getDecimalValue()));
     }
 
-    private void loadIndexRegisterFromMemory(IndexRegister indexRegister, int effectiveAddressInDecimal) {
-        indexRegister.setDecimalValue(Integer.valueOf(Memory.memoryMap.get(effectiveAddressInDecimal)));
+    private void loadIndexRegisterFromMemory(IndexRegister indexRegister, Address address) {
+        indexRegister.setDecimalValue(Cache.getWordDecimalValue(address));
     }
 
     private void loadRegisterWithAddress(GeneralPurposeRegister generalPurposeRegister, int effectiveAddressInDecimal) {
         generalPurposeRegister.setDecimalValue(effectiveAddressInDecimal);
     }
 
-    private void storeRegisterToMemory(GeneralPurposeRegister generalPurposeRegister, int effectiveAddressInDecimal) {
-        String value = String.valueOf(generalPurposeRegister.getDecimalValue());
-
-        Memory.memoryMap.put(effectiveAddressInDecimal, value);
+    private void storeRegisterToMemory(GeneralPurposeRegister generalPurposeRegister, Address address) {
+        Cache.writeToMemory(address, new Word(generalPurposeRegister.getDecimalValue()));
     }
 
-    private void loadRegisterFromMemory(GeneralPurposeRegister generalPurposeRegister, int effectiveAddressInDecimal) {
-        Integer value = Integer.valueOf(Memory.memoryMap.get(effectiveAddressInDecimal));
-
-        generalPurposeRegister.setDecimalValue(value);
+    private void loadRegisterFromMemory(GeneralPurposeRegister generalPurposeRegister, Address address) {
+        generalPurposeRegister.setDecimalValue(Cache.getWordDecimalValue(address));
     }
 
 }

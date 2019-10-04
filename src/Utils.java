@@ -89,4 +89,8 @@ public class Utils {
     public static boolean isValidOctalInstruction(String instruction) {
         return instruction != null && instruction.matches("[0-7]+");
     }
+
+    public static String getNotNullValue(Word word) {
+        return word == null ? null : word.getValue();
+    }
 }

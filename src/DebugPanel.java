@@ -483,9 +483,9 @@ public class DebugPanel extends JFrame {
         int index;
         String value;
         clearMemory();
-        for (Map.Entry<Integer, String> entry : memory.memoryMap.entrySet()) {
+        for (Map.Entry<Integer, Word> entry : memory.memoryMap.entrySet()) {
             index = entry.getKey();
-            value = entry.getValue();
+            value = entry.getValue().getValue();
             value = value.replace(" ", "");
             if (value.length() != 0) {
                 memoryValue[index] = (Utils.binaryValid(value) && value.length() == 16) ? Utils.autoFill(value, 16) : Utils.autoFill(Utils.decimalToBinary(Integer.parseInt(value)), 16);
@@ -501,9 +501,9 @@ public class DebugPanel extends JFrame {
 
     private void setMemory(int key, String value) { // set MEM[key] = value
         if (memory.memoryMap.containsKey(key))
-            memory.memoryMap.replace(key, value);
+            memory.memoryMap.replace(key, new Word(value));
         else
-            memory.memoryMap.put(key, value);
+            memory.memoryMap.put(key, new Word(value));
     }
 
     public void setData(CiscComputer ciscComputer) { // update front-end from back-end
@@ -583,7 +583,7 @@ public class DebugPanel extends JFrame {
     private void singleRun() {
         int address = Integer.parseInt(pc, 2); // get current counter
         ciscComputer.getProgramCounter().setDecimalValue(address + 1); // set pc
-        ciscComputer.getInstructionRegister().setBinaryInstruction(memory.memoryMap.get(address)); // set ir
+        ciscComputer.getInstructionRegister().setBinaryInstruction(Cache.getWordStringValue(new Address(address))); // set ir
         Instruction instruction = new InstructionDecoder().decode(ciscComputer); // decode instruction
         new InstructionProcessor().processInstruction(ciscComputer, instruction); // execute instruction
 
