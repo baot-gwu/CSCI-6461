@@ -13,7 +13,8 @@ public enum RegisterType {
     INSTRUCTION_REGISTER("IR", 16),
     MEMORY_ADDRESS_REGISTER("MAR", 16),
     MEMORY_BUFFER_REGISTER("MBR", 16),
-    PROGRAM_COUNTER("PC", 12);
+    PROGRAM_COUNTER("PC", 12),
+    CONDITION_CODE("CC", 4);
 
     private String symbol;
     private int size;

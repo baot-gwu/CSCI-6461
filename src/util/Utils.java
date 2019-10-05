@@ -72,4 +72,10 @@ public class Utils {
         return instruction != null && instruction.matches("[0-7]+");
     }
 
+    public static void validImmediate(int value) {
+        if (value > 32) {
+            throw new IllegalArgumentException("Invalid Immediate Value: " + value);
+        }
+    }
+
 }

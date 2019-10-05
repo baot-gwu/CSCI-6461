@@ -27,6 +27,7 @@ public class CiscComputer {
     private MemoryBufferRegister memoryBufferRegister;
     private InstructionRegister instructionRegister;
     private ProgramCounter programCounter;
+    private ConditionCode conditionCode;
     private Memory memory;
 
     public List<GeneralPurposeRegister> getGeneralPurposeRegisters() {
@@ -83,6 +84,14 @@ public class CiscComputer {
 
     public void setMemory(Memory memory) {
         this.memory = memory;
+    }
+
+    public ConditionCode getConditionCode() {
+        return conditionCode;
+    }
+
+    public void setConditionCode(ConditionCode conditionCode) {
+        this.conditionCode = conditionCode;
     }
 
     public GeneralPurposeRegister getGeneralPurposeRegister(int registerNumber) {

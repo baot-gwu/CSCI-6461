@@ -598,7 +598,7 @@ public class DebugPanel extends JFrame {
         ciscComputer.getProgramCounter().setDecimalValue(address + 1); // set pc
         ciscComputer.getInstructionRegister().setBinaryInstruction(Cache.getWordStringValue(new Address(address))); // set ir
         Instruction instruction = new InstructionDecoder().decode(ciscComputer); // decode instruction
-        new InstructionProcessor().processInstruction(ciscComputer, instruction); // execute instruction
+        instruction.getType().getProcessor().process(ciscComputer, instruction); // execute instruction
 
         setData(ciscComputer); // update front-end
         syncListSelect(address + 1, true); // memory selected index jump to the pc
