@@ -1,3 +1,8 @@
+package common;
+
+import register.GeneralPurposeRegister;
+import register.IndexRegister;
+
 import java.util.List;
 
 /**

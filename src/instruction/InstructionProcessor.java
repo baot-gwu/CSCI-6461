@@ -1,3 +1,12 @@
+package instruction;
+
+import common.CiscComputer;
+import memory.Address;
+import memory.Cache;
+import memory.Word;
+import register.GeneralPurposeRegister;
+import register.IndexRegister;
+
 /**
  * @author jalal
  * @since 12/9/19
@@ -8,7 +17,7 @@
  */
 public class InstructionProcessor {
 
-    protected void processInstruction(CiscComputer ciscComputer, Instruction instruction) {
+    public void processInstruction(CiscComputer ciscComputer, Instruction instruction) {
 
         GeneralPurposeRegister generalPurposeRegister = instruction.getGeneralPurposeRegister();
         IndexRegister indexRegister = instruction.getIndexRegister();

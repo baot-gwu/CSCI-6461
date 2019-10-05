@@ -1,3 +1,8 @@
+package common;
+
+import memory.Memory;
+import register.*;
+
 import java.util.ArrayList;
 import java.util.List;
 

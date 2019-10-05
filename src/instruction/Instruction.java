@@ -1,3 +1,8 @@
+package instruction;
+
+import register.GeneralPurposeRegister;
+import register.IndexRegister;
+
 /**
  * @author jalal
  * @since 12/9/19
@@ -40,5 +45,18 @@ public class Instruction {
 
     public boolean isIndirect() {
         return indirect;
+    }
+
+    public String symbolicForm() {
+        String symbolicForm = type.name() + " "
+                + (generalPurposeRegister == null ? "" : generalPurposeRegister.getRegisterNumber() + ",")
+                + (indexRegister == null ? "0" : indexRegister.getRegisterNumber()) +
+                "," + effectiveAddressInDecimal;
+
+        if (indirect) {
+            symbolicForm += ",1";
+        }
+
+        return symbolicForm;
     }
 }

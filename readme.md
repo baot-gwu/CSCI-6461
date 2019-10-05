@@ -17,11 +17,11 @@ CSCI 6461
     - [x] `MBR` (16 bits)
     - [ ] `MFR` (4 bits)
     - [x] `X1`...`X3` (16 bits) 
-    - [x] `Memory` (2048 words, expandable to 4096 words)
+    - [x] `memory.Memory` (2048 words, expandable to 4096 words)
 - instruction.Instructions (Opcode)
-    - [x] `LDR` (01): Load Memory to Register
-    - [x] `STR` (02): Store Register to Memory
-    - [x] `LDA` (03): Load Address to Register
+    - [x] `LDR` (01): Load memory.Memory to register.Register
+    - [x] `STR` (02): Store register.Register to memory.Memory
+    - [x] `LDA` (03): Load memory.Address to register.Register
     - [ ] `AMR` (04):
     - [ ] `SMR` (05):
     - [ ] `AIR` (06):
@@ -29,8 +29,8 @@ CSCI 6461
     - [ ] `JZ` (10): Jump if Zero
     - [ ] `JNE` (11): Jump if not equal
     - [ ] `JCC` (12): Jump if Condition Code
-    - [ ] `JMA` (13): Unconditional Jump to Address
-    - [ ] `JSR` (14): Jump and save Return Address
+    - [ ] `JMA` (13): Unconditional Jump to memory.Address
+    - [ ] `JSR` (14): Jump and save Return memory.Address
     - [ ] `RFS` (15): 
     - [ ] `SOB` (16):
     - [ ] `JGE` (17):
@@ -47,8 +47,8 @@ CSCI 6461
     - [ ] `VADD` (35):
     - [ ] `VSUB` (36):
     - [ ] `CNVRT` (37):
-    - [x] `LDX` (41): Load Index Register from Memory
-    - [x] `STX` (42): Store Index Register to Memory
+    - [x] `LDX` (41): Load Index register.Register from memory.Memory
+    - [x] `STX` (42): Store Index register.Register to memory.Memory
     - [ ] `LDFR` (50):
     - [ ] `STFR` (51):
     - [ ] `IN` (61):

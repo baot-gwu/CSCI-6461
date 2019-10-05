@@ -1,8 +1,12 @@
+package memory;
+
+import memory.CacheLine;
+
 /**
  * @author jalal
  * @since 29/9/19
  * <p>
- * Memory Address
+ * memory.Memory memory.Address
  */
 public class Address {
 

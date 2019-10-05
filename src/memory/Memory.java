@@ -1,3 +1,5 @@
+package memory;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,7 +29,7 @@ public class Memory {
 
     Path path = Paths.get(FILE_NAME).toAbsolutePath();
 
-    protected void clear() {
+    public void clear() {
         for (int i = 1; i <= MAX_MEMORY_SIZE; i++) {
             memoryMap.put(i, new Word(""));
         }
@@ -35,7 +37,7 @@ public class Memory {
         writeContent();
     }
 
-    protected void loadBackupContent() {
+    public void loadBackupContent() {
         try {
             List<String> list = Files.readAllLines(Paths.get(BACK_UP_FILE_NAME).toAbsolutePath());
 
@@ -51,7 +53,7 @@ public class Memory {
         writeContent();
     }
 
-    protected void loadContent() {
+    public void loadContent() {
         try {
             List<String> list = Files.readAllLines(path);
 
@@ -65,7 +67,7 @@ public class Memory {
         }
     }
 
-    protected void writeContent() {
+    public void writeContent() {
         try {
             Files.write(path, getBytes(), StandardOpenOption.CREATE);
         } catch (IOException e) {

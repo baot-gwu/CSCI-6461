@@ -1,3 +1,5 @@
+package util;
+
 /**
  * @author jalal
  * @since 12/9/19
@@ -62,26 +64,6 @@ public class Utils {
         return java.util.regex.Pattern.compile(pattern).matcher(hex).matches();
     }
 
-    public static String symbolicForm(Instruction instruction) {
-        if (instruction == null) {
-            return null;
-        }
-
-        GeneralPurposeRegister generalPurposeRegister = instruction.getGeneralPurposeRegister();
-        IndexRegister indexRegister = instruction.getIndexRegister();
-
-        String symbolicForm = instruction.getType().name() + " "
-                + (generalPurposeRegister == null ? "" : generalPurposeRegister.getRegisterNumber() + ",")
-                + (indexRegister == null ? "0" : indexRegister.getRegisterNumber()) +
-                "," + instruction.getEffectiveAddressInDecimal();
-
-        if (instruction.isIndirect()) {
-            symbolicForm += ",1";
-        }
-
-        return symbolicForm;
-    }
-
     public static boolean isValidBinaryInstruction(String instruction) {
         return instruction != null && instruction.matches("[0-1]+");
     }
@@ -90,7 +72,4 @@ public class Utils {
         return instruction != null && instruction.matches("[0-7]+");
     }
 
-    public static String getNotNullValue(Word word) {
-        return word == null ? null : word.getValue();
-    }
 }

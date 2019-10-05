@@ -1,3 +1,16 @@
+import common.CiscComputer;
+import common.Display;
+import common.Initializer;
+import instruction.Instruction;
+import instruction.InstructionDecoder;
+import instruction.InstructionProcessor;
+import memory.Address;
+import memory.Cache;
+import memory.Memory;
+import memory.Word;
+import util.Utils;
+import register.InstructionRegister;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -114,7 +127,7 @@ public class DebugPanel extends JFrame {
     private String memoryHexValue[] = new String[Main.MAX_MEMORY_SIZE];
     private String memoryAssembleCode[] = new String[Main.MAX_MEMORY_SIZE];
 
-    DebugPanel() {
+    public DebugPanel() {
         // create windows
         super("CISC Machine Simulator");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -591,7 +604,8 @@ public class DebugPanel extends JFrame {
         syncListSelect(address + 1, true); // memory selected index jump to the pc
 
         // print the log to console
-        System.out.println(Utils.symbolicForm(instruction));
+        System.out.println(instruction.symbolicForm());
+
         Main.printValues(ciscComputer);
 
         // HALT when address is 39 (HALT instruction is NOT REQUIRED in PHASE I)
@@ -630,8 +644,11 @@ public class DebugPanel extends JFrame {
         instructionRegister.setBinaryInstruction(binaryInstruction);
         Instruction instruction = instructionDecoder.decode(ciscComputer);
 
-        String symbolicForm = Utils.symbolicForm(instruction);
-        return (symbolicForm == null) ? "null" : symbolicForm;
+        if (instruction == null) {
+            return "null";
+        }
+
+        return instruction.symbolicForm();
     }
 
 

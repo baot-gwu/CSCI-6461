@@ -1,3 +1,5 @@
+package memory;
+
 /**
  * @author jalal
  * @since 29/9/19

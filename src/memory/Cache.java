@@ -1,3 +1,5 @@
+package memory;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -23,11 +25,11 @@ public class Cache {
         cacheLines.add(cacheLine);
     }
 
-    protected static String getWordStringValue(Address address) {
+    public static String getWordStringValue(Address address) {
         return getWord(address).getValue();
     }
 
-    protected static int getWordDecimalValue(Address address) {
+    public static int getWordDecimalValue(Address address) {
         return Integer.parseInt(getWord(address).getValue());
     }
 
@@ -63,7 +65,7 @@ public class Cache {
         return cacheLine;
     }
 
-    protected static void writeToMemory(Address address, Word word) {
+    public static void writeToMemory(Address address, Word word) {
         CacheLine cacheLine = getCacheLine(address);
 
         if (cacheLine == null) {

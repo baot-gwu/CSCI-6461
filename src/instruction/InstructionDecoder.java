@@ -1,3 +1,11 @@
+package instruction;
+
+import common.CiscComputer;
+import util.Utils;
+import register.GeneralPurposeRegister;
+import register.IndexRegister;
+import register.InstructionRegister;
+
 /**
  * @author jalal
  * @since 12/9/19

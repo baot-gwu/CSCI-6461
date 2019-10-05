@@ -1,3 +1,7 @@
+package register;
+
+import util.Utils;
+
 /**
  * @author jalal
  * @since 12/9/19
@@ -32,7 +36,7 @@ public abstract class Register {
         this.decimalValue = Utils.binaryToDecimal(binaryValue);
     }
 
-    protected int getDecimalValue() {
+    public int getDecimalValue() {
         return decimalValue;
     }
 

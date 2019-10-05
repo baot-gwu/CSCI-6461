@@ -1,3 +1,8 @@
+package common;
+
+import memory.Memory;
+import register.*;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,7 +14,7 @@ import java.util.List;
  */
 public class Initializer {
 
-    protected CiscComputer initialize() {
+    public CiscComputer initialize() {
 
         CiscComputer ciscComputer = new CiscComputer();
 
