@@ -1,10 +1,6 @@
 package instruction;
 
 import common.CiscComputer;
-import memory.Address;
-import memory.Cache;
-import register.GeneralPurposeRegister;
-import register.IndexRegister;
 
 /**
  * @author jalal

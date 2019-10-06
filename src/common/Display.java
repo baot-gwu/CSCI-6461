@@ -27,6 +27,8 @@ public class Display {
     private String mbr;
     private String ir;
 
+    private String cc;
+
     public Display(CiscComputer ciscComputer, boolean binary) {
         setGeneralPurposeRegisters(ciscComputer.getGeneralPurposeRegisters(), binary);
         setIndexRegisters(ciscComputer.getIndexRegisters(), binary);
@@ -34,6 +36,7 @@ public class Display {
         setMbr(ciscComputer.getMemoryBufferRegister().getValue(binary));
         setIr(ciscComputer.getInstructionRegister().getValue(binary));
         setPc(ciscComputer.getProgramCounter().getValue(binary));
+        setCc(ciscComputer.getConditionCode().toString());
     }
 
     private void setIndexRegisters(List<IndexRegister> indexRegisters, boolean binary) {
@@ -137,6 +140,14 @@ public class Display {
         this.ir = ir;
     }
 
+    public String getCc() {
+        return cc;
+    }
+
+    public void setCc(String cc) {
+        this.cc = cc;
+    }
+
     @Override
     public String toString() {
         return ", PC=" + (pc == null ? "" : pc)
@@ -149,6 +160,7 @@ public class Display {
                 + ", IX3=" + (ix3 == null ? "" : ix3)
                 + ", IR=" + (ir == null ? "" : ir)
                 + ", MAR=" + (mar == null ? "" : mar)
-                + ", MBR=" + (mbr == null ? "" : mbr);
+                + ", MBR=" + (mbr == null ? "" : mbr)
+                + ", CC=" + (mbr == null ? "" : cc);
     }
 }

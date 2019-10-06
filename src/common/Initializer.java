@@ -32,6 +32,8 @@ public class Initializer {
 
         ciscComputer.setProgramCounter(new ProgramCounter());
 
+        ciscComputer.setConditionCode(new ConditionCode());
+
         return ciscComputer;
     }
 

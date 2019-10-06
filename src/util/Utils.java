@@ -1,5 +1,12 @@
 package util;
 
+import instruction.InstructionType;
+import memory.Word;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author jalal
  * @since 12/9/19
@@ -8,8 +15,19 @@ package util;
  */
 public class Utils {
 
+    private static final List<InstructionType> instructionWithNoIndexRegister = Arrays.asList(
+            InstructionType.MLT, InstructionType.DVD, InstructionType.TRR, InstructionType.AND, InstructionType.ORR,
+            InstructionType.NOT);
+
     public static int binaryToDecimal(String binary) {
         return Integer.parseInt(binary, 2);
+    }
+
+    public static int unsignedBinaryToDecimal(String binary) {
+        String padStr = binary.charAt(0) == '0' ? "0" : "1";
+        String fullLengthBinary = StringUtils.leftPad(binary, Word.MAX_SIZE * 2, padStr);
+
+        return Integer.parseUnsignedInt(fullLengthBinary, 2);
     }
 
     public static String octalToBinary(String octal, int registerSize) {
@@ -25,7 +43,22 @@ public class Utils {
     }
 
     public static String decimalToBinary(int decimal) {
-        return Integer.toBinaryString(decimal);
+        String result = Integer.toBinaryString(decimal);
+        int length = result.length();
+
+        if (length > Word.MAX_SIZE) {
+            result = result.substring(length - Word.MAX_SIZE, length);
+        }
+
+        return result;
+    }
+
+    public static String decimalToUnsignedBinary(int value) {
+        if (value < 0) {
+            return Integer.toBinaryString(value & 0xFFFF);
+        }
+
+        return StringUtils.leftPad(Integer.toBinaryString(value), Word.MAX_SIZE, "0");
     }
 
     public static String decimalToHex(int decimal) {
@@ -78,4 +111,11 @@ public class Utils {
         }
     }
 
+    public static boolean hasIndexRegister(InstructionType type) {
+        return !instructionWithNoIndexRegister.contains(type);
+    }
+
+    public static boolean hasSecondRegister(InstructionType type) {
+        return InstructionType.NOT != type;
+    }
 }

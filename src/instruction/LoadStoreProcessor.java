@@ -4,8 +4,7 @@ import common.CiscComputer;
 import memory.Address;
 import memory.Cache;
 import memory.Word;
-import register.GeneralPurposeRegister;
-import register.IndexRegister;
+import register.Register;
 
 /**
  * @author jalal
@@ -23,8 +22,8 @@ public class LoadStoreProcessor implements InstructionProcessor {
 
         ciscComputer.getMemoryAddressRegister().setDecimalValue(address.getEffectiveAddress());
 
-        GeneralPurposeRegister generalPurposeRegister = instruction.getGeneralPurposeRegister();
-        IndexRegister indexRegister = instruction.getIndexRegister();
+        Register generalPurposeRegister = instruction.getFirstRegister();
+        Register indexRegister = instruction.getSecondRegister();
 
         switch (instruction.getType()) {
             case LDR:
@@ -47,23 +46,23 @@ public class LoadStoreProcessor implements InstructionProcessor {
         ciscComputer.getMemoryBufferRegister().setDecimalValue(Cache.getWordDecimalValue(address));
     }
 
-    private void storeIndexRegisterFromMemory(IndexRegister indexRegister, Address address) {
+    private void storeIndexRegisterFromMemory(Register indexRegister, Address address) {
         Cache.writeToMemory(address, new Word(indexRegister.getDecimalValue()));
     }
 
-    private void loadIndexRegisterFromMemory(IndexRegister indexRegister, Address address) {
+    private void loadIndexRegisterFromMemory(Register indexRegister, Address address) {
         indexRegister.setDecimalValue(Cache.getWordDecimalValue(address));
     }
 
-    private void loadRegisterWithAddress(GeneralPurposeRegister generalPurposeRegister, Address address) {
+    private void loadRegisterWithAddress(Register generalPurposeRegister, Address address) {
         generalPurposeRegister.setDecimalValue(address.getEffectiveAddress());
     }
 
-    private void storeRegisterToMemory(GeneralPurposeRegister generalPurposeRegister, Address address) {
+    private void storeRegisterToMemory(Register generalPurposeRegister, Address address) {
         Cache.writeToMemory(address, new Word(generalPurposeRegister.getDecimalValue()));
     }
 
-    private void loadRegisterFromMemory(GeneralPurposeRegister generalPurposeRegister, Address address) {
+    private void loadRegisterFromMemory(Register generalPurposeRegister, Address address) {
         generalPurposeRegister.setDecimalValue(Cache.getWordDecimalValue(address));
     }
 }

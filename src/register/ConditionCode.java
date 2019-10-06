@@ -3,7 +3,7 @@ package register;
 /**
  * @author jalal
  * @since 12/9/19
- *
+ * <p>
  * Condition Code Register
  */
 public class ConditionCode extends Register {
@@ -15,18 +15,21 @@ public class ConditionCode extends Register {
         return RegisterType.CONDITION_CODE;
     }
 
-    @Override
-    public void setDecimalValue(int decimalValue) {
-        setConditionCodeType(decimalValue);
-
-        super.setDecimalValue(decimalValue);
-    }
-
-    public void setConditionCodeType(int decimalValue) {
-        this.conditionCodeType = ConditionCodeType.getConditionCodeType(decimalValue);
+    public void setConditionCodeType(ConditionCodeType conditionCodeType) {
+        this.conditionCodeType = conditionCodeType;
     }
 
     public ConditionCodeType getConditionCodeType() {
         return conditionCodeType;
+    }
+
+    @Override
+    public String toString() {
+        if (conditionCodeType == null) {
+            return "";
+        }
+
+        return "Condition Code Type: " + conditionCodeType.toString()
+                + (conditionCodeType == ConditionCodeType.EQUALORNOT ? " Condition Code Value: " + getDecimalValue() : "");
     }
 }

@@ -1,10 +1,9 @@
 package instruction;
 
 import common.CiscComputer;
-import util.Utils;
-import register.GeneralPurposeRegister;
-import register.IndexRegister;
 import register.InstructionRegister;
+import register.Register;
+import util.Utils;
 
 /**
  * @author jalal
@@ -38,23 +37,29 @@ public class InstructionDecoder {
             return null;
         }
 
-        String generalPurposeRegisterNumberInBinary = binaryInstruction.substring(6, 8);
+        String firstRegisterNumberInBinary = binaryInstruction.substring(6, 8);
 
-        GeneralPurposeRegister generalPurposeRegister = null;
+        Register fistRegister = null;
         if (type != InstructionType.LDX && type != InstructionType.STX) {
-            generalPurposeRegister = ciscComputer.getGeneralPurposeRegister(Utils.binaryToDecimal(generalPurposeRegisterNumberInBinary));
+            fistRegister = ciscComputer.getGeneralPurposeRegister(Utils.binaryToDecimal(firstRegisterNumberInBinary));
         }
 
-        String indexRegisterNumberInBinary = binaryInstruction.substring(8, 10);
-        IndexRegister indexRegister = null;
-        if (!indexRegisterNumberInBinary.equals("00")) {
-            indexRegister = ciscComputer.getIndexRegister(Utils.binaryToDecimal(indexRegisterNumberInBinary));
+        String secondRegisterNumberInBinary = binaryInstruction.substring(8, 10);
+        Register secondRegister = null;
+        if (Utils.hasSecondRegister(type)) {
+            if (Utils.hasIndexRegister(type)) {
+                if (!secondRegisterNumberInBinary.equals("00")) {
+                    secondRegister = ciscComputer.getIndexRegister(Utils.binaryToDecimal(secondRegisterNumberInBinary));
+                }
+            } else {
+                secondRegister = ciscComputer.getGeneralPurposeRegister(Utils.binaryToDecimal(secondRegisterNumberInBinary));
+            }
         }
 
         boolean indirect = binaryInstruction.substring(10, 11).equals("1");
         int effectiveAddressInDecimal = Utils.binaryToDecimal(binaryInstruction.substring(11, 16));
 
-        return new Instruction(generalPurposeRegister, indexRegister, type, effectiveAddressInDecimal, indirect);
+        return new Instruction(fistRegister, secondRegister, type, effectiveAddressInDecimal, indirect);
     }
 
     private InstructionType getInstructionType(String binaryInstruction) {

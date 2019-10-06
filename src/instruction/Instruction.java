@@ -1,38 +1,46 @@
 package instruction;
 
-import register.GeneralPurposeRegister;
-import register.IndexRegister;
+import register.Register;
+import util.Utils;
 
 /**
  * @author jalal
  * @since 12/9/19
- *
+ * <p>
  * This is the class to to represent an instruction
  */
 public class Instruction {
 
-    private GeneralPurposeRegister generalPurposeRegister;
-    private IndexRegister indexRegister;
+    private Register firstRegister;
+    private Register secondRegister;
     private InstructionType type;
     private int effectiveAddressInDecimal;
     private boolean indirect;
 
-    public Instruction(GeneralPurposeRegister generalPurposeRegister, IndexRegister indexRegister, InstructionType type,
+    public Instruction(Register firstRegister, Register secondRegister, InstructionType type,
                        int effectiveAddressInDecimal, boolean indirect) {
 
-        this.generalPurposeRegister = generalPurposeRegister;
-        this.indexRegister = indexRegister;
+        this.firstRegister = firstRegister;
+        this.secondRegister = secondRegister;
         this.type = type;
         this.effectiveAddressInDecimal = effectiveAddressInDecimal;
         this.indirect = indirect;
     }
 
-    public GeneralPurposeRegister getGeneralPurposeRegister() {
-        return generalPurposeRegister;
+    public Register getFirstRegister() {
+        return firstRegister;
     }
 
-    public IndexRegister getIndexRegister() {
-        return indexRegister;
+    public void setFirstRegister(Register firstRegister) {
+        this.firstRegister = firstRegister;
+    }
+
+    public Register getSecondRegister() {
+        return secondRegister;
+    }
+
+    public void setSecondRegister(Register secondRegister) {
+        this.secondRegister = secondRegister;
     }
 
     public InstructionType getType() {
@@ -48,15 +56,32 @@ public class Instruction {
     }
 
     public String symbolicForm() {
-        String symbolicForm = type.name() + " "
-                + (generalPurposeRegister == null ? "" : generalPurposeRegister.getRegisterNumber() + ",")
-                + (indexRegister == null ? "0" : indexRegister.getRegisterNumber()) +
-                "," + effectiveAddressInDecimal;
+        String symbolicForm = type.name() + " " + (firstRegister == null ? "" : firstRegister.getRegisterNumber());
+
+        if (isShowSecondRegister()) {
+            if (firstRegister != null) {
+                symbolicForm += ",";
+            }
+
+            symbolicForm += (secondRegister == null ? "0" : secondRegister.getRegisterNumber());
+        }
+
+        if (isShowAddress()) {
+            symbolicForm += "," + effectiveAddressInDecimal;
+        }
 
         if (indirect) {
             symbolicForm += ",1";
         }
 
         return symbolicForm;
+    }
+
+    private boolean isShowAddress() {
+        return Utils.hasIndexRegister(type);
+    }
+
+    private boolean isShowSecondRegister() {
+        return type != InstructionType.SIR && type != InstructionType.AIR && type != InstructionType.NOT;
     }
 }

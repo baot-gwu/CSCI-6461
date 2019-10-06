@@ -2,14 +2,13 @@ package instruction;
 
 import memory.Address;
 import memory.Cache;
-import register.GeneralPurposeRegister;
-import register.IndexRegister;
+import register.Register;
 
 public class AddressDecoder {
 
     protected static Address decodeAddress(Instruction instruction) {
-        GeneralPurposeRegister generalPurposeRegister = instruction.getGeneralPurposeRegister();
-        IndexRegister indexRegister = instruction.getIndexRegister();
+        Register generalPurposeRegister = instruction.getFirstRegister();
+        Register indexRegister = instruction.getSecondRegister();
         InstructionType type = instruction.getType();
         boolean indirect = instruction.isIndirect();
         int effectiveAddressInDecimal = instruction.getEffectiveAddressInDecimal();

@@ -3,13 +3,12 @@ import common.Display;
 import common.Initializer;
 import instruction.Instruction;
 import instruction.InstructionDecoder;
-import instruction.InstructionProcessor;
 import memory.Address;
 import memory.Cache;
 import memory.Memory;
 import memory.Word;
-import util.Utils;
 import register.InstructionRegister;
+import util.Utils;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
