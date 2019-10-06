@@ -20,12 +20,24 @@ public class ArithmeticLogicalProcessor implements InstructionProcessor {
 
     private static final int MAX_INT_VALUE = (int) Math.pow(2, 15); // One bit for sign
 
+    private static InstructionProcessor processor;
+
+    static InstructionProcessor getInstance() {
+        if (processor == null) {
+            processor = new ArithmeticLogicalProcessor();
+        }
+
+        return processor;
+    }
+
     @Override
     public void process(CiscComputer ciscComputer, Instruction instruction) {
         Address address = AddressDecoder.decodeAddress(instruction);
         Register firstRegister = instruction.getFirstRegister();
         Register secondRegister = instruction.getSecondRegister();
         ciscComputer.getConditionCode().setConditionCodeType(null);
+        ciscComputer.getMemoryAddressRegister().setDecimalValue(0);
+        ciscComputer.getMemoryBufferRegister().setDecimalValue(0);
 
         switch (instruction.getType()) {
             case AMR:

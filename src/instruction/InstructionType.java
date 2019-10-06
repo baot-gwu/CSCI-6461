@@ -8,23 +8,23 @@ package instruction;
  */
 public enum InstructionType {
 
-    LDR("000001", new LoadStoreProcessor()),
-    STR("000010", new LoadStoreProcessor()),
-    LDA("000011", new LoadStoreProcessor()),
-    AMR("000100", new ArithmeticLogicalProcessor()),
-    SMR("000101", new ArithmeticLogicalProcessor()),
-    AIR("000110", new ArithmeticLogicalProcessor()),
-    SIR("000111", new ArithmeticLogicalProcessor()),
-    MLT("010100", new ArithmeticLogicalProcessor()),
-    DVD("010101", new ArithmeticLogicalProcessor()),
-    TRR("010110", new ArithmeticLogicalProcessor()),
-    AND("010111", new ArithmeticLogicalProcessor()),
-    ORR("011000", new ArithmeticLogicalProcessor()),
-    NOT("011001", new ArithmeticLogicalProcessor()),
-    SRC("011111", new ArithmeticLogicalProcessor()),
-    RRC("100000", new ArithmeticLogicalProcessor()),
-    LDX("101001", new LoadStoreProcessor()),
-    STX("101010", new LoadStoreProcessor());
+    LDR("000001", LoadStoreProcessor.getInstance()),
+    STR("000010", LoadStoreProcessor.getInstance()),
+    LDA("000011", LoadStoreProcessor.getInstance()),
+    AMR("000100", ArithmeticLogicalProcessor.getInstance()),
+    SMR("000101", ArithmeticLogicalProcessor.getInstance()),
+    AIR("000110", ArithmeticLogicalProcessor.getInstance()),
+    SIR("000111", ArithmeticLogicalProcessor.getInstance()),
+    MLT("010100", ArithmeticLogicalProcessor.getInstance()),
+    DVD("010101", ArithmeticLogicalProcessor.getInstance()),
+    TRR("010110", ArithmeticLogicalProcessor.getInstance()),
+    AND("010111", ArithmeticLogicalProcessor.getInstance()),
+    ORR("011000", ArithmeticLogicalProcessor.getInstance()),
+    NOT("011001", ArithmeticLogicalProcessor.getInstance()),
+    SRC("011111", ArithmeticLogicalProcessor.getInstance()),
+    RRC("100000", ArithmeticLogicalProcessor.getInstance()),
+    LDX("101001", LoadStoreProcessor.getInstance()),
+    STX("101010", LoadStoreProcessor.getInstance());
 
     private final String opcodeInBinary;
     private final InstructionProcessor processor;

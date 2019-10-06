@@ -16,6 +16,16 @@ import register.Register;
  */
 public class LoadStoreProcessor implements InstructionProcessor {
 
+    private static InstructionProcessor processor;
+
+    static InstructionProcessor getInstance() {
+        if (processor == null) {
+            processor = new LoadStoreProcessor();
+        }
+
+        return processor;
+    }
+
     @Override
     public void process(CiscComputer ciscComputer, Instruction instruction) {
         Address address = AddressDecoder.decodeAddress(instruction);
