@@ -13,18 +13,24 @@ public class Instruction {
 
     private Register firstRegister;
     private Register secondRegister;
+    private boolean arithmetic;
+    private boolean left;
     private InstructionType type;
     private int effectiveAddressInDecimal;
+    private int count;
     private boolean indirect;
 
     public Instruction(Register firstRegister, Register secondRegister, InstructionType type,
-                       int effectiveAddressInDecimal, boolean indirect) {
+                       int effectiveAddressInDecimal, boolean indirect, boolean arithmetic, boolean left, int count) {
 
         this.firstRegister = firstRegister;
         this.secondRegister = secondRegister;
         this.type = type;
         this.effectiveAddressInDecimal = effectiveAddressInDecimal;
+        this.count = count;
         this.indirect = indirect;
+        this.arithmetic = arithmetic;
+        this.left = left;
     }
 
     public Register getFirstRegister() {
@@ -53,6 +59,18 @@ public class Instruction {
 
     public boolean isIndirect() {
         return indirect;
+    }
+
+    public boolean isArithmetic() {
+        return arithmetic;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     public String symbolicForm() {

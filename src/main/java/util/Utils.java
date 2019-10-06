@@ -17,7 +17,7 @@ public class Utils {
 
     private static final List<InstructionType> instructionWithNoIndexRegister = Arrays.asList(
             InstructionType.MLT, InstructionType.DVD, InstructionType.TRR, InstructionType.AND, InstructionType.ORR,
-            InstructionType.NOT);
+            InstructionType.NOT, InstructionType.SRC, InstructionType.RRC);
 
     public static int binaryToDecimal(String binary) {
         return Integer.parseInt(binary, 2);
@@ -116,6 +116,14 @@ public class Utils {
     }
 
     public static boolean hasSecondRegister(InstructionType type) {
-        return InstructionType.NOT != type;
+        return InstructionType.NOT != type && !isShiftInstruction(type);
+    }
+
+    public static boolean isShiftInstruction(InstructionType type) {
+        return (InstructionType.SRC == type || InstructionType.RRC == type);
+    }
+
+    public static boolean isValidMultiplicationOrDivisionRegister(int registerNumber) {
+        return (registerNumber == 0 || registerNumber == 2);
     }
 }

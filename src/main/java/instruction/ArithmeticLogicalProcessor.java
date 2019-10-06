@@ -3,6 +3,7 @@ package main.java.instruction;
 import main.java.common.CiscComputer;
 import main.java.memory.Address;
 import main.java.memory.Cache;
+import main.java.memory.Word;
 import main.java.register.ConditionCode;
 import main.java.register.ConditionCodeType;
 import main.java.register.Register;
@@ -70,13 +71,51 @@ public class ArithmeticLogicalProcessor implements InstructionProcessor {
             case NOT:
                 logicalNotOfRegisterAndRegister(firstRegister);
                 break;
+            case SRC:
+                shiftRegisterByCount(firstRegister, instruction);
+                break;
+            case RRC:
+                rotateRegisterByCount(firstRegister, instruction);
+                break;
         }
     }
 
-    private void logicalNotOfRegisterAndRegister(Register firstRegister) {
-        int contentOfFirstRegister = firstRegister.getDecimalValue();
+    private void rotateRegisterByCount(Register register, Instruction instruction) {
+        String binaryValue = register.getValue(true);
+        int count = instruction.getCount();
 
-        firstRegister.setDecimalValue(~contentOfFirstRegister);
+        for (int i = 0; i < count; i++) {
+            if (instruction.isLeft()) {
+                binaryValue = binaryValue.substring(1, Word.MAX_SIZE) + binaryValue.charAt(0);
+            } else {
+                binaryValue = binaryValue.charAt(Word.MAX_SIZE - 1) + binaryValue.substring(0, Word.MAX_SIZE - 1);
+            }
+        }
+
+        register.setBinaryValue(binaryValue);
+    }
+
+    private void shiftRegisterByCount(Register register, Instruction instruction) {
+        String binaryValue = register.getValue(true);
+        int count = instruction.getCount();
+
+        if (instruction.isLeft()) {
+            binaryValue = shiftLeft(binaryValue, count);
+        } else {
+            if (instruction.isArithmetic()) {
+                binaryValue = shiftRight(binaryValue, count, true);
+            } else {
+                binaryValue = shiftRight(binaryValue, count, false);
+            }
+        }
+
+        register.setBinaryValue(binaryValue);
+    }
+
+    private void logicalNotOfRegisterAndRegister(Register register) {
+        int contentOfFirstRegister = register.getDecimalValue();
+
+        register.setDecimalValue(~contentOfFirstRegister);
     }
 
     private void logicalOrOfRegisterAndRegister(Register firstRegister, Register secondRegister) {
@@ -110,18 +149,26 @@ public class ArithmeticLogicalProcessor implements InstructionProcessor {
     }
 
     private void divideRegisterByRegister(Register firstRegister, Register secondRegister, CiscComputer ciscComputer) {
+        int registerNumber = firstRegister.getRegisterNumber();
+        checkRegisterValidityForMulDvd(registerNumber);
+        checkRegisterValidityForMulDvd(secondRegister.getRegisterNumber());
+
         int contentOfFirstRegister = firstRegister.getDecimalValue();
         int contentOfSecondRegister = secondRegister.getDecimalValue();
 
         if (contentOfSecondRegister == 0) {
             ciscComputer.getConditionCode().setConditionCodeType(ConditionCodeType.DIVZERO);
+        } else {
+            firstRegister.setDecimalValue(contentOfFirstRegister / contentOfSecondRegister);
+            ciscComputer.getGeneralPurposeRegister(registerNumber + 1).setDecimalValue(contentOfFirstRegister % contentOfSecondRegister);
         }
-
-        firstRegister.setDecimalValue(contentOfFirstRegister / contentOfSecondRegister);
-        secondRegister.setDecimalValue(contentOfFirstRegister % contentOfSecondRegister);
     }
 
     private void multiplyRegisterByRegister(Register firstRegister, Register secondRegister, CiscComputer ciscComputer) {
+        int registerNumber = firstRegister.getRegisterNumber();
+        checkRegisterValidityForMulDvd(registerNumber);
+        checkRegisterValidityForMulDvd(secondRegister.getRegisterNumber());
+
         int contentOfFirstRegister = firstRegister.getDecimalValue();
         int contentOfSecondRegister = secondRegister.getDecimalValue();
 
@@ -132,7 +179,7 @@ public class ArithmeticLogicalProcessor implements InstructionProcessor {
         }
 
         firstRegister.setDecimalValue(product / MAX_INT_VALUE);
-        secondRegister.setDecimalValue(product % MAX_INT_VALUE);
+        ciscComputer.getGeneralPurposeRegister(registerNumber + 1).setDecimalValue(product % MAX_INT_VALUE);
     }
 
     private void addImmediateToRegister(Register generalPurposeRegister, Address address) {
@@ -169,6 +216,38 @@ public class ArithmeticLogicalProcessor implements InstructionProcessor {
         int result = generalPurposeRegister.getDecimalValue() - Cache.getWordDecimalValue(address);
 
         generalPurposeRegister.setDecimalValue(result);
+    }
+
+    private void checkRegisterValidityForMulDvd(int registerNumber) {
+        if (!Utils.isValidMultiplicationOrDivisionRegister(registerNumber)) {
+            throw new IllegalArgumentException("Not valid register Number for MUL or DVD: " + registerNumber);
+        }
+    }
+
+    private String shiftRight(String value, int count, boolean arithmetic) {
+        char firstChar;
+
+        for (int i = 0; i < count; i++) {
+            if (arithmetic) {
+                firstChar = value.charAt(0);
+                char lastChar = value.charAt(Word.MAX_SIZE - 1);
+
+                value = firstChar + "" + lastChar + value.substring(1, Word.MAX_SIZE - 1);
+            } else {
+                firstChar = '0';
+                value = firstChar + value.substring(0, Word.MAX_SIZE - 1);
+            }
+        }
+
+        return value;
+    }
+
+    private String shiftLeft(String value, int count) {
+        for (int i = 0; i < count; i++) {
+            value = value.substring(1, Word.MAX_SIZE) + '0';
+        }
+
+        return value;
     }
 
 }
