@@ -3,7 +3,7 @@ CSCI 6461
 
 ## Progress
 - [x] Phase I (Complete)
-- [ ] Phase II (Not Start)
+- [ ] Phase II (In Progress)
 - [ ] Phase III (Not Start)
 - [ ] Phase IV (Not Start)
 
@@ -27,14 +27,14 @@ CSCI 6461
     - [x] `SMR` (05):
     - [x] `AIR` (06):
     - [x] `SIR` (07):
-    - [ ] `JZ` (10): Jump if Zero
-    - [ ] `JNE` (11): Jump if not equal
-    - [ ] `JCC` (12): Jump if Condition Code
-    - [ ] `JMA` (13): Unconditional Jump to memory.Address
+    - [x] `JZ` (10): Jump if Zero
+    - [x] `JNE` (11): Jump if not equal
+    - [x] `JCC` (12): Jump if Condition Code
+    - [x] `JMA` (13): Unconditional Jump to memory.Address
     - [ ] `JSR` (14): Jump and save Return memory.Address
-    - [ ] `RFS` (15): 
-    - [ ] `SOB` (16):
-    - [ ] `JGE` (17):
+    - [x] `RFS` (15): 
+    - [x] `SOB` (16):
+    - [x] `JGE` (17):
     - [x] `MLT` (20):
     - [x] `DVD` (21):
     - [x] `TRR` (22):
