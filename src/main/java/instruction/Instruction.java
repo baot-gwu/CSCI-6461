@@ -76,7 +76,11 @@ public class Instruction {
     public String symbolicForm() {
         String symbolicForm = type.name() + " " + (firstRegister == null ? "" : firstRegister.getRegisterNumber());
 
-        if (isShowSecondRegister()) {
+        if (Utils.isShiftOrRotateInstruction(type)) {
+            symbolicForm += "," + count + "," + (left ? "1" : "0") + "," + (arithmetic ? "0" : "1");
+        }
+
+        if (Utils.hasSecondRegister(type)) {
             if (firstRegister != null) {
                 symbolicForm += ",";
             }
@@ -84,7 +88,7 @@ public class Instruction {
             symbolicForm += (secondRegister == null ? "0" : secondRegister.getRegisterNumber());
         }
 
-        if (isShowAddress()) {
+        if (Utils.hasIndexRegister(type)) {
             symbolicForm += "," + effectiveAddressInDecimal;
         }
 
@@ -95,11 +99,4 @@ public class Instruction {
         return symbolicForm;
     }
 
-    private boolean isShowAddress() {
-        return Utils.hasIndexRegister(type);
-    }
-
-    private boolean isShowSecondRegister() {
-        return type != InstructionType.SIR && type != InstructionType.AIR && type != InstructionType.NOT;
-    }
 }

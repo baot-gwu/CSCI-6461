@@ -3,7 +3,7 @@ package main.java.instruction;
 /**
  * @author jalal
  * @since 12/9/19
- *
+ * <p>
  * Enum to represent types of instruction, their Symbolic form and binary values
  */
 public enum InstructionType {
@@ -24,7 +24,10 @@ public enum InstructionType {
     SRC("011111", ArithmeticLogicalProcessor.getInstance()),
     RRC("100000", ArithmeticLogicalProcessor.getInstance()),
     LDX("101001", LoadStoreProcessor.getInstance()),
-    STX("101010", LoadStoreProcessor.getInstance());
+    STX("101010", LoadStoreProcessor.getInstance()),
+    IN("111101", InputOutputProcessor.getInstance()),
+    OUT("111110", InputOutputProcessor.getInstance()),
+    CHK("111111", InputOutputProcessor.getInstance());
 
     private final String opcodeInBinary;
     private final InstructionProcessor processor;

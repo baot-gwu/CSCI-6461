@@ -58,7 +58,7 @@ public class InstructionDecoder {
             } else {
                 secondRegister = ciscComputer.getGeneralPurposeRegister(Utils.binaryToDecimal(secondRegisterNumberInBinary));
             }
-        } else if (Utils.isShiftInstruction(type)) {
+        } else if (Utils.isShiftOrRotateInstruction(type)) {
             arithmeticShift = binaryInstruction.charAt(8) == '0';
             leftShift = binaryInstruction.charAt(9) == '1';
             count = Utils.binaryToDecimal(binaryInstruction.substring(12, 16));

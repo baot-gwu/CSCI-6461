@@ -116,10 +116,10 @@ public class Utils {
     }
 
     public static boolean hasSecondRegister(InstructionType type) {
-        return InstructionType.NOT != type && !isShiftInstruction(type);
+        return InstructionType.NOT != type && !isShiftOrRotateInstruction(type);
     }
 
-    public static boolean isShiftInstruction(InstructionType type) {
+    public static boolean isShiftOrRotateInstruction(InstructionType type) {
         return (InstructionType.SRC == type || InstructionType.RRC == type);
     }
 
