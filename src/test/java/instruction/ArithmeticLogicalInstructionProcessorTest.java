@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ArithmeticLogicalProcessorTest {
+public class ArithmeticLogicalInstructionProcessorTest {
 
     private CiscComputer ciscComputer;
     private Register register0;

@@ -17,7 +17,7 @@ import main.java.util.Utils;
  * <p>
  * Based on instruction type. AMR, SMR, AIR, SIR
  */
-public class ArithmeticLogicalProcessor implements InstructionProcessor {
+public class ArithmeticLogicalInstructionProcessor implements InstructionProcessor {
 
     private static final int MAX_INT_VALUE = (int) Math.pow(2, 16);
 
@@ -25,7 +25,7 @@ public class ArithmeticLogicalProcessor implements InstructionProcessor {
 
     static InstructionProcessor getInstance() {
         if (processor == null) {
-            processor = new ArithmeticLogicalProcessor();
+            processor = new ArithmeticLogicalInstructionProcessor();
         }
 
         return processor;

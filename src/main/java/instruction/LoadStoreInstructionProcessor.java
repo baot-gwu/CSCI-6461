@@ -14,13 +14,13 @@ import main.java.register.Register;
  * <p>
  * Based on instruction type. LDR, STR, LDA, LDX, STX
  */
-public class LoadStoreProcessor implements InstructionProcessor {
+public class LoadStoreInstructionProcessor implements InstructionProcessor {
 
     private static InstructionProcessor processor;
 
     static InstructionProcessor getInstance() {
         if (processor == null) {
-            processor = new LoadStoreProcessor();
+            processor = new LoadStoreInstructionProcessor();
         }
 
         return processor;
