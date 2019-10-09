@@ -596,22 +596,29 @@ public class DebugPanel extends JFrame {
 
     private void singleRun() {
         int address = Integer.parseInt(pc, 2); // get current counter
-        ciscComputer.getProgramCounter().setDecimalValue(address + 1); // set pc
-        ciscComputer.getInstructionRegister().setBinaryInstruction(Cache.getWordStringValue(new Address(address))); // set ir
-        Instruction instruction = new InstructionDecoder().decode(ciscComputer); // decode instruction
-        instruction.getType().getProcessor().process(ciscComputer, instruction); // execute instruction
-
-        setData(ciscComputer); // update front-end
-        syncListSelect(address + 1, true); // memory selected index jump to the pc
-
-        // print the log to console
-        System.out.println(instruction.symbolicForm());
-
-        Main.printValues(ciscComputer);
-
-        // HALT when address is 39 (HALT instruction is NOT REQUIRED in PHASE I)
-        if (address >= 39)
+        if (String.valueOf(memoryAssembleCode[address]) == "null") {
             pause = true;
+            JOptionPane.showMessageDialog(null, "Not a supported instruction!", "HALT", JOptionPane.ERROR_MESSAGE);
+        } else {
+            ciscComputer.getProgramCounter().setDecimalValue(address + 1); // set pc
+            ciscComputer.getInstructionRegister().setBinaryInstruction(Cache.getWordStringValue(new Address(address))); // set ir
+            Instruction instruction = new InstructionDecoder().decode(ciscComputer); // decode instruction
+            instruction.getType().getProcessor().process(ciscComputer, instruction); // execute instruction
+
+            setData(ciscComputer); // update front-end
+            syncListSelect(address + 1, true); // memory selected index jump to the pc
+
+            // print the log to console
+            System.out.println(instruction.symbolicForm());
+
+            Main.printValues(ciscComputer);
+
+            // HALT when next Value is 0000000000000000
+            if ((address == Main.MAX_MEMORY_SIZE - 1) || (memoryValue[address + 1] == "0000000000000000")) {
+                pause = true;
+                JOptionPane.showMessageDialog(null, "HALT", "HALT", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }
 
     private void autoRun() {
