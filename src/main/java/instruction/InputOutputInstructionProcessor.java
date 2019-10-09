@@ -2,13 +2,13 @@ package main.java.instruction;
 
 import main.java.common.CiscComputer;
 
-public class InputOutputProcessor implements InstructionProcessor {
+public class InputOutputInstructionProcessor implements InstructionProcessor {
 
     private static InstructionProcessor processor;
 
     static InstructionProcessor getInstance() {
         if (processor == null) {
-            processor = new InputOutputProcessor();
+            processor = new InputOutputInstructionProcessor();
         }
 
         return processor;

@@ -1,5 +1,7 @@
 package main.java.memory;
 
+import main.java.util.Utils;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -30,7 +32,7 @@ public class Cache {
     }
 
     public static int getWordDecimalValue(Address address) {
-        return Integer.parseInt(getWord(address).getValue());
+        return Utils.unsignedBinaryToDecimal(getWord(address).getValue());
     }
 
     private static Word getWord(Address address) {

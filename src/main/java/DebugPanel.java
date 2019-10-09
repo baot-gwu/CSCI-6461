@@ -321,8 +321,8 @@ public class DebugPanel extends JFrame {
                     MBR_textField.setText(mbr); // refresh mbr textfield
                     MBR_value.setText("x" + Utils.binaryToHex(mbr)); // refresh mbr hex label
                     writeMemory(mar, mbr); // set memory
-                    mar = Utils.autoFill(Utils.decimalToBinary(Utils.binaryToDecimal(mar) + 1), 16); // mar++
-                    mbr = Utils.autoFill("0", 16); // clean mbr
+                    mar = Utils.increment(mar); // mar++
+                    mbr = Utils.decimalToUnsignedBinary(0); // clean mbr
                     MAR_textField.setText(mar); // refresh mar textfield
                     MAR_value.setText("x" + Utils.binaryToHex(mar)); // refresh mar hex label
                     MBR_textField.setText(mbr); // refresh mbr textfield
@@ -502,7 +502,7 @@ public class DebugPanel extends JFrame {
             value = entry.getValue().getValue();
             value = value.replace(" ", "");
             if (value.length() != 0) {
-                memoryValue[index] = (Utils.binaryValid(value) && value.length() == 16) ? Utils.autoFill(value, 16) : Utils.autoFill(Utils.decimalToBinary(Integer.parseInt(value)), 16);
+                memoryValue[index] = value;
                 memoryHexValue[index] = "x" + Utils.binaryToHex(memoryValue[index]);
                 memoryAssembleCode[index] = getSymbolicForm(memoryValue[index]);
                 MemoryValueList.setListData(memoryValue);

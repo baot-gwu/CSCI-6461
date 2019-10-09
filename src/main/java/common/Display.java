@@ -161,6 +161,6 @@ public class Display {
                 + ", IR=" + (ir == null ? "" : ir)
                 + ", MAR=" + (mar == null ? "" : mar)
                 + ", MBR=" + (mbr == null ? "" : mbr)
-                + ", CC=" + (mbr == null ? "" : cc);
+                + ", CC=" + (cc == null ? "" : cc);
     }
 }

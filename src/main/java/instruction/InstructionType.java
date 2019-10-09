@@ -33,9 +33,9 @@ public enum InstructionType {
     RRC("100000", ArithmeticLogicalInstructionProcessor.getInstance()),
     LDX("101001", LoadStoreInstructionProcessor.getInstance()),
     STX("101010", LoadStoreInstructionProcessor.getInstance()),
-    IN("111101", InputOutputProcessor.getInstance()),
-    OUT("111110", InputOutputProcessor.getInstance()),
-    CHK("111111", InputOutputProcessor.getInstance());
+    IN("111101", InputOutputInstructionProcessor.getInstance()),
+    OUT("111110", InputOutputInstructionProcessor.getInstance()),
+    CHK("111111", InputOutputInstructionProcessor.getInstance());
 
     private final String opcodeInBinary;
     private final InstructionProcessor processor;

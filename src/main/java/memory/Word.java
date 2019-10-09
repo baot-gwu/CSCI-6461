@@ -1,5 +1,7 @@
 package main.java.memory;
 
+import main.java.util.Utils;
+
 /**
  * @author jalal
  * @since 29/9/19
@@ -13,8 +15,14 @@ public class Word {
     private String value;
 
     public Word(String value) {
-        if (value != null && value.length() > MAX_SIZE) {
-            throw new IllegalArgumentException("Invalid word " + value);
+        if (value != null && value.length() > 0) {
+            if (value.length() > MAX_SIZE) {
+                value = value.substring(0, MAX_SIZE);
+            }
+
+            if (!Utils.binaryValid(value)) {
+                throw new IllegalArgumentException("Invalid Word:" + value);
+            }
         }
 
         this.value = value;

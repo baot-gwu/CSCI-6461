@@ -57,7 +57,7 @@ public class LoadStoreInstructionProcessor implements InstructionProcessor {
     }
 
     private void storeIndexRegisterFromMemory(Register indexRegister, Address address) {
-        Cache.writeToMemory(address, new Word(indexRegister.getDecimalValue()));
+        Cache.writeToMemory(address, new Word(indexRegister.getValue(true)));
     }
 
     private void loadIndexRegisterFromMemory(Register indexRegister, Address address) {
@@ -69,7 +69,7 @@ public class LoadStoreInstructionProcessor implements InstructionProcessor {
     }
 
     private void storeRegisterToMemory(Register generalPurposeRegister, Address address) {
-        Cache.writeToMemory(address, new Word(generalPurposeRegister.getDecimalValue()));
+        Cache.writeToMemory(address, new Word(generalPurposeRegister.getValue(true)));
     }
 
     private void loadRegisterFromMemory(Register generalPurposeRegister, Address address) {

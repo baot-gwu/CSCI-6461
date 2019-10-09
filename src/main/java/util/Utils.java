@@ -126,4 +126,13 @@ public class Utils {
     public static boolean isValidMultiplicationOrDivisionRegister(int registerNumber) {
         return (registerNumber == 0 || registerNumber == 2);
     }
+
+    public static int increment(int decimal) {
+        return decimal + 1;
+    }
+
+    public static String increment(String binary) {
+        return decimalToUnsignedBinary(increment(unsignedBinaryToDecimal(binary)));
+    }
+
 }
