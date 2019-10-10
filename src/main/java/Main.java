@@ -14,7 +14,9 @@ public class Main {
         // Initialize all classes
         CiscComputer ciscComputer = initializer.initialize();
         DebugPanel dp = new DebugPanel();
+        OperationPanel op = new OperationPanel();
         dp.setData(ciscComputer);
+        op.setData(ciscComputer);
     }
 
     static void printValues(CiscComputer ciscComputer) {

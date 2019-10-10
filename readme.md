@@ -31,7 +31,7 @@ CSCI 6461
     - [x] `JNE` (11): Jump if not equal
     - [x] `JCC` (12): Jump if Condition Code
     - [x] `JMA` (13): Unconditional Jump to memory.Address
-    - [ ] `JSR` (14): Jump and save Return memory.Address
+    - [x] `JSR` (14): Jump and save Return memory.Address
     - [x] `RFS` (15): 
     - [x] `SOB` (16):
     - [x] `JGE` (17):

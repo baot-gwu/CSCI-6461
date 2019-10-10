@@ -33,6 +33,8 @@ import java.util.Map;
 public class DebugPanel extends JFrame {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 720;
+    private int user_width = Toolkit.getDefaultToolkit().getScreenSize().width;
+    private int user_height = Toolkit.getDefaultToolkit().getScreenSize().height;
     private JPanel MainForm;
     private JPanel Controller;
     private JButton autoRunButton;
@@ -135,6 +137,7 @@ public class DebugPanel extends JFrame {
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setSize(WIDTH, HEIGHT);
         getContentPane().add(MainForm);
+        setLocation((user_width - 800 - WIDTH) / 2, (user_height - HEIGHT) / 2);
         setVisible(true);
 
         // Initialize memory lists
