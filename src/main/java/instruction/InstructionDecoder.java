@@ -1,6 +1,8 @@
 package main.java.instruction;
 
 import main.java.common.CiscComputer;
+import main.java.device.Device;
+import main.java.device.DeviceType;
 import main.java.register.InstructionRegister;
 import main.java.register.Register;
 import main.java.util.Utils;
@@ -49,6 +51,8 @@ public class InstructionDecoder {
         boolean arithmeticShift = false;
         boolean leftShift = false;
         int count = 0;
+        int effectiveAddressInDecimal = 0;
+        int deviceId = 0;
 
         if (Utils.hasSecondRegister(type)) {
             if (Utils.hasIndexRegister(type)) {
@@ -65,10 +69,16 @@ public class InstructionDecoder {
         }
 
         boolean indirect = binaryInstruction.substring(10, 11).equals("1");
-        int effectiveAddressInDecimal = Utils.binaryToDecimal(binaryInstruction.substring(11, 16));
+        int valueOf11To16 = Utils.binaryToDecimal(binaryInstruction.substring(11, 16));
+
+        if (Utils.isIoInstruction(type)) {
+            deviceId = valueOf11To16;
+        } else {
+            effectiveAddressInDecimal = valueOf11To16;
+        }
 
         return new Instruction(fistRegister, secondRegister, type, effectiveAddressInDecimal, indirect, arithmeticShift,
-                leftShift, count);
+                leftShift, count, deviceId);
     }
 
     private InstructionType getInstructionType(String binaryInstruction) {

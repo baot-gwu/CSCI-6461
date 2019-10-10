@@ -4,6 +4,7 @@ import main.java.common.CiscComputer;
 import main.java.common.Initializer;
 import main.java.instruction.Instruction;
 import main.java.instruction.InstructionDecoder;
+import main.java.register.ConditionCode;
 import main.java.register.ConditionCodeType;
 import main.java.register.Register;
 import org.junit.Before;
@@ -18,6 +19,7 @@ public class ArithmeticLogicalInstructionProcessorTest {
     private Register register1;
     private Register register2;
     private Register register3;
+    private ConditionCode conditionCode;
 
     @Before
     public void setUp() {
@@ -26,6 +28,7 @@ public class ArithmeticLogicalInstructionProcessorTest {
         register1 = ciscComputer.getGeneralPurposeRegister(1);
         register2 = ciscComputer.getGeneralPurposeRegister(2);
         register3 = ciscComputer.getGeneralPurposeRegister(3);
+        conditionCode = ciscComputer.getConditionCode();
     }
 
     @Test
@@ -39,6 +42,17 @@ public class ArithmeticLogicalInstructionProcessorTest {
         assertEquals(instruction.symbolicForm(), "MLT 0,2");
         assertEquals(register0.getDecimalValue(), 8000);
         assertEquals(register1.getDecimalValue(), 16384);
+    }
+
+    @Test
+    public void testMLTOverflow() {
+        register0.setDecimalValue(65536);
+        register2.setDecimalValue(65536);
+        ciscComputer.getInstructionRegister().setBinaryInstruction("0101000010000000");
+        Instruction instruction = new InstructionDecoder().decode(ciscComputer);
+        instruction.getType().getProcessor().process(ciscComputer, instruction);
+
+        assertEquals(conditionCode.getConditionCodeType(), ConditionCodeType.OVERFLOW);
     }
 
     @Test
@@ -62,7 +76,7 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(ciscComputer.getConditionCode().getConditionCodeType(), ConditionCodeType.DIVZERO);
+        assertEquals(conditionCode.getConditionCodeType(), ConditionCodeType.DIVZERO);
     }
 
     @Test

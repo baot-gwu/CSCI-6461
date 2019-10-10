@@ -19,9 +19,11 @@ public class Instruction {
     private int effectiveAddressInDecimal;
     private int count;
     private boolean indirect;
+    private int deviceId;
 
     public Instruction(Register firstRegister, Register secondRegister, InstructionType type,
-                       int effectiveAddressInDecimal, boolean indirect, boolean arithmetic, boolean left, int count) {
+                       int effectiveAddressInDecimal, boolean indirect, boolean arithmetic, boolean left, int count,
+                       int deviceId) {
 
         this.firstRegister = firstRegister;
         this.secondRegister = secondRegister;
@@ -31,6 +33,7 @@ public class Instruction {
         this.indirect = indirect;
         this.arithmetic = arithmetic;
         this.left = left;
+        this.deviceId = deviceId;
     }
 
     public Register getFirstRegister() {
@@ -73,6 +76,10 @@ public class Instruction {
         return count;
     }
 
+    public int getDeviceId() {
+        return deviceId;
+    }
+
     public String symbolicForm() {
         String symbolicForm = type.name() + " " + (firstRegister == null ? "" : firstRegister.getRegisterNumber());
 
@@ -90,6 +97,8 @@ public class Instruction {
 
         if (Utils.hasIndexRegister(type)) {
             symbolicForm += "," + effectiveAddressInDecimal;
+        } else if (Utils.isIoInstruction(type)) {
+            symbolicForm += "," + deviceId;
         }
 
         if (indirect) {

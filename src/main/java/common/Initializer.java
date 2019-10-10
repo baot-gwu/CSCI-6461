@@ -1,8 +1,13 @@
 package main.java.common;
 
+import main.java.device.CardReader;
+import main.java.device.ConsoleKeyboard;
+import main.java.device.ConsolePrinter;
+import main.java.device.Device;
 import main.java.memory.Memory;
 import main.java.register.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +39,19 @@ public class Initializer {
 
         ciscComputer.setConditionCode(new ConditionCode());
 
+        ciscComputer.setDevices(createDevices());
+
         return ciscComputer;
+    }
+
+    private List<Device> createDevices() {
+        List<Device> devices = new ArrayList<>(Device.MAX_DEVICES);
+
+        devices.add(new ConsoleKeyboard());
+        devices.add(new ConsolePrinter());
+        devices.add(new CardReader());
+
+        return devices;
     }
 
     private List<GeneralPurposeRegister> createGeneralPurposeRegisters() {

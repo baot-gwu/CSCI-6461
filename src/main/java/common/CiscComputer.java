@@ -1,5 +1,6 @@
 package main.java.common;
 
+import main.java.device.Device;
 import main.java.memory.Memory;
 import main.java.register.*;
 
@@ -29,6 +30,7 @@ public class CiscComputer {
     private ProgramCounter programCounter;
     private ConditionCode conditionCode;
     private Memory memory;
+    private List<Device> devices = new ArrayList<>(Device.MAX_DEVICES);
 
     public List<GeneralPurposeRegister> getGeneralPurposeRegisters() {
         return generalPurposeRegisters;
@@ -92,6 +94,18 @@ public class CiscComputer {
 
     public void setConditionCode(ConditionCode conditionCode) {
         this.conditionCode = conditionCode;
+    }
+
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
+    }
+
+    public void setDevice(Device device) {
+        devices.set(device.getDeviceType().getDeviceId(), device);
+    }
+
+    public Device getDevice(int deviceId) {
+        return devices.get(deviceId);
     }
 
     public GeneralPurposeRegister getGeneralPurposeRegister(int registerNumber) {

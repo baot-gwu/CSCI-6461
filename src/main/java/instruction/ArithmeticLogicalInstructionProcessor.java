@@ -9,6 +9,8 @@ import main.java.register.ConditionCodeType;
 import main.java.register.Register;
 import main.java.util.Utils;
 
+import java.math.BigInteger;
+
 /**
  * @author jalal
  * @since 12/9/19
@@ -19,7 +21,7 @@ import main.java.util.Utils;
  */
 public class ArithmeticLogicalInstructionProcessor implements InstructionProcessor {
 
-    private static final int MAX_INT_VALUE = (int) Math.pow(2, 16);
+    private static final BigInteger MAX_INT_VALUE = BigInteger.valueOf((long) Math.pow(2, 16));
 
     private static InstructionProcessor processor;
 
@@ -169,17 +171,17 @@ public class ArithmeticLogicalInstructionProcessor implements InstructionProcess
         checkRegisterValidityForMulDvd(registerNumber);
         checkRegisterValidityForMulDvd(secondRegister.getRegisterNumber());
 
-        int contentOfFirstRegister = firstRegister.getDecimalValue();
-        int contentOfSecondRegister = secondRegister.getDecimalValue();
+        BigInteger contentOfFirstRegister = BigInteger.valueOf(firstRegister.getDecimalValue());
+        BigInteger contentOfSecondRegister = BigInteger.valueOf(secondRegister.getDecimalValue());
 
-        int product = contentOfFirstRegister * contentOfSecondRegister;
+        BigInteger product = contentOfFirstRegister.multiply(contentOfSecondRegister);
 
-        if (Math.abs(product) > MAX_INT_VALUE) {
+        if (product.abs().compareTo(MAX_INT_VALUE) > 0) {
             ciscComputer.getConditionCode().setConditionCodeType(ConditionCodeType.OVERFLOW);
         }
 
-        firstRegister.setDecimalValue(product / MAX_INT_VALUE);
-        ciscComputer.getGeneralPurposeRegister(registerNumber + 1).setDecimalValue(product % MAX_INT_VALUE);
+        firstRegister.setDecimalValue(product.divide(MAX_INT_VALUE).intValue());
+        ciscComputer.getGeneralPurposeRegister(registerNumber + 1).setDecimalValue(product.mod(MAX_INT_VALUE).intValue());
     }
 
     private void addImmediateToRegister(Register generalPurposeRegister, Address address) {
