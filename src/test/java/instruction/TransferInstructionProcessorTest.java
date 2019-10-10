@@ -4,6 +4,8 @@ import main.java.common.CiscComputer;
 import main.java.common.Initializer;
 import main.java.instruction.Instruction;
 import main.java.instruction.InstructionDecoder;
+import main.java.memory.Memory;
+import main.java.memory.Word;
 import main.java.register.ConditionCode;
 import main.java.register.ProgramCounter;
 import main.java.register.Register;
@@ -116,6 +118,8 @@ public class TransferInstructionProcessorTest {
     @Test
     public void testJSR() {
         register3.setDecimalValue(0);
+        Memory.memoryMap.replace(8,new Word("0000000000010000"));
+        Memory.memoryMap.replace(16,new Word("0000000000011111"));
         pc.setDecimalValue(2);
         ciscComputer.setProgramCounter(pc);
         ciscComputer.getInstructionRegister().setBinaryInstruction("0011100000000001");
@@ -124,7 +128,7 @@ public class TransferInstructionProcessorTest {
 
         assertEquals("0000000000000001", ciscComputer.getProgramCounter().getValue(true));
         assertEquals("0000000000000011", register3.getValue(true));
-        //TODO: detect R0
+        assertEquals("0000000000010000", register0.getValue(true));
     }
 
     @Test

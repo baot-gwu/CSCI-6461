@@ -2,10 +2,12 @@ package main.java.instruction;
 
 import main.java.common.CiscComputer;
 import main.java.memory.Address;
+import main.java.memory.Memory;
 import main.java.register.ConditionCode;
 import main.java.register.GeneralPurposeRegister;
 import main.java.register.ProgramCounter;
 import main.java.register.Register;
+import main.java.util.Utils;
 
 import java.util.List;
 
@@ -90,8 +92,8 @@ public class TransferInstructionProcessor implements InstructionProcessor {
 
         List<GeneralPurposeRegister> GeneralPurposeRegisters = ciscComputer.getGeneralPurposeRegisters();
         GeneralPurposeRegisters.get(3).setDecimalValue(ciscComputer.getProgramCounter().getDecimalValue() + 1);
-
-        //TODO: R0 should contain pointer to arguments, Argument list should end with –1 (all 1s) value
+        GeneralPurposeRegisters.get(0).setBinaryValue(String.valueOf(String.valueOf(Memory.memoryMap.get(8))));
+//        GeneralPurposeRegisters.get(0).setBinaryValue(String.valueOf(Memory.memoryMap.get(Utils.binaryToDecimal(String.valueOf(Memory.memoryMap.get(8))))));
 
         ciscComputer.setGeneralPurposeRegisters(GeneralPurposeRegisters);
         ciscComputer.setProgramCounter(pc);

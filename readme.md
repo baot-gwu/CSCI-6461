@@ -55,3 +55,18 @@ CSCI 6461
     - [ ] `IN` (61):
     - [ ] `OUT` (62):
     - [ ] `CHK` (63):
+
+## Memory Reserved Locations:
+
+|Memory Address|Usage|
+|:----:|:----|
+|0|Reserved for the Trap instruction for Part III|
+|1|Reserved for a machine fault|
+|2|Store PC for Trap|
+|3|Not Used|
+|4|Store PC for Machine Fault|
+|5|Not Used|
+|6|I/O Devices Status|
+|7|I/O Devices Data Buffer|
+|8|Arguments List Address|
+|9|Store PC for Subroutine|
