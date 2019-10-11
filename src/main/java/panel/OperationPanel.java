@@ -35,6 +35,9 @@ public class OperationPanel extends JFrame{
     private Boolean commandMode = true;
     private String dataBuffer = "";
     private Object dataBufferFlag = new Object();
+    private String threadType;
+    private Thread pg1;
+    private Thread dg;
 
     public OperationPanel() {
         // create windows
@@ -139,6 +142,8 @@ public class OperationPanel extends JFrame{
             Controller.save();
         } else if (command.toLowerCase().equals("reload")) {
             Controller.reload();
+        } else if (command.toLowerCase().equals("exit") || command.toLowerCase().equals("quit") || command.toLowerCase().equals("shutdown") || command.toLowerCase().equals("power off")) {
+            System.exit(EXIT_ON_CLOSE);
         } else {
             sendCommand(command);
         }
@@ -159,7 +164,8 @@ public class OperationPanel extends JFrame{
             screen_content.append("Machine Status is ").append(Main.busy);
             newLine();
         } else if (command.toLowerCase().equals("program1") || command.toLowerCase().equals("program 1")) {
-            Thread pg1 = new Thread(new program1());
+            pg1 = new Thread(new program1());
+            threadType = "program1";
             pg1.start();
         } else if (command.toLowerCase().equals("program2") || command.toLowerCase().equals("program 2")) {
             program2();
@@ -188,30 +194,34 @@ public class OperationPanel extends JFrame{
             Program1 pg1 = new Program1();
             switchCommandMode(false);
 
-            CountDownLatch signal = new CountDownLatch(1);
-            new Thread(new DataGetter(signal, "Please input 20 numbers (using comma to split numbers): \n", 20, "int")).start();
             try {
-                signal.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+                CountDownLatch signal = new CountDownLatch(1);
+                dg = new Thread(new DataGetter(signal, "Please input 20 numbers (using comma to split numbers): \n", 20, "int"));
+                dg.start();
 
-            int[] inputNumbers = Utils.stringToIntegerArray(dataBuffer, ",");
-
-            signal = new CountDownLatch(1);
-            new Thread(new DataGetter(signal, "Please input the number you want to compare: \n", 1, "int")).start();
-            try {
                 signal.await();
+
+                int[] inputNumbers = Utils.stringToIntegerArray(dataBuffer, ",");
+
+                signal = new CountDownLatch(1);
+                dg = new Thread(new DataGetter(signal, "Please input the number you want to compare: \n", 1, "int"));
+                dg.start();
+
+                signal.await();
+
+                int numberToBeComparedWith = Integer.parseInt(dataBuffer);
+                pg1.inputAndStoreNumber(ciscComputer, inputNumbers, memoryAddressStartPoint);
+
+                pushToScreen("The closest number compare with " + numberToBeComparedWith + " is " + pg1.findClosestNumber(ciscComputer, numberToBeComparedWith, inputNumbers.length, memoryAddressStartPoint), false);
+                newLine();
+                threadType = "";
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.err.println("Program 1 interrupted");
+                newLine();
             }
-            int numberToBeComparedWith = Integer.parseInt(dataBuffer);
 
             switchCommandMode(true);
-            pg1.inputAndStoreNumber(ciscComputer, inputNumbers, memoryAddressStartPoint);
             Controller.update(ciscComputer);
-            pushToScreen("The closest number compare with " + numberToBeComparedWith + " is " + pg1.findClosestNumber(ciscComputer, numberToBeComparedWith, inputNumbers.length, memoryAddressStartPoint), false);
-            newLine();
             Main.busy = false;
         }
     }
@@ -287,8 +297,22 @@ public class OperationPanel extends JFrame{
                 dataBuffer = StringUtils.join(dataList.toArray(), ",");
                 signal.countDown();
             } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
+    }
+
+    protected void stopThread() {
+        switch (threadType) {
+            case "program1":
+                System.err.println("Try to interrupt.");
+                if (dg != null)
+                    dg.interrupt();
+                if (pg1 != null)
+                    pg1.interrupt();
+        }
+    }
+
+    protected void pause() {
+
     }
 }

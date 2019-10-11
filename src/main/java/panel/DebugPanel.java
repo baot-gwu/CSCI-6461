@@ -10,6 +10,7 @@ import main.java.memory.Address;
 import main.java.memory.Cache;
 import main.java.memory.Memory;
 import main.java.memory.Word;
+import main.java.panel.Controller;
 import main.java.register.InstructionRegister;
 import main.java.util.Utils;
 
@@ -349,7 +350,7 @@ public class DebugPanel extends JFrame {
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                stop();
+                main.java.panel.Controller.stop();
             }
         });
 

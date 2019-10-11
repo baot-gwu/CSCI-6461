@@ -16,6 +16,7 @@ public class Controller {
 
     public static void stop() {
         Main.dp.stop();
+        Main.op.stopThread();
     }
 
     public static void pause() {
