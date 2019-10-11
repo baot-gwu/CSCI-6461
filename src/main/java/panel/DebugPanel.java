@@ -1,5 +1,6 @@
-package main.java;
+package main.java.panel;
 
+import main.java.Main;
 import main.java.common.CiscComputer;
 import main.java.common.Display;
 import main.java.common.Initializer;
@@ -471,6 +472,50 @@ public class DebugPanel extends JFrame {
                 }
             }
         });
+
+        program1Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (Main.busy){
+                    JOptionPane.showMessageDialog(null, "Machine is busy", "Machine is busy, please try it later.", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    Main.op.sendCommand("Program 1");
+                }
+            }
+        });
+
+        program2Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (Main.busy){
+                    JOptionPane.showMessageDialog(null, "Machine is busy", "Machine is busy, please try it later.", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    Main.op.sendCommand("program2");
+                }
+            }
+        });
+
+        floatingTestButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (Main.busy){
+                    JOptionPane.showMessageDialog(null, "Machine is busy", "Machine is busy, please try it later.", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    Main.op.sendCommand("floating test");
+                }
+            }
+        });
+
+        vectorTestButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (Main.busy){
+                    JOptionPane.showMessageDialog(null, "Machine is busy", "Machine is busy, please try it later.", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    Main.op.sendCommand("vector test");
+                }
+            }
+        });
     }
 
     private void writeMemory(String mar, String mbr) { // Load MBR to MEM[MAR]
@@ -583,21 +628,22 @@ public class DebugPanel extends JFrame {
         MBR_value.setText("x" + Utils.binaryToHex(Utils.autoFill(mbr, 16)));
     }
 
-    private void restart() {
+    protected void restart() {
+        pause = true;
         new Memory().clear();  // clear all memory
         new Memory().loadBackupContent(); // load the memory with backup
         clear();
     }
 
-    private void stop() {
+    protected void stop() {
         pause = true;
     }
 
-    private void pause() {
+    protected void pause() {
         pause = true;
     }
 
-    private void singleRun() {
+    protected void singleRun() {
         int address = Integer.parseInt(pc, 2); // get current counter
         if (String.valueOf(memoryAssembleCode[address]) == "null") {
             pause = true;
@@ -624,23 +670,23 @@ public class DebugPanel extends JFrame {
         }
     }
 
-    private void autoRun() {
+    protected void autoRun() {
         // multi-thread the back-end from main thread (front-end)
         Thread backEnd = new Thread(new BackEnd());
         backEnd.start();
     }
 
-    private void ipl() { // import instructions from file (not available not)
+    protected void ipl() { // import instructions from file (not available not)
         ciscComputer.getMemory().loadContent();
         getMemory();
     }
 
-    private void reload() { // reload the memory file
+    protected void reload() { // reload the memory file
         ciscComputer.getMemory().loadContent();
         getMemory();
     }
 
-    private void save() { // save the memory file
+    protected void save() { // save the memory file
         ciscComputer.getMemory().writeContent();
         getMemory();
     }
@@ -663,7 +709,7 @@ public class DebugPanel extends JFrame {
     }
 
 
-    private void clear() { // reset machine and front-end (except memory)
+    protected void clear() { // reset machine and front-end (except memory)
         ciscComputer = new Initializer().initialize();
         setData(ciscComputer);
     }

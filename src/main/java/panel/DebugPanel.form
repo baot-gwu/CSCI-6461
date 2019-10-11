@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="main.java.DebugPanel">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="main.java.panel.DebugPanel">
   <grid id="27dc6" binding="MainForm" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
       <xy x="20" y="25" width="652" height="883"/>
@@ -871,7 +871,7 @@
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <enabled value="false"/>
+              <enabled value="true"/>
               <text value="Program 1"/>
               <toolTipText value="Not Avaliable"/>
             </properties>

@@ -140,4 +140,16 @@ public class Utils {
         return decimalToUnsignedBinary(increment(unsignedBinaryToDecimal(binary)));
     }
 
+    public static int[] stringToIntegerArray(String str, String regex) {
+        String[] temp = str.split(regex);
+        int[] array = new int[temp.length];
+        for (int i = 0; i < temp.length; i++){
+            array[i] = Integer.parseInt(temp[i].trim());
+        }
+        return array;
+    }
+
+    public static String arrayToString(Object[] arr) {
+        return StringUtils.join(arr, ",");
+    }
 }
