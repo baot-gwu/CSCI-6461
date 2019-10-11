@@ -73,6 +73,7 @@
               </grid>
             </constraints>
             <properties>
+              <background color="-1"/>
               <foreground color="-8026747"/>
               <text value="Input Command here..."/>
               <toolTipText value=""/>
@@ -83,6 +84,7 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-415181"/>
               <text value="Enter"/>
             </properties>
           </component>

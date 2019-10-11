@@ -5,20 +5,31 @@ import main.java.common.Display;
 import main.java.common.Initializer;
 import main.java.panel.DebugPanel;
 import main.java.panel.OperationPanel;
+import mdlaf.MaterialLookAndFeel;
+
+import javax.swing.*;
 
 public class Main {
     public static final int AUTORUN_DELAY = 1000; // in milliseconds (ms)
     public static final int MAX_MEMORY_SIZE = 2048; // Memory size 2048 expand to 4096
     public static boolean busy = true; // Status of machine
-    public static DebugPanel dp = new DebugPanel();
-    public static OperationPanel op = new OperationPanel();
-
+    public static DebugPanel dp;
+    public static OperationPanel op;
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel (new MaterialLookAndFeel());
+        }
+        catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace ();
+        }
+
         Initializer initializer = new Initializer();
 
         // Initialize all classes
         CiscComputer ciscComputer = initializer.initialize();
+        dp = new DebugPanel();
+        op = new OperationPanel();
         dp.setData(ciscComputer);
         op.setData(ciscComputer);
         busy = false;

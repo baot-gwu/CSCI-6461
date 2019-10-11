@@ -10,10 +10,8 @@ import main.java.memory.Address;
 import main.java.memory.Cache;
 import main.java.memory.Memory;
 import main.java.memory.Word;
-import main.java.panel.Controller;
 import main.java.register.InstructionRegister;
 import main.java.util.Utils;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;

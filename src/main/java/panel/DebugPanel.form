@@ -5,6 +5,8 @@
       <xy x="20" y="25" width="652" height="883"/>
     </constraints>
     <properties>
+      <background color="-13421773"/>
+      <foreground color="-13421773"/>
       <maximumSize width="480" height="720"/>
       <minimumSize width="480" height="720"/>
       <preferredSize width="500" height="720"/>
@@ -14,7 +16,10 @@
       <grid id="eea21" binding="Indicators" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints border-constraint="North"/>
-        <properties/>
+        <properties>
+          <background color="-13421773"/>
+          <foreground color="-1"/>
+        </properties>
         <border type="none" title="Indicators"/>
         <children>
           <grid id="d7210" binding="Registers" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -168,7 +173,10 @@
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-13421773"/>
+              <foreground color="-1"/>
+            </properties>
             <border type="none" title="Index Register"/>
             <children>
               <component id="50a3a" class="javax.swing.JLabel" binding="IX1_label">
@@ -280,7 +288,10 @@
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-13421773"/>
+              <foreground color="-1"/>
+            </properties>
             <border type="none" title="Memory Register"/>
             <children>
               <component id="4cfda" class="javax.swing.JLabel" binding="MAR_label">
@@ -359,6 +370,8 @@
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-13421773"/>
+              <foreground color="-1"/>
               <toolTipText value="Not Avaliable"/>
             </properties>
             <border type="none" title="Basic Indicators"/>
@@ -873,7 +886,7 @@
             <properties>
               <enabled value="true"/>
               <text value="Program 1"/>
-              <toolTipText value="Not Avaliable"/>
+              <toolTipText value=""/>
             </properties>
           </component>
           <component id="37c40" class="javax.swing.JButton" binding="IPLButton" default-binding="true">
