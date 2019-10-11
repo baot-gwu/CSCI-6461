@@ -1,8 +1,6 @@
 package main.java.instruction;
 
 import main.java.common.CiscComputer;
-import main.java.device.Device;
-import main.java.device.DeviceType;
 import main.java.register.InstructionRegister;
 import main.java.register.Register;
 import main.java.util.Utils;
@@ -48,11 +46,11 @@ public class InstructionDecoder {
 
         String secondRegisterNumberInBinary = binaryInstruction.substring(8, 10);
         Register secondRegister = null;
-        boolean arithmeticShift = false;
-        boolean leftShift = false;
-        int count = 0;
-        int effectiveAddressInDecimal = 0;
-        int deviceId = 0;
+        Boolean arithmeticShift = null;
+        Boolean leftShift = null;
+        Integer count = null;
+        Integer effectiveAddressInDecimal = null;
+        Integer deviceId = null;
 
         if (Utils.hasSecondRegister(type)) {
             if (Utils.hasIndexRegister(type)) {

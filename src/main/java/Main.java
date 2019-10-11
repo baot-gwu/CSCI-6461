@@ -17,6 +17,13 @@ public class Main {
         OperationPanel op = new OperationPanel();
         dp.setData(ciscComputer);
         op.setData(ciscComputer);
+
+//        int memoryAddressStartPoint = 2000;
+//        Program1 program1 = new Program1();
+//        int[] inputNumbers = {4587, 15541, 1554, 9455, 1551,
+//                5858, 8951, 3211, 4558, 2554, 5454, 7893, 4845, 3684, 1234, 1225, 15441, 15548, 1364, 6987};
+//        program1.inputAndStoreNumber(ciscComputer, inputNumbers, memoryAddressStartPoint);
+//        System.out.println(program1.findClosestNumber(ciscComputer, 2258, inputNumbers.length, memoryAddressStartPoint));
     }
 
     static void printValues(CiscComputer ciscComputer) {

@@ -13,17 +13,16 @@ public class Instruction {
 
     private Register firstRegister;
     private Register secondRegister;
-    private boolean arithmetic;
-    private boolean left;
+    private Boolean arithmetic;
+    private Boolean left;
     private InstructionType type;
-    private int effectiveAddressInDecimal;
-    private int count;
-    private boolean indirect;
-    private int deviceId;
+    private Integer effectiveAddressInDecimal;
+    private Integer count;
+    private Boolean indirect;
+    private Integer deviceId;
 
-    public Instruction(Register firstRegister, Register secondRegister, InstructionType type,
-                       int effectiveAddressInDecimal, boolean indirect, boolean arithmetic, boolean left, int count,
-                       int deviceId) {
+    public Instruction(Register firstRegister, Register secondRegister, InstructionType type, Integer effectiveAddressInDecimal,
+                       Boolean indirect, Boolean arithmetic, Boolean left, Integer count, Integer deviceId) {
 
         this.firstRegister = firstRegister;
         this.secondRegister = secondRegister;
@@ -56,27 +55,27 @@ public class Instruction {
         return type;
     }
 
-    public int getEffectiveAddressInDecimal() {
+    public Integer getEffectiveAddressInDecimal() {
         return effectiveAddressInDecimal;
     }
 
-    public boolean isIndirect() {
+    public Boolean isIndirect() {
         return indirect;
     }
 
-    public boolean isArithmetic() {
+    public Boolean isArithmetic() {
         return arithmetic;
     }
 
-    public boolean isLeft() {
+    public Boolean isLeft() {
         return left;
     }
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public int getDeviceId() {
+    public Integer getDeviceId() {
         return deviceId;
     }
 

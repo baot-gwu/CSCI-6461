@@ -2,7 +2,6 @@ package main.java.instruction;
 
 import main.java.common.CiscComputer;
 import main.java.device.Device;
-import main.java.memory.Address;
 import main.java.register.Register;
 
 /**
@@ -26,8 +25,6 @@ public class InputOutputInstructionProcessor implements InstructionProcessor {
 
     @Override
     public void process(CiscComputer ciscComputer, Instruction instruction) {
-        Address address = AddressDecoder.decodeAddress(instruction);
-
         Register register = instruction.getFirstRegister();
         Device device = ciscComputer.getDevice(instruction.getDeviceId());
 

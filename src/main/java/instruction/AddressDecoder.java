@@ -10,7 +10,7 @@ public class AddressDecoder {
         Register generalPurposeRegister = instruction.getFirstRegister();
         Register indexRegister = instruction.getSecondRegister();
         InstructionType type = instruction.getType();
-        boolean indirect = instruction.isIndirect();
+        Boolean indirect = instruction.isIndirect();
         int effectiveAddressInDecimal = instruction.getEffectiveAddressInDecimal();
 
         if (type == InstructionType.AIR || type == InstructionType.SIR) {
@@ -25,7 +25,7 @@ public class AddressDecoder {
             effectiveAddressInDecimal += indexRegister.getDecimalValue();
         }
 
-        if (indirect) {
+        if (Boolean.TRUE.equals(indirect)) {
             effectiveAddressInDecimal = Cache.getWordDecimalValue(new Address(effectiveAddressInDecimal));
         }
 
