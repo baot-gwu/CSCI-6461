@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="835e8" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="835e8" binding="monitor" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -17,7 +17,6 @@
         </constraints>
         <properties>
           <background color="-13421773"/>
-          <foreground color="-13421773"/>
         </properties>
         <border type="none"/>
         <children>
@@ -50,8 +49,10 @@
             </constraints>
             <properties>
               <background color="-13421773"/>
+              <editable value="false"/>
               <font name="Monospaced" size="14"/>
               <foreground color="-1"/>
+              <margin top="3" left="3" bottom="3" right="3"/>
             </properties>
           </component>
         </children>
@@ -73,8 +74,10 @@
               </grid>
             </constraints>
             <properties>
-              <background color="-1"/>
-              <foreground color="-8026747"/>
+              <editable value="true"/>
+              <focusable value="true"/>
+              <font name="Courier New" size="14"/>
+              <opaque value="false"/>
               <text value="Input Command here..."/>
               <toolTipText value=""/>
             </properties>
@@ -84,7 +87,6 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-415181"/>
               <text value="Enter"/>
             </properties>
           </component>

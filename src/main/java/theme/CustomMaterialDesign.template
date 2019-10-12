@@ -1,0 +1,37 @@
+package main.java.theme;
+
+import java.awt.*;
+
+public class CustomMaterialDesignTemplate {
+    private static Color background = new Color();
+    private static Color foreground = new Color();
+    private static Color text = new Color();
+    private static Color selectionBackground = new Color();
+    private static Color selectionForeground = new Color();
+    private static Color buttons = new Color();
+    private static Color secondBackground = new Color();
+    private static Color disabled = new Color();
+    private static Color contrast = new Color();
+    private static Color active = new Color();
+    private static Color border = new Color();
+    private static Color highlight = new Color();
+    private static Color tree = new Color();
+    private static Color notifications = new Color();
+    private static Color accent = new Color();
+    private static Color excludedFiles = new Color();
+    private static Color comments = new Color();
+    private static Color variable = new Color();
+    private static Color links = new Color();
+    private static Color functions = new Color();
+    private static Color keywords = new Color();
+    private static Color tags = new Color();
+    private static Color strings = new Color();
+    private static Color operators = new Color();
+    private static Color attributes = new Color();
+    private static Color numbers = new Color();
+    private static Color parameters = new Color();
+
+    public static Theme getTheme() {
+        return new Theme(background, foreground, text, selectionBackground, selectionForeground, buttons, secondBackground, disabled, contrast, active, border, highlight, tree, notifications, accent, excludedFiles, comments, variable, links, functions, keywords, tags, strings, operators, attributes, numbers, parameters);
+    }
+}

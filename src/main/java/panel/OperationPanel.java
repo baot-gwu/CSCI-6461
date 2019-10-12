@@ -3,6 +3,7 @@ package main.java.panel;
 import main.java.Main;
 import main.java.common.CiscComputer;
 import main.java.program.Program1;
+import main.java.theme.Theme;
 import main.java.util.Utils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,13 +21,11 @@ public class OperationPanel extends JFrame{
     private JTextField textField;
     private JButton enterButton;
     private JTextPane screen;
+    private JPanel monitor;
     private CiscComputer ciscComputer;
     private int user_width = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int user_height = Toolkit.getDefaultToolkit().getScreenSize().height;
     private StringBuilder screen_content = new StringBuilder();
-    private Color white = new Color(255,255,255);
-    private Color gray = new Color(133, 133, 133);
-    private Color black = new Color(0, 0, 0);
     private String banner = "Welcome to CISC Computer Simulator!";
     private String cleanScreenBanner = "==== New Screen =====";
     private String tip_command = "Input Command here...";
@@ -38,6 +37,7 @@ public class OperationPanel extends JFrame{
     private String threadType;
     private Thread pg1;
     private Thread dg;
+    private Theme theme;
 
     public OperationPanel() {
         // create windows
@@ -48,6 +48,7 @@ public class OperationPanel extends JFrame{
         getContentPane().add(MainForm);
         setLocation((user_width - 600 - WIDTH) / 2 + 600, (user_height - HEIGHT) / 2);
         setVisible(true);
+        setTheme();
         screen_content.append(banner).append(arrow);
         updateScreen();
 
@@ -60,13 +61,13 @@ public class OperationPanel extends JFrame{
                     if (!Main.busy) {
                         pushCommand();
                         textField.setText(commandMode? tip_command: tip_data);
-                        textField.setForeground(gray);
+                        textField.setForeground(theme.getComments());
                     } else {
                         pushToScreen("Machine is BUSY!", true);
                     }
                 }
                 textField.setText(commandMode? tip_command: tip_data);
-                textField.setForeground(gray);
+                textField.setForeground(theme.getComments());
             }
         });
         textField.addFocusListener(new FocusAdapter() {
@@ -74,7 +75,7 @@ public class OperationPanel extends JFrame{
             public void focusGained(FocusEvent e) {
                 if ((commandMode && textField.getText().equals(tip_command)) || (!commandMode && textField.getText().equals(tip_data))){
                     textField.setText("");
-                    textField.setForeground(black);
+                    textField.setForeground(theme.getForeground());
                 }
             }
 
@@ -82,9 +83,9 @@ public class OperationPanel extends JFrame{
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()){
                     textField.setText(commandMode? tip_command: tip_data);
-                    textField.setForeground(gray);
+                    textField.setForeground(theme.getComments());
                 } else {
-                    textField.setForeground(black);
+                    textField.setForeground(theme.getForeground());
                 }
             }
         });
@@ -251,7 +252,7 @@ public class OperationPanel extends JFrame{
     private void switchCommandMode(boolean commandMode) {
         this.commandMode = commandMode;
         textField.setText(commandMode? tip_command: tip_data);
-        textField.setForeground(gray);
+        textField.setForeground(theme.getComments());
     }
 
     class DataGetter implements Runnable {
@@ -314,5 +315,12 @@ public class OperationPanel extends JFrame{
 
     protected void pause() {
 
+    }
+
+    private void setTheme() {
+        theme = Main.theme;
+        monitor.setBackground(theme.getBackground());
+        screen.setBackground(theme.getBackground());
+        screen.setForeground(theme.getForeground());
     }
 }

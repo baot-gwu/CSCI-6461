@@ -11,8 +11,13 @@ import main.java.memory.Cache;
 import main.java.memory.Memory;
 import main.java.memory.Word;
 import main.java.register.InstructionRegister;
+import main.java.theme.Theme;
 import main.java.util.Utils;
+import mdlaf.utils.MaterialColors;
+
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -89,10 +94,8 @@ public class DebugPanel extends JFrame {
     private JLabel MAR_value;
     private JLabel PC_value;
     private JLabel CC_value;
-    private JTextField Instruction_textField;
     private JButton saveButton;
     private JButton pauseButton;
-    private JLabel Instruction_label;
     private JLabel MFR;
     private JTextField MFR_textField;
     private JLabel MFR_value;
@@ -118,6 +121,8 @@ public class DebugPanel extends JFrame {
     private JButton MFR_Button;
     private JLabel MBR_value;
     private JLabel IR_value;
+    private JPanel MemoryFullList;
+    private JTabbedPane tabbedPane;
     private CiscComputer ciscComputer;
     private InstructionDecoder instructionDecoder = new InstructionDecoder();
     private InstructionRegister instructionRegister;
@@ -138,6 +143,8 @@ public class DebugPanel extends JFrame {
         setSize(WIDTH, HEIGHT);
         getContentPane().add(MainForm);
         setLocation((user_width - 800 - WIDTH) / 2, (user_height - HEIGHT) / 2);
+        setTheme();
+        MemoryListScroll.getVerticalScrollBar().setUnitIncrement(Main.MAX_MEMORY_SIZE / MemoryListScroll.getVerticalScrollBar().getVisibleAmount());
         setVisible(true);
 
         // Initialize memory lists
@@ -739,6 +746,86 @@ public class DebugPanel extends JFrame {
                     Thread.currentThread().interrupt();
                 }
             }
+        }
+    }
+
+    private void setTheme() {
+        Theme theme = Main.theme;
+
+        // Set JPanels
+
+        setTitleColor(Registers, theme);
+        setTitleColor(Index, theme);
+        setTitleColor(MemoryRegister, theme);
+        setTitleColor(BasicIndicators, theme);
+        setTitleColor(Memory, theme);
+        setTitleColor(Controller, theme);
+
+        // Set JButtons
+//        R0_Button.setForeground(theme.getForegroundColorJButton());
+//        R0_Button.setBackground(theme.getBackgroundColorJButton());
+//        R1_Button.setForeground(theme.getForegroundColorJButton());
+//        R1_Button.setBackground(theme.getBackgroundColorJButton());
+//        R2_Button.setForeground(theme.getForegroundColorJButton());
+//        R2_Button.setBackground(theme.getBackgroundColorJButton());
+//        R3_Button.setForeground(theme.getForegroundColorJButton());
+//        R3_Button.setBackground(theme.getBackgroundColorJButton());
+//        IX1_Button.setForeground(theme.getForegroundColorJButton());
+//        IX1_Button.setBackground(theme.getBackgroundColorJButton());
+//        IX2_Button.setForeground(theme.getForegroundColorJButton());
+//        IX2_Button.setBackground(theme.getBackgroundColorJButton());
+//        IX3_Button.setForeground(theme.getForegroundColorJButton());
+//        IX3_Button.setBackground(theme.getBackgroundColorJButton());
+//        MAR_Button.setForeground(theme.getForegroundColorJButton());
+//        MAR_Button.setBackground(theme.getBackgroundColorJButton());
+//        MBR_Button.setForeground(theme.getForegroundColorJButton());
+//        MBR_Button.setBackground(theme.getBackgroundColorJButton());
+//        PC_Button.setForeground(theme.getForegroundColorJButton());
+//        PC_Button.setBackground(theme.getBackgroundColorJButton());
+//        IR_Button.setForeground(theme.getForegroundColorJButton());
+//        IR_Button.setBackground(theme.getBackgroundColorJButton());
+//        CC_Button.setForeground(theme.getForegroundColorJButton());
+//        CC_Button.setBackground(theme.getBackgroundColorJButton());
+//        MFR.setForeground(theme.getForegroundColorJButton());
+//        MFR.setBackground(theme.getBackgroundColorJButton());
+//        reloadButton.setForeground(theme.getForegroundColorJButton());
+//        reloadButton.setBackground(theme.getBackgroundColorJButton());
+//        saveButton.setForeground(theme.getForegroundColorJButton());
+//        saveButton.setBackground(theme.getBackgroundColorJButton());
+//        IPLButton.setForeground(theme.getForegroundColorJButton());
+//        IPLButton.setBackground(theme.getBackgroundColorJButton());
+//        program1Button.setForeground(theme.getForegroundColorJButton());
+//        program1Button.setBackground(theme.getBackgroundColorJButton());
+//        program2Button.setForeground(theme.getForegroundColorJButton());
+//        program2Button.setBackground(theme.getBackgroundColorJButton());
+//        floatingTestButton.setForeground(theme.getForegroundColorJButton());
+//        floatingTestButton.setBackground(theme.getBackgroundColorJButton());
+//        vectorTestButton.setForeground(theme.getForegroundColorJButton());
+//        vectorTestButton.setBackground(theme.getBackgroundColorJButton());
+//        autoRunButton.setForeground(theme.getForegroundColorJButton());
+//        autoRunButton.setBackground(theme.getBackgroundColorJButton());
+//        singleRunButton.setForeground(theme.getForegroundColorJButton());
+//        singleRunButton.setBackground(theme.getBackgroundColorJButton());
+//        pauseButton.setForeground(theme.getForegroundColorJButton());
+//        pauseButton.setBackground(theme.getBackgroundColorJButton());
+//        stopButton.setForeground(theme.getForegroundColorJButton());
+//        stopButton.setBackground(theme.getBackgroundColorJButton());
+//        restartButton.setForeground(theme.getForegroundColorJButton());
+//        restartButton.setBackground(theme.getBackgroundColorJButton());
+
+        // Set JLabels
+
+
+        // Set JTextFields
+
+
+        // Set JList
+    }
+
+    private void setTitleColor(JPanel panel, Theme theme) {
+        if (panel.getBorder() instanceof TitledBorder) {
+            TitledBorder tb = (TitledBorder) panel.getBorder();
+            panel.setBorder(BorderFactory.createTitledBorder((Border) null, tb.getTitle(), 4, 0, (Font) null, MaterialColors.WHITE));
         }
     }
 }

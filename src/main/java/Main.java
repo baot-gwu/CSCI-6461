@@ -5,6 +5,9 @@ import main.java.common.Display;
 import main.java.common.Initializer;
 import main.java.panel.DebugPanel;
 import main.java.panel.OperationPanel;
+import main.java.theme.CustomMaterialDesignOceanic;
+import main.java.theme.MaterialOceanicThemeR;
+import main.java.theme.Theme;
 import mdlaf.MaterialLookAndFeel;
 
 import javax.swing.*;
@@ -15,14 +18,10 @@ public class Main {
     public static boolean busy = true; // Status of machine
     public static DebugPanel dp;
     public static OperationPanel op;
+    public static Theme theme;
 
     public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel (new MaterialLookAndFeel());
-        }
-        catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace ();
-        }
+        setTheme("MaterialDesignOcean");
 
         Initializer initializer = new Initializer();
 
@@ -46,5 +45,22 @@ public class Main {
         // print back-end information to console
         System.out.println("In Binary  -> " + new Display(ciscComputer, true).toString());
         System.out.println("In Decimal -> " + new Display(ciscComputer, false).toString());
+    }
+
+    public static void setTheme(String themeType) {
+        try {
+            UIManager.setLookAndFeel (new MaterialLookAndFeel());
+            if (UIManager.getLookAndFeel() instanceof MaterialLookAndFeel){
+                switch (themeType) {
+                    case "MaterialDesignOcean":
+                        theme = CustomMaterialDesignOceanic.getTheme();
+                        MaterialLookAndFeel.changeTheme(new MaterialOceanicThemeR());
+                        break;
+                }
+            }
+        }
+        catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace ();
+        }
     }
 }
