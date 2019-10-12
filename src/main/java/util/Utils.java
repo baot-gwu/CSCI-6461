@@ -152,4 +152,8 @@ public class Utils {
     public static String arrayToString(Object[] arr) {
         return StringUtils.join(arr, ",");
     }
+
+    public static String arrayToStringParagraph(String[] arr) {
+        return StringUtils.join(arr, "\n");
+    }
 }

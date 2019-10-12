@@ -11,6 +11,7 @@ import main.java.memory.Cache;
 import main.java.memory.Memory;
 import main.java.memory.Word;
 import main.java.register.InstructionRegister;
+import main.java.theme.CustomMaterialDesignOceanic;
 import main.java.theme.Theme;
 import main.java.util.Utils;
 import mdlaf.utils.MaterialColors;
@@ -749,17 +750,20 @@ public class DebugPanel extends JFrame {
         }
     }
 
-    private void setTheme() {
+    public void setTheme() {
         Theme theme = Main.theme;
+//        SwingUtilities.updateComponentTreeUI(MainForm);
+//        MainForm.repaint();
 
         // Set JPanels
-
-        setTitleColor(Registers, theme);
-        setTitleColor(Index, theme);
-        setTitleColor(MemoryRegister, theme);
-        setTitleColor(BasicIndicators, theme);
-        setTitleColor(Memory, theme);
-        setTitleColor(Controller, theme);
+//        for (int i = 0; i < 100; i++){
+            setTitleColor(Registers, theme);
+            setTitleColor(Index, theme);
+            setTitleColor(MemoryRegister, theme);
+            setTitleColor(BasicIndicators, theme);
+            setTitleColor(Memory, theme);
+            setTitleColor(Controller, theme);
+//        }
 
         // Set JButtons
 //        R0_Button.setForeground(theme.getForegroundColorJButton());
@@ -825,7 +829,14 @@ public class DebugPanel extends JFrame {
     private void setTitleColor(JPanel panel, Theme theme) {
         if (panel.getBorder() instanceof TitledBorder) {
             TitledBorder tb = (TitledBorder) panel.getBorder();
-            panel.setBorder(BorderFactory.createTitledBorder((Border) null, tb.getTitle(), 4, 0, (Font) null, MaterialColors.WHITE));
+            if (theme == CustomMaterialDesignOceanic.getTheme())
+                panel.setBorder(BorderFactory.createTitledBorder((Border) null, tb.getTitle(), 4, 0, (Font) null, MaterialColors.WHITE));
+            else
+                panel.setBorder(BorderFactory.createTitledBorder((Border) null, tb.getTitle(), 4, 0, (Font) null, theme.getForeground()));
         }
+    }
+
+    public CiscComputer getCiscComputer() {
+        return this.ciscComputer;
     }
 }

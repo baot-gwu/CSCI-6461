@@ -46,4 +46,11 @@ public class Controller {
     public static void update(CiscComputer ciscComputer) {
         Main.dp.setData(ciscComputer);
     }
+
+    public static void switchTheme(String themeName) {
+        Main.setTheme(themeName);
+        Main.repaintUI();
+        Main.op.pushToScreen("Theme switch to " + themeName, false);
+        Main.op.pushNewLine();
+    }
 }

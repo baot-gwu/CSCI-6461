@@ -22,10 +22,12 @@ public class OperationPanel extends JFrame{
     private JButton enterButton;
     private JTextPane screen;
     private JPanel monitor;
+    private JPanel Input;
+    private JScrollPane screenScroll;
     private CiscComputer ciscComputer;
     private int user_width = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int user_height = Toolkit.getDefaultToolkit().getScreenSize().height;
-    private StringBuilder screen_content = new StringBuilder();
+    private StringBuilder screenContent = new StringBuilder();
     private String banner = "Welcome to CISC Computer Simulator!";
     private String cleanScreenBanner = "==== New Screen =====";
     private String tip_command = "Input Command here...";
@@ -38,6 +40,37 @@ public class OperationPanel extends JFrame{
     private Thread pg1;
     private Thread dg;
     private Theme theme;
+    private final String[] COMMAND_LIST = {
+            "Command\t\tUsage\t\tDescription\t\t",
+
+            "autorun\t\tautorun\t\tRun The Instructions Until TRAP or HALT (Same as \"auto run\" and \"run\")",
+            "auto run\t\tauto run\t\tRun The Instructions Until TRAP or HALT (Same as \"autorun\" and \"run\")",
+            "clean\t\tclean\t\tClean The Console (Same as \"cls\")",
+            "cls\t\tcls\t\tClean The Console (Same as \"clean\")",
+            "exit\t\texit\t\tShutdown The Machine (Same as \"quit\" and \"power off\")",
+            "floating test\tfloating test\tRun The Floating Test",
+            "ipl\t\tipl\t\tLoad The Program From I/O",
+            "pause\t\tpause\t\tPause The Workload on The Machine (not finished)",
+            "power off\tpower off\tShutdown The Machine (Same as \"exit\" and \"quit\")",
+            "Program1\t\tProgram1\t\tRun Program 1 (Same as \"Program 1\")",
+            "Program 1\tProgram 1\tRun Program 1 (Same as \"Program1\")",
+            "Program2\t\tProgram2\t\tRun Program 2 (Same as \"Program 2\")",
+            "Program 2\tProgram 2\tRun Program 2 (Same as \"Program2\")",
+            "quit\t\tquit\t\tShutdown The Machine (Same as \"exit\" and \"power off\")",
+            "reload\t\treload\t\tReload The Data From memory.txt to Memory",
+            "reset\t\treset\t\tRestart The Machine (Same as \"restart\")",
+            "restart\t\trestart\t\tRestart The Machine (Same as \"reset\")",
+            "run\t\trun\t\tRun The Instructions Until TRAP or HALT (Same as \"autorun\" and \"auto run\")",
+            "save\t\tsave\t\tSave The Data in Memory to memory.txt",
+            "singlerun\tsinglerun\tRun One Instruction (Same as \"single run\")",
+            "single run\tsingle run\tRun One Instruction (Same as \"singlerun\")",
+            "status\t\tstatus\t\tShow The Status of The Machine",
+            "stop\t\tstop\t\tStop The Workload on The Machine",
+            "switch theme\tswitch theme {$THEME_NAME}\tSwitch the Theme of UI. Now Support \"Material Design Ocean\" (or \"MaterialDesignOcean\") and \"Material Design Lighter\" (or \"MaterialDesignLighter\")",
+            "vector test\tvector test\tRun The Vector Test",
+            "/help\t\t/help\t\tShow The Command List",
+
+    };
 
     public OperationPanel() {
         // create windows
@@ -49,7 +82,7 @@ public class OperationPanel extends JFrame{
         setLocation((user_width - 600 - WIDTH) / 2 + 600, (user_height - HEIGHT) / 2);
         setVisible(true);
         setTheme();
-        screen_content.append(banner).append(arrow);
+        screenContent.append(banner).append(arrow);
         updateScreen();
 
         enterButton.addActionListener(new ActionListener() {
@@ -113,12 +146,17 @@ public class OperationPanel extends JFrame{
     }
 
     private void updateScreen() {
-        screen.setText(screen_content.toString());
+        screen.setText(screenContent.toString());
+        screenScroll.getVerticalScrollBar().setValue(screenScroll.getVerticalScrollBar().getMaximum() + 10);
     }
 
     private void newLine() {
-        screen_content.append(arrow);
+        screenContent.append(arrow);
         updateScreen();
+    }
+
+    public void pushNewLine() {
+        newLine();
     }
 
     private void pushCommand() {
@@ -145,6 +183,16 @@ public class OperationPanel extends JFrame{
             Controller.reload();
         } else if (command.toLowerCase().equals("exit") || command.toLowerCase().equals("quit") || command.toLowerCase().equals("shutdown") || command.toLowerCase().equals("power off")) {
             System.exit(EXIT_ON_CLOSE);
+        } else if (command.length() > 12 && command.toLowerCase().substring(0,12).equals("switch theme")) {
+            screenContent.append(command).append("\n");
+            String themeName = command.toLowerCase().substring(13, command.length());
+            if (themeName.equals("materialdesignocean") || themeName.equals("material design ocean"))
+                Controller.switchTheme("Material Design Ocean");
+            else if (themeName.equals("materialdesignlighter") || themeName.equals("material design lighter"))
+                Controller.switchTheme("Material Design Lighter");
+            else
+                pushToScreen(themeName + " is not support.\n", false);
+            newLine();
         } else {
             sendCommand(command);
         }
@@ -160,9 +208,9 @@ public class OperationPanel extends JFrame{
     }
 
     public void sendCommand(String command){
-        screen_content.append(command).append("\n");
+        screenContent.append(command).append("\n");
         if (command.equals("status")){
-            screen_content.append("Machine Status is ").append(Main.busy);
+            screenContent.append("Machine Status is ").append(Main.busy);
             newLine();
         } else if (command.toLowerCase().equals("program1") || command.toLowerCase().equals("program 1")) {
             pg1 = new Thread(new program1());
@@ -174,16 +222,19 @@ public class OperationPanel extends JFrame{
             vectorTest();
         } else if (command.toLowerCase().equals("floating test")) {
             floatingTest();
+        } else if (command.toLowerCase().equals("/help")) {
+            pushToScreen(Utils.arrayToStringParagraph(COMMAND_LIST), false);
+            newLine();
         } else {
-            screen_content.append(command).append(" is not support.");
+            screenContent.append(command).append(" is not support. You can type \"/help\" to get command list.");
             newLine();
         }
     }
 
     public void pushToScreen(String content, boolean isIndependentContent) {
         if (isIndependentContent)
-            screen_content.delete(screen_content.length() - 2, screen_content.length());
-        screen_content.append(content);
+            screenContent.delete(screenContent.length() - 2, screenContent.length());
+        screenContent.append(content);
         updateScreen();
     }
 
@@ -240,12 +291,12 @@ public class OperationPanel extends JFrame{
     }
 
     protected void reset() {
-        screen_content.delete(0, screen_content.length()).append(banner).append(arrow);
+        screenContent.delete(0, screenContent.length()).append(banner).append(arrow);
         updateScreen();
     }
 
     protected void clear() {
-        screen_content.delete(0, screen_content.length()).append("").append(cleanScreenBanner).append(arrow);
+        screenContent.delete(0, screenContent.length()).append("").append(cleanScreenBanner).append(arrow);
         updateScreen();
     }
 
@@ -317,10 +368,26 @@ public class OperationPanel extends JFrame{
 
     }
 
-    private void setTheme() {
+    public void setTheme() {
         theme = Main.theme;
+//        SwingUtilities.updateComponentTreeUI(MainForm.getRootPane());
+//        repaint();
+
         monitor.setBackground(theme.getBackground());
         screen.setBackground(theme.getBackground());
         screen.setForeground(theme.getForeground());
+        screenScroll.setBackground(theme.getBackground());
+    }
+
+    public CiscComputer getCiscComputer() {
+        return this.ciscComputer;
+    }
+
+    public StringBuilder getScreenContent() {
+        return screenContent;
+    }
+
+    public void setScreenContent(StringBuilder screenContent) {
+        this.screenContent = screenContent;
     }
 }

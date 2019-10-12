@@ -5,10 +5,12 @@ import main.java.common.Display;
 import main.java.common.Initializer;
 import main.java.panel.DebugPanel;
 import main.java.panel.OperationPanel;
+import main.java.theme.CustomMaterialDesignLighter;
 import main.java.theme.CustomMaterialDesignOceanic;
 import main.java.theme.MaterialOceanicThemeR;
 import main.java.theme.Theme;
 import mdlaf.MaterialLookAndFeel;
+import mdlaf.themes.MaterialLiteTheme;
 
 import javax.swing.*;
 
@@ -21,7 +23,7 @@ public class Main {
     public static Theme theme;
 
     public static void main(String[] args) {
-        setTheme("MaterialDesignOcean");
+        setTheme("Material Design Lighter");
 
         Initializer initializer = new Initializer();
 
@@ -52,9 +54,13 @@ public class Main {
             UIManager.setLookAndFeel (new MaterialLookAndFeel());
             if (UIManager.getLookAndFeel() instanceof MaterialLookAndFeel){
                 switch (themeType) {
-                    case "MaterialDesignOcean":
+                    case "Material Design Ocean":
                         theme = CustomMaterialDesignOceanic.getTheme();
                         MaterialLookAndFeel.changeTheme(new MaterialOceanicThemeR());
+                        break;
+                    case "Material Design Lighter":
+                        theme = CustomMaterialDesignLighter.getTheme();
+                        MaterialLookAndFeel.changeTheme(new MaterialLiteTheme());
                         break;
                 }
             }
@@ -62,5 +68,17 @@ public class Main {
         catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace ();
         }
+    }
+
+    public static void repaintUI() {
+        DebugPanel tempDP = dp;
+        OperationPanel tempOP = op;
+        dp = new DebugPanel();
+        dp.setData(tempDP.getCiscComputer());
+        tempDP.dispose();
+        op = new OperationPanel();
+        op.setScreenContent(tempOP.getScreenContent());
+        op.setData(tempOP.getCiscComputer());
+        tempOP.dispose();
     }
 }
