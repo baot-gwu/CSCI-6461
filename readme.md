@@ -1,9 +1,20 @@
 # Machine Simulator
-CSCI 6461
+CSCI 6461 Session 10 Fall 2019 Group 8
+
+## Screenshot
+Material Design Lighter Theme
+
+![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Lighter_1.png?raw=true)
+![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Lighter_2.png?raw=true)
+
+Material Design Ocean Theme
+
+![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Ocean_1.png?raw=true)
+![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Ocean_1.png?raw=true)
 
 ## Progress
 - [x] Phase I (Complete)
-- [ ] Phase II (In Progress)
+- [X] Phase II (Complete)
 - [ ] Phase III (Not Start)
 - [ ] Phase IV (Not Start)
 
@@ -52,8 +63,8 @@ CSCI 6461
     - [x] `STX` (42): Store Index register.Register to memory.Memory
     - [ ] `LDFR` (50):
     - [ ] `STFR` (51):
-    - [ ] `IN` (61):
-    - [ ] `OUT` (62):
+    - [x] `IN` (61):
+    - [x] `OUT` (62):
     - [ ] `CHK` (63):
 
 ## Memory Reserved Locations:
