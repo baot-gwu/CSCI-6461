@@ -39,9 +39,9 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(instruction.symbolicForm(), "MLT 0,2");
-        assertEquals(register0.getDecimalValue(), 8000);
-        assertEquals(register1.getDecimalValue(), 16384);
+        assertEquals("MLT 0,2", instruction.symbolicForm());
+        assertEquals(8000, register0.getDecimalValue());
+        assertEquals(16384, register1.getDecimalValue());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(conditionCode.getConditionCodeType(), ConditionCodeType.OVERFLOW);
+        assertEquals(ConditionCodeType.OVERFLOW, conditionCode.getConditionCodeType());
     }
 
     @Test
@@ -63,9 +63,9 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(instruction.symbolicForm(), "DVD 2,0");
-        assertEquals(register2.getDecimalValue(), 73);
-        assertEquals(register3.getDecimalValue(), 158);
+        assertEquals("DVD 2,0", instruction.symbolicForm());
+        assertEquals(73, register2.getDecimalValue());
+        assertEquals(158, register3.getDecimalValue());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(conditionCode.getConditionCodeType(), ConditionCodeType.DIVZERO);
+        assertEquals(ConditionCodeType.DIVZERO, conditionCode.getConditionCodeType());
     }
 
     @Test
@@ -87,8 +87,8 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(ciscComputer.getConditionCode().getConditionCodeType(), ConditionCodeType.EQUALORNOT);
-        assertEquals(ciscComputer.getConditionCode().getDecimalValue(), 1);
+        assertEquals(ConditionCodeType.EQUALORNOT, ciscComputer.getConditionCode().getConditionCodeType());
+        assertEquals(1, ciscComputer.getConditionCode().getDecimalValue());
     }
 
     @Test
@@ -99,8 +99,8 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(ciscComputer.getConditionCode().getConditionCodeType(), ConditionCodeType.EQUALORNOT);
-        assertEquals(ciscComputer.getConditionCode().getDecimalValue(), 0);
+        assertEquals(ConditionCodeType.EQUALORNOT, ciscComputer.getConditionCode().getConditionCodeType());
+        assertEquals(0, ciscComputer.getConditionCode().getDecimalValue());
     }
 
     @Test
@@ -111,7 +111,7 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(register0.getDecimalValue(), 280);
+        assertEquals(280, register0.getDecimalValue());
     }
 
     @Test
@@ -122,7 +122,7 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(register0.getDecimalValue(), 1365);
+        assertEquals(1365, register0.getDecimalValue());
     }
 
     @Test
@@ -132,7 +132,7 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(register0.getDecimalValue(), -23659);
+        assertEquals(-23659, register0.getDecimalValue());
     }
 
     @Test
@@ -142,8 +142,8 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(instruction.symbolicForm(), "SRC 0,3,1,1");
-        assertEquals(register0.getValue(true), "0000000000110000");
+        assertEquals("SRC 0,3,1,1", instruction.symbolicForm());
+        assertEquals("0000000000110000", register0.getValue(true));
     }
 
     @Test
@@ -153,8 +153,8 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(instruction.symbolicForm(), "SRC 0,3,1,0");
-        assertEquals(register0.getValue(true), "0000000000110000");
+        assertEquals("SRC 0,3,1,0", instruction.symbolicForm());
+        assertEquals("0000000000110000", register0.getValue(true));
     }
 
     @Test
@@ -165,7 +165,7 @@ public class ArithmeticLogicalInstructionProcessorTest {
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
         assertEquals(instruction.symbolicForm(), "SRC 0,2,0,0");
-        assertEquals(register0.getValue(true), "1100000000000001");
+        assertEquals("1100000000000001", register0.getValue(true));
     }
 
     @Test
@@ -175,8 +175,8 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(instruction.symbolicForm(), "SRC 0,2,0,1");
-        assertEquals(register0.getValue(true), "0010000000000001");
+        assertEquals("SRC 0,2,0,1", instruction.symbolicForm());
+        assertEquals("0010000000000001", register0.getValue(true));
     }
 
     @Test
@@ -186,8 +186,8 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(instruction.symbolicForm(), "RRC 0,2,0,1");
-        assertEquals(register0.getValue(true), "1010000000000001");
+        assertEquals("RRC 0,2,0,1", instruction.symbolicForm());
+        assertEquals("1010000000000001", register0.getValue(true));
     }
 
     @Test
@@ -197,7 +197,7 @@ public class ArithmeticLogicalInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(instruction.symbolicForm(), "RRC 0,2,1,1");
-        assertEquals(register0.getValue(true), "0000000000011010");
+        assertEquals("RRC 0,2,1,1", instruction.symbolicForm());
+        assertEquals("0000000000011010", register0.getValue(true));
     }
 }
