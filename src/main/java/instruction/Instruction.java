@@ -100,7 +100,7 @@ public class Instruction {
             symbolicForm += "," + deviceId;
         }
 
-        if (indirect) {
+        if (Boolean.TRUE.equals(indirect)) {
             symbolicForm += ",1";
         }
 

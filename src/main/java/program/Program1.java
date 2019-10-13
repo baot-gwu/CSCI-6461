@@ -39,6 +39,8 @@ public class Program1 {
                 false, false, false, null, 0);
 
         instruction.getType().getProcessor().process(ciscComputer, instruction);
+
+        System.out.println(instruction.symbolicForm());
     }
 
     private void outputValue(CiscComputer ciscComputer) {
@@ -46,6 +48,8 @@ public class Program1 {
                 null, null, null, null, 1);
 
         instruction.getType().getProcessor().process(ciscComputer, instruction);
+
+        System.out.println(instruction.symbolicForm());
     }
 
     private void storeValue(CiscComputer ciscComputer, int addressCount, int memoryAddressStartPoint) {
@@ -53,6 +57,8 @@ public class Program1 {
                 false, false, false, null, null);
 
         instruction.getType().getProcessor().process(ciscComputer, instruction);
+
+        System.out.println(instruction.symbolicForm());
     }
 
     public int findClosestNumber(CiscComputer ciscComputer, int numberToBeComparedWith, int totalNumbers, int memoryAddressStartPoint) {
@@ -80,6 +86,8 @@ public class Program1 {
         GeneralPurposeRegister generalPurposeRegister = ciscComputer.getGeneralPurposeRegister(registerNumber);
         instruction = new Instruction(generalPurposeRegister, null, InstructionType.SMR, address, null, null, null, null, null);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
+
+        System.out.println(instruction.symbolicForm());
 
         return Math.abs(generalPurposeRegister.getDecimalValue());
     }
