@@ -35,8 +35,8 @@ public class InputOutputRegisterProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(instruction.symbolicForm(), "IN 1,0");
-        assertEquals(register1.getValue(true), "0010101101010111");
+        assertEquals("IN 1,0", instruction.symbolicForm());
+        assertEquals("0010101101010111", register1.getValue(true));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class InputOutputRegisterProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals(instruction.symbolicForm(), "OUT 1,1");
-        assertEquals(device.getBinaryValue(), "0000000100000110");
+        assertEquals("OUT 1,1", instruction.symbolicForm());
+        assertEquals("0000000100000110", device.getBinaryValue());
     }
 }
