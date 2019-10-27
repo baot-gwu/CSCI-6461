@@ -28,7 +28,7 @@ public class LoadStoreInstructionProcessor implements InstructionProcessor {
 
     @Override
     public void process(CiscComputer ciscComputer, Instruction instruction) {
-        Address address = AddressDecoder.decodeAddress(instruction);
+        Address address = AddressDecoder.decodeAddress(instruction, ciscComputer.getMachineFaultRegister());
 
         ciscComputer.getMemoryAddressRegister().setDecimalValue(address.getEffectiveAddress());
 

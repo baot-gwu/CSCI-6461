@@ -29,6 +29,7 @@ public class CiscComputer {
     private InstructionRegister instructionRegister;
     private ProgramCounter programCounter;
     private ConditionCode conditionCode;
+    private MachineFaultRegister machineFaultRegister;
     private Memory memory;
     private List<Device> devices = new ArrayList<>(Device.MAX_DEVICES);
 
@@ -94,6 +95,14 @@ public class CiscComputer {
 
     public void setConditionCode(ConditionCode conditionCode) {
         this.conditionCode = conditionCode;
+    }
+
+    public MachineFaultRegister getMachineFaultRegister() {
+        return machineFaultRegister;
+    }
+
+    public void setMachineFaultRegister(MachineFaultRegister machineFaultRegister) {
+        this.machineFaultRegister = machineFaultRegister;
     }
 
     public void setDevices(List<Device> devices) {

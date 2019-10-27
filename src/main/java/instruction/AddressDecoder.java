@@ -2,11 +2,17 @@ package main.java.instruction;
 
 import main.java.memory.Address;
 import main.java.memory.Cache;
+import main.java.memory.Memory;
+import main.java.register.MachineFaultRegister;
 import main.java.register.Register;
+import main.java.util.Utils;
 
 public class AddressDecoder {
 
-    protected static Address decodeAddress(Instruction instruction) {
+    public static final int RESERVED_LOCATION = 6;
+    private static final int RESERVED_ADDRESS_MACHINE_FAULT = 1;
+
+    protected static Address decodeAddress(Instruction instruction, MachineFaultRegister machineFaultRegister) {
         Register generalPurposeRegister = instruction.getFirstRegister();
         Register indexRegister = instruction.getSecondRegister();
         InstructionType type = instruction.getType();
@@ -27,6 +33,14 @@ public class AddressDecoder {
 
         if (Boolean.TRUE.equals(indirect)) {
             effectiveAddressInDecimal = Cache.getWordDecimalValue(new Address(effectiveAddressInDecimal));
+        }
+
+        if (effectiveAddressInDecimal > Memory.MAX_MEMORY_SIZE) {
+            machineFaultRegister.setDecimalValue(Utils.MFR_ID_ILLEGAL_MEMORY_ADDRESS_BEYOND_SIZE);
+            effectiveAddressInDecimal = RESERVED_ADDRESS_MACHINE_FAULT;
+        } else if (effectiveAddressInDecimal <= RESERVED_LOCATION) {
+            machineFaultRegister.setDecimalValue(Utils.MFR_ID_ILLEGAL_MEMORY_ADDRESS_RESERVED_LOCATION);
+            effectiveAddressInDecimal = RESERVED_ADDRESS_MACHINE_FAULT;
         }
 
         return new Address(effectiveAddressInDecimal);

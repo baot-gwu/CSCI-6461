@@ -31,6 +31,8 @@ public enum InstructionType {
     NOT("011001", ArithmeticLogicalInstructionProcessor.getInstance()),
     SRC("011111", ArithmeticLogicalInstructionProcessor.getInstance()),
     RRC("100000", ArithmeticLogicalInstructionProcessor.getInstance()),
+    HLT("000000", MiscellaneousInstructionProcessor.getInstance()),
+    TRAP("011110", MiscellaneousInstructionProcessor.getInstance()),
     LDX("101001", LoadStoreInstructionProcessor.getInstance()),
     STX("101010", LoadStoreInstructionProcessor.getInstance()),
     IN("111101", InputOutputInstructionProcessor.getInstance()),

@@ -35,7 +35,7 @@ public class ArithmeticLogicalInstructionProcessor implements InstructionProcess
 
     @Override
     public void process(CiscComputer ciscComputer, Instruction instruction) {
-        Address address = AddressDecoder.decodeAddress(instruction);
+        Address address = AddressDecoder.decodeAddress(instruction, ciscComputer.getMachineFaultRegister());
         Register firstRegister = instruction.getFirstRegister();
         Register secondRegister = instruction.getSecondRegister();
         ciscComputer.getConditionCode().setConditionCodeType(null);

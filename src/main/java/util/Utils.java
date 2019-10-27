@@ -15,6 +15,11 @@ import java.util.List;
  */
 public class Utils {
 
+    public static final int MFR_ID_ILLEGAL_MEMORY_ADDRESS_RESERVED_LOCATION = 0;
+    public static final int MFR_ID_ILLEGAL_TRAP_CODE = 1;
+    public static final int MFR_ID_ILLEGAL_OPCODE = 2;
+    public static final int MFR_ID_ILLEGAL_MEMORY_ADDRESS_BEYOND_SIZE = 3;
+
     private static final List<InstructionType> instructionWithNoIndexRegister = Arrays.asList(
             InstructionType.MLT, InstructionType.DVD, InstructionType.TRR, InstructionType.AND, InstructionType.ORR,
             InstructionType.NOT, InstructionType.SRC, InstructionType.RRC, InstructionType.IN, InstructionType.OUT,
@@ -155,5 +160,15 @@ public class Utils {
 
     public static String arrayToStringParagraph(String[] arr) {
         return StringUtils.join(arr, "\n");
+    }
+
+    public static String trimBinaryValue(String binaryValue, int size) {
+        int length = binaryValue.length();
+
+        if (length > size) {
+            binaryValue = binaryValue.substring(length - size, length);
+        }
+
+        return binaryValue;
     }
 }

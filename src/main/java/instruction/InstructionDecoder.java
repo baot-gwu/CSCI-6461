@@ -34,6 +34,7 @@ public class InstructionDecoder {
 
         InstructionType type = getInstructionType(binaryInstruction);
         if (type == null) {
+            ciscComputer.getMachineFaultRegister().setDecimalValue(Utils.MFR_ID_ILLEGAL_OPCODE);
             return null;
         }
 

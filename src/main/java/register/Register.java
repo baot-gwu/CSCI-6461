@@ -32,6 +32,8 @@ public abstract class Register {
     }
 
     public void setBinaryValue(String binaryValue) {
+        binaryValue = Utils.trimBinaryValue(binaryValue, getType().getSize());
+
         this.binaryValue = binaryValue;
         this.decimalValue = Utils.unsignedBinaryToDecimal(binaryValue);
     }
@@ -42,6 +44,8 @@ public abstract class Register {
 
     public void setDecimalValue(int decimalValue) {
         this.decimalValue = decimalValue;
-        this.binaryValue = Utils.decimalToUnsignedBinary(decimalValue);
+        binaryValue = Utils.decimalToUnsignedBinary(decimalValue);
+
+        this.binaryValue = Utils.trimBinaryValue(binaryValue, getType().getSize());
     }
 }

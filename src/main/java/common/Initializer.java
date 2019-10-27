@@ -41,6 +41,8 @@ public class Initializer {
 
         ciscComputer.setDevices(createDevices());
 
+        ciscComputer.setMachineFaultRegister(new MachineFaultRegister());
+
         return ciscComputer;
     }
 

@@ -24,7 +24,7 @@ public class TransferInstructionProcessor implements InstructionProcessor {
 
     @Override
     public void process(CiscComputer ciscComputer, Instruction instruction) {
-        Address address = AddressDecoder.decodeAddress(instruction);
+        Address address = AddressDecoder.decodeAddress(instruction, ciscComputer.getMachineFaultRegister());
         Register firstRegister = instruction.getFirstRegister();
         ciscComputer.getConditionCode().setConditionCodeType(null);
         ciscComputer.getMemoryAddressRegister().setDecimalValue(0);
@@ -91,7 +91,7 @@ public class TransferInstructionProcessor implements InstructionProcessor {
 
         List<GeneralPurposeRegister> GeneralPurposeRegisters = ciscComputer.getGeneralPurposeRegisters();
         GeneralPurposeRegisters.get(3).setDecimalValue(ciscComputer.getProgramCounter().getDecimalValue() + 1);
-        GeneralPurposeRegisters.get(0).setBinaryValue(String.valueOf(String.valueOf(Cache.getWordStringValue(new Address(8)))));
+        GeneralPurposeRegisters.get(0).setBinaryValue(Cache.getWordStringValue(new Address(8)));
 //        GeneralPurposeRegisters.get(0).setBinaryValue(String.valueOf(Memory.memoryMap.get(Utils.binaryToDecimal(String.valueOf(Memory.memoryMap.get(8))))));
 
         ciscComputer.setGeneralPurposeRegisters(GeneralPurposeRegisters);
