@@ -25,6 +25,11 @@ public class Memory {
     private static final String FILE_NAME = "memory.txt";
     private static final String BACK_UP_FILE_NAME = "memory-backup.txt";
 
+    public static final int RESERVE_ADDRESS_FOR_TRAP_INSTRUCTION = 0;
+    public static final int RESERVE_ADDRESS_FOR_MACHINE_FAULT = 1;
+    public static final int RESERVE_ADDRESS_TO_STORE_PC_FOR_TRAP = 2;
+    public static final int RESERVE_ADDRESS_TO_STORE_PC_FOR_MACHINE_FAULT = 4;
+
     public static Map<Integer, Word> memoryMap = new LinkedHashMap<>(MAX_MEMORY_SIZE);
 
     Path path = Paths.get(FILE_NAME).toAbsolutePath();

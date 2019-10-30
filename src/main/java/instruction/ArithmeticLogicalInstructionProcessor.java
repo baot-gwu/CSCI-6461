@@ -215,6 +215,7 @@ public class ArithmeticLogicalInstructionProcessor implements InstructionProcess
     }
 
     private void subtractMemoryFromRegister(Register generalPurposeRegister, Address address) {
+
         int result = generalPurposeRegister.getDecimalValue() - Cache.getWordDecimalValue(address);
 
         generalPurposeRegister.setDecimalValue(result);

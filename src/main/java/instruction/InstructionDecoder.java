@@ -41,7 +41,7 @@ public class InstructionDecoder {
         String firstRegisterNumberInBinary = binaryInstruction.substring(6, 8);
 
         Register fistRegister = null;
-        if (type != InstructionType.LDX && type != InstructionType.STX) {
+        if (type != InstructionType.LDX && type != InstructionType.STX && type != InstructionType.TRAP) {
             fistRegister = ciscComputer.getGeneralPurposeRegister(Utils.binaryToDecimal(firstRegisterNumberInBinary));
         }
 
@@ -52,6 +52,7 @@ public class InstructionDecoder {
         Integer count = null;
         Integer effectiveAddressInDecimal = null;
         Integer deviceId = null;
+        Integer trapCode = null;
 
         if (Utils.hasSecondRegister(type)) {
             if (Utils.hasIndexRegister(type)) {
@@ -65,6 +66,8 @@ public class InstructionDecoder {
             arithmeticShift = binaryInstruction.charAt(8) == '0';
             leftShift = binaryInstruction.charAt(9) == '1';
             count = Utils.binaryToDecimal(binaryInstruction.substring(12, 16));
+        } else if (type == InstructionType.TRAP) {
+            trapCode = Utils.binaryToDecimal(binaryInstruction.substring(12, 16));
         }
 
         boolean indirect = binaryInstruction.substring(10, 11).equals("1");
@@ -77,7 +80,7 @@ public class InstructionDecoder {
         }
 
         return new Instruction(fistRegister, secondRegister, type, effectiveAddressInDecimal, indirect, arithmeticShift,
-                leftShift, count, deviceId);
+                leftShift, count, deviceId, trapCode);
     }
 
     private InstructionType getInstructionType(String binaryInstruction) {

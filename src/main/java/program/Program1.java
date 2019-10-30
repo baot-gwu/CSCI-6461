@@ -36,7 +36,7 @@ public class Program1 {
 
     private void inputValue(CiscComputer ciscComputer) {
         instruction = new Instruction(ciscComputer.getGeneralPurposeRegister(registerNumber), null, InstructionType.IN, null,
-                false, false, false, null, 0);
+                false, false, false, null, 0, null);
 
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
@@ -45,7 +45,7 @@ public class Program1 {
 
     private void outputValue(CiscComputer ciscComputer) {
         instruction = new Instruction(ciscComputer.getGeneralPurposeRegister(registerNumber), null, InstructionType.OUT, null,
-                null, null, null, null, 1);
+                null, null, null, null, 1, null);
 
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
@@ -54,7 +54,7 @@ public class Program1 {
 
     private void storeValue(CiscComputer ciscComputer, int addressCount, int memoryAddressStartPoint) {
         instruction = new Instruction(ciscComputer.getGeneralPurposeRegister(registerNumber), null, InstructionType.STR, memoryAddressStartPoint + addressCount,
-                false, false, false, null, null);
+                false, false, false, null, null, null);
 
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
@@ -84,7 +84,7 @@ public class Program1 {
         inputValue(ciscComputer);
 
         GeneralPurposeRegister generalPurposeRegister = ciscComputer.getGeneralPurposeRegister(registerNumber);
-        instruction = new Instruction(generalPurposeRegister, null, InstructionType.SMR, address, null, null, null, null, null);
+        instruction = new Instruction(generalPurposeRegister, null, InstructionType.SMR, address, null, null, null, null, null, null);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
         System.out.println(instruction.symbolicForm());

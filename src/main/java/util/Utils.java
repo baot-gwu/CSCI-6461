@@ -23,7 +23,7 @@ public class Utils {
     private static final List<InstructionType> instructionWithNoIndexRegister = Arrays.asList(
             InstructionType.MLT, InstructionType.DVD, InstructionType.TRR, InstructionType.AND, InstructionType.ORR,
             InstructionType.NOT, InstructionType.SRC, InstructionType.RRC, InstructionType.IN, InstructionType.OUT,
-            InstructionType.CHK);
+            InstructionType.CHK, InstructionType.TRAP);
 
     public static int binaryToDecimal(String binary) {
         return Integer.parseInt(binary, 2);
@@ -122,7 +122,7 @@ public class Utils {
     }
 
     public static boolean hasSecondRegister(InstructionType type) {
-        return InstructionType.NOT != type && !isShiftOrRotateInstruction(type) && !isIoInstruction(type);
+        return InstructionType.NOT != type && !isShiftOrRotateInstruction(type) && !isIoInstruction(type) && InstructionType.TRAP != type;
     }
 
     public static boolean isShiftOrRotateInstruction(InstructionType type) {

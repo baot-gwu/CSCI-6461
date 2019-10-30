@@ -6,7 +6,11 @@ import main.java.memory.Cache;
 import main.java.memory.Word;
 import main.java.util.Utils;
 
+import static main.java.memory.Memory.RESERVE_ADDRESS_TO_STORE_PC_FOR_TRAP;
+
 public class MiscellaneousInstructionProcessor  implements InstructionProcessor {
+
+    private static final int TABLE_ADDRESS_IN_MEMORY_FOR_TRAP = 1000;
 
     private static InstructionProcessor processor;
 
@@ -22,7 +26,7 @@ public class MiscellaneousInstructionProcessor  implements InstructionProcessor 
     public void process(CiscComputer ciscComputer, Instruction instruction) {
         switch (instruction.getType()) {
             case TRAP:
-                trap(ciscComputer);
+                trap(ciscComputer, instruction.getTrapCode());
                 break;
             case HLT:
                 stopTheMachine();
@@ -34,7 +38,17 @@ public class MiscellaneousInstructionProcessor  implements InstructionProcessor 
 
     }
 
-    private void trap(CiscComputer ciscComputer) {
-        Cache.writeToMemory(new Address(2), new Word(Utils.decimalToUnsignedBinary(ciscComputer.getProgramCounter().getDecimalValue() + 1)));
+    private void trap(CiscComputer ciscComputer, Integer trapCode) {
+        Cache.writeToMemory(new Address(RESERVE_ADDRESS_TO_STORE_PC_FOR_TRAP + 1),
+                new Word(Utils.decimalToUnsignedBinary(ciscComputer.getProgramCounter().getDecimalValue() + 1)));
+
+        int addressOfRoutineInstruction = TABLE_ADDRESS_IN_MEMORY_FOR_TRAP + trapCode;
+
+        ciscComputer.getProgramCounter().setDecimalValue(addressOfRoutineInstruction);
+        ciscComputer.getInstructionRegister().setBinaryInstruction(Cache.getWordStringValue(new Address(addressOfRoutineInstruction)));
+        Instruction instruction = new InstructionDecoder().decode(ciscComputer);
+        instruction.getType().getProcessor().process(ciscComputer, instruction);
+
+        ciscComputer.getProgramCounter().setDecimalValue(Cache.getWordDecimalValue(new Address(RESERVE_ADDRESS_TO_STORE_PC_FOR_TRAP + 1)));
     }
 }

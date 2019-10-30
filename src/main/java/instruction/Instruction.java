@@ -20,9 +20,10 @@ public class Instruction {
     private Integer count;
     private Boolean indirect;
     private Integer deviceId;
+    private Integer trapCode;
 
     public Instruction(Register firstRegister, Register secondRegister, InstructionType type, Integer effectiveAddressInDecimal,
-                       Boolean indirect, Boolean arithmetic, Boolean left, Integer count, Integer deviceId) {
+                       Boolean indirect, Boolean arithmetic, Boolean left, Integer count, Integer deviceId, Integer trapCode) {
 
         this.firstRegister = firstRegister;
         this.secondRegister = secondRegister;
@@ -33,6 +34,7 @@ public class Instruction {
         this.arithmetic = arithmetic;
         this.left = left;
         this.deviceId = deviceId;
+        this.trapCode = trapCode;
     }
 
     public Register getFirstRegister() {
@@ -79,6 +81,10 @@ public class Instruction {
         return deviceId;
     }
 
+    public Integer getTrapCode() {
+        return trapCode;
+    }
+
     public String symbolicForm() {
         String symbolicForm = type.name() + " " + (firstRegister == null ? "" : firstRegister.getRegisterNumber());
 
@@ -102,6 +108,10 @@ public class Instruction {
 
         if (Boolean.TRUE.equals(indirect)) {
             symbolicForm += ",1";
+        }
+
+        if (trapCode != null) {
+            symbolicForm += trapCode;
         }
 
         return symbolicForm;
