@@ -35,8 +35,15 @@ public class InputOutputInstructionProcessor implements InstructionProcessor {
             case OUT:
                 outputCharacterToDeviceFromRegister(register, device);
                 break;
+            case CHK:
+                checkDeviceStatusToRegister(register, device);
+                break;
         }
 
+    }
+
+    private void checkDeviceStatusToRegister(Register register, Device device) {
+        register.setDecimalValue(device.getStatus());
     }
 
     private void outputCharacterToDeviceFromRegister(Register register, Device device) {
