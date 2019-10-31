@@ -14,7 +14,7 @@ import main.java.util.Utils;
 public abstract class Register {
 
     int registerNumber;
-    private String binaryValue;
+    protected String binaryValue;
     private int decimalValue;
 
     abstract RegisterType getType();

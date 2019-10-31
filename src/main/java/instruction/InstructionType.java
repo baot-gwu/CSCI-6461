@@ -37,7 +37,12 @@ public enum InstructionType {
     STX("101010", LoadStoreInstructionProcessor.getInstance()),
     IN("111101", InputOutputInstructionProcessor.getInstance()),
     OUT("111110", InputOutputInstructionProcessor.getInstance()),
-    CHK("111111", InputOutputInstructionProcessor.getInstance());
+    CHK("111111", InputOutputInstructionProcessor.getInstance()),
+    FADD("100001", FloatingPointInstructionProcessor.getInstance()),
+    FSUB("100010", FloatingPointInstructionProcessor.getInstance()),
+    CNVRT("100101", FloatingPointInstructionProcessor.getInstance()),
+    LDFR("110010", FloatingPointInstructionProcessor.getInstance()),
+    STFR("110011", FloatingPointInstructionProcessor.getInstance());
 
     private final String opcodeInBinary;
     private final InstructionProcessor processor;

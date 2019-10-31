@@ -29,6 +29,8 @@ public class Initializer {
 
         ciscComputer.setGeneralPurposeRegisters(createGeneralPurposeRegisters());
 
+        ciscComputer.setFloatingPointRegisters(createFloatingPointRegisters());
+
         ciscComputer.setInstructionRegister(new InstructionRegister());
 
         ciscComputer.setMemoryAddressRegister(new MemoryAddressRegister());
@@ -61,6 +63,11 @@ public class Initializer {
                 new GeneralPurposeRegister(1),
                 new GeneralPurposeRegister(2),
                 new GeneralPurposeRegister(3));
+    }
+
+    private List<FloatingPointRegister> createFloatingPointRegisters() {
+        return Arrays.asList(new FloatingPointRegister(0),
+                new FloatingPointRegister(1));
     }
 
     private List<IndexRegister> createIndexRegisters() {

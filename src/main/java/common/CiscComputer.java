@@ -16,6 +16,7 @@ import java.util.List;
  *
  * 4 General purpose register
  * 3 Index register
+ * 2 Floating Point register
  * 1 Instruction register
  * 1 Program Counter
  * and Memory with length of 2048 words
@@ -23,6 +24,7 @@ import java.util.List;
 public class CiscComputer {
 
     private List<GeneralPurposeRegister> generalPurposeRegisters = new ArrayList<>(4);
+    private List<FloatingPointRegister> floatingPointRegisters = new ArrayList<>(2);
     private List<IndexRegister> indexRegisters = new ArrayList<>(3);
     private MemoryAddressRegister memoryAddressRegister;
     private MemoryBufferRegister memoryBufferRegister;
@@ -47,6 +49,18 @@ public class CiscComputer {
 
     public void setIndexRegisters(List<IndexRegister> indexRegisters) {
         this.indexRegisters = indexRegisters;
+    }
+
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public List<FloatingPointRegister> getFloatingPointRegisters() {
+        return floatingPointRegisters;
+    }
+
+    public void setFloatingPointRegisters(List<FloatingPointRegister> floatingPointRegisters) {
+        this.floatingPointRegisters = floatingPointRegisters;
     }
 
     public MemoryAddressRegister getMemoryAddressRegister() {
@@ -125,6 +139,16 @@ public class CiscComputer {
         }
 
         throw new IllegalArgumentException("Invalid General Purpose Register Number" + registerNumber);
+    }
+
+    public FloatingPointRegister getFloatingPointRegister(int registerNumber) {
+        for (FloatingPointRegister register : floatingPointRegisters) {
+            if (register.getRegisterNumber() == registerNumber) {
+                return register;
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid Floating Point Register Number" + registerNumber);
     }
 
     public IndexRegister getIndexRegister(int registerNumber) {

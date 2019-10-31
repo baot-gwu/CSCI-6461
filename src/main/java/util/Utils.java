@@ -4,6 +4,7 @@ import main.java.instruction.InstructionType;
 import main.java.memory.Word;
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +25,9 @@ public class Utils {
             InstructionType.MLT, InstructionType.DVD, InstructionType.TRR, InstructionType.AND, InstructionType.ORR,
             InstructionType.NOT, InstructionType.SRC, InstructionType.RRC, InstructionType.IN, InstructionType.OUT,
             InstructionType.CHK, InstructionType.TRAP);
+
+    private static final List<InstructionType> floatingPointInstructions = Arrays.asList(
+            InstructionType.FADD, InstructionType.FSUB, InstructionType.CNVRT, InstructionType.LDFR, InstructionType.STFR);
 
     public static int binaryToDecimal(String binary) {
         return Integer.parseInt(binary, 2);
@@ -148,7 +152,7 @@ public class Utils {
     public static int[] stringToIntegerArray(String str, String regex) {
         String[] temp = str.split(regex);
         int[] array = new int[temp.length];
-        for (int i = 0; i < temp.length; i++){
+        for (int i = 0; i < temp.length; i++) {
             array[i] = Integer.parseInt(temp[i].trim());
         }
         return array;
@@ -170,5 +174,46 @@ public class Utils {
         }
 
         return binaryValue;
+    }
+
+    public static boolean isFloatingPointInstruction(InstructionType type) {
+        return floatingPointInstructions.contains(type);
+    }
+
+    public static BigDecimal binaryToFloatingPoint(String value) {
+        int exponent = binaryToDecimal(value.substring(2, 8));
+        int mantissa = binaryToDecimal(value.substring(8, 16));
+
+        BigDecimal fpValue = new BigDecimal(mantissa + "E" + (value.charAt(1) == '1' ? "-" : "+") + exponent);
+
+        if (value.charAt(0) == '1') {
+            fpValue = fpValue.negate();
+        }
+
+        return fpValue;
+    }
+
+    public static String floatingPointToBinary(BigDecimal value) {
+        String[] engStr = value.toEngineeringString().split("E");
+        String mantissa = trimBinaryValue(decimalToUnsignedBinary(Math.abs(Integer.parseInt(engStr[0]))), 8);
+
+        int exponant = 0;
+        if (engStr.length == 2) {
+            exponant = Integer.parseInt(engStr[1]);
+        }
+
+        String expStr = trimBinaryValue(decimalToUnsignedBinary(Math.abs(exponant)), 6);
+
+        expStr = ((exponant < 0) ? "1" : "0") + expStr;
+
+        if (value.compareTo(BigDecimal.ZERO) < 0) {
+            return ("1" + expStr + mantissa);
+        }
+
+        return ("0" + expStr + mantissa);
+    }
+
+    public static int getMantissa(BigDecimal value) {
+        return value.unscaledValue().abs().intValue();
     }
 }

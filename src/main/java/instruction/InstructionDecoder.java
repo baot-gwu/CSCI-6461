@@ -41,7 +41,9 @@ public class InstructionDecoder {
         String firstRegisterNumberInBinary = binaryInstruction.substring(6, 8);
 
         Register fistRegister = null;
-        if (type != InstructionType.LDX && type != InstructionType.STX && type != InstructionType.TRAP) {
+        if (Utils.isFloatingPointInstruction(type)) {
+            fistRegister = ciscComputer.getFloatingPointRegister(Utils.binaryToDecimal(firstRegisterNumberInBinary));
+        } else if (type != InstructionType.LDX && type != InstructionType.STX && type != InstructionType.TRAP) {
             fistRegister = ciscComputer.getGeneralPurposeRegister(Utils.binaryToDecimal(firstRegisterNumberInBinary));
         }
 
