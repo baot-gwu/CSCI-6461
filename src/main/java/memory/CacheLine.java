@@ -36,14 +36,14 @@ public class CacheLine {
     protected void setWord(Address address, Word word) {
         this.words[address.getOffset()] = word;
 
-        Memory.memoryMap.put(address.getTag() * MAX_WORD + address.getOffset() + 1, word);
+        Memory.memoryMap.put(address.getTag() * MAX_WORD + address.getOffset(), word);
     }
 
     protected void fetWords(int tag) {
         this.words = new Word[MAX_WORD];
 
         for (int i = 0; i < MAX_WORD; i++) {
-            int address = (tag * MAX_WORD) + i + 1;
+            int address = (tag * MAX_WORD) + i;
 
             System.out.println("Reading from memory address: " + address + " Value: " + Memory.memoryMap.get(address));
 

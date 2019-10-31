@@ -52,4 +52,16 @@ public class InputOutputRegisterProcessorTest {
         assertEquals("OUT 1,1", instruction.symbolicForm());
         assertEquals("0000000100000110", device.getBinaryValue());
     }
+
+    @Test
+    public void testDeviceStatus() {
+        device = new ConsolePrinter();
+        ciscComputer.setDevice(device);
+
+        ciscComputer.getInstructionRegister().setBinaryInstruction("1111110100000001");
+        Instruction instruction = new InstructionDecoder().decode(ciscComputer);
+        instruction.getType().getProcessor().process(ciscComputer, instruction);
+
+        assertEquals("CHK 1,1", instruction.symbolicForm());
+    }
 }

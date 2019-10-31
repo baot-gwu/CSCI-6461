@@ -35,7 +35,7 @@ public class Memory {
     Path path = Paths.get(FILE_NAME).toAbsolutePath();
 
     public void clear() {
-        for (int i = 1; i <= MAX_MEMORY_SIZE; i++) {
+        for (int i = 0; i < MAX_MEMORY_SIZE; i++) {
             memoryMap.put(i, new Word(""));
         }
 
@@ -46,8 +46,8 @@ public class Memory {
         try {
             List<String> list = Files.readAllLines(Paths.get(BACK_UP_FILE_NAME).toAbsolutePath());
 
-            for (int i = 1; i <= MAX_MEMORY_SIZE; i++) {
-                memoryMap.put(i, new Word(list.get(i - 1)));
+            for (int i = 0; i < MAX_MEMORY_SIZE; i++) {
+                memoryMap.put(i, new Word(list.get(i)));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,8 +62,8 @@ public class Memory {
         try {
             List<String> list = Files.readAllLines(path);
 
-            for (int i = 1; i <= MAX_MEMORY_SIZE; i++) {
-                memoryMap.put(i, new Word(list.get(i - 1)));
+            for (int i = 0; i < MAX_MEMORY_SIZE; i++) {
+                memoryMap.put(i, new Word(list.get(i)));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -83,7 +83,7 @@ public class Memory {
     }
 
     private byte[] getBytes() {
-        StringBuilder sb = new StringBuilder((Word.MAX_SIZE + 1) * MAX_MEMORY_SIZE);
+        StringBuilder sb = new StringBuilder(Word.MAX_SIZE * MAX_MEMORY_SIZE);
 
         memoryMap.values().forEach(v -> sb.append(v.getValue()).append("\n"));
 

@@ -14,8 +14,8 @@ public class Address {
 
     public Address(int effectiveAddress) {
         this.effectiveAddress = effectiveAddress;
-        this.tag = (effectiveAddress - 1) / CacheLine.MAX_WORD;
-        this.offset = (effectiveAddress - 1) % CacheLine.MAX_WORD;
+        this.tag = effectiveAddress / CacheLine.MAX_WORD;
+        this.offset = effectiveAddress % CacheLine.MAX_WORD;
     }
 
     public int getEffectiveAddress() {
@@ -32,6 +32,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Effective Address=" + effectiveAddress + ", tag=" + (tag + 1)  + ", offset=" + (offset + 1);
+        return "Effective Address=" + effectiveAddress + ", tag=" + tag  + ", offset=" + offset;
     }
 }

@@ -39,7 +39,7 @@ public class MiscellaneousInstructionProcessor  implements InstructionProcessor 
     }
 
     private void trap(CiscComputer ciscComputer, Integer trapCode) {
-        Cache.writeToMemory(new Address(RESERVE_ADDRESS_TO_STORE_PC_FOR_TRAP + 1),
+        Cache.writeToMemory(new Address(RESERVE_ADDRESS_TO_STORE_PC_FOR_TRAP),
                 new Word(Utils.decimalToUnsignedBinary(ciscComputer.getProgramCounter().getDecimalValue() + 1)));
 
         int addressOfRoutineInstruction = TABLE_ADDRESS_IN_MEMORY_FOR_TRAP + trapCode;
@@ -49,6 +49,6 @@ public class MiscellaneousInstructionProcessor  implements InstructionProcessor 
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        ciscComputer.getProgramCounter().setDecimalValue(Cache.getWordDecimalValue(new Address(RESERVE_ADDRESS_TO_STORE_PC_FOR_TRAP + 1)));
+        ciscComputer.getProgramCounter().setDecimalValue(Cache.getWordDecimalValue(new Address(RESERVE_ADDRESS_TO_STORE_PC_FOR_TRAP)));
     }
 }

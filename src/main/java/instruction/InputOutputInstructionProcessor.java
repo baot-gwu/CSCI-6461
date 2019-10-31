@@ -43,7 +43,9 @@ public class InputOutputInstructionProcessor implements InstructionProcessor {
     }
 
     private void checkDeviceStatusToRegister(Register register, Device device) {
-        register.setDecimalValue(device.getStatus());
+        boolean isReady = device.getBinaryValue() != null && device.getBinaryValue().length() > 0;
+
+        register.setDecimalValue(isReady ? 1 : 0);
     }
 
     private void outputCharacterToDeviceFromRegister(Register register, Device device) {

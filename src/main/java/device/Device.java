@@ -12,7 +12,6 @@ public abstract class Device {
     public static final int MAX_DEVICES = 32;
 
     private String value;
-    private int status;
 
     public abstract DeviceType getDeviceType();
 
@@ -32,11 +31,4 @@ public abstract class Device {
         this.value = value;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 }
