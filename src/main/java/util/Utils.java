@@ -195,9 +195,16 @@ public class Utils {
 
     public static String floatingPointToBinary(BigDecimal value) {
         String[] engStr = value.toEngineeringString().split("E");
-        String mantissa = trimBinaryValue(decimalToUnsignedBinary(Math.abs(Integer.parseInt(engStr[0]))), 8);
-
+        String mantissa = engStr[0];
         int exponant = 0;
+
+        if (mantissa.contains(".")) {
+            exponant = mantissa.indexOf('.') - mantissa.length() + 1;
+            mantissa = mantissa.replace(".", "");
+        }
+
+        mantissa = trimBinaryValue(decimalToUnsignedBinary(Math.abs(Integer.parseInt(mantissa))), 8);
+
         if (engStr.length == 2) {
             exponant = Integer.parseInt(engStr[1]);
         }
