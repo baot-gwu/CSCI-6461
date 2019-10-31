@@ -15,7 +15,8 @@ public enum RegisterType {
     MEMORY_BUFFER_REGISTER("MBR", 16),
     MACHINE_FAULT_REGISTER("MFR", 4),
     PROGRAM_COUNTER("PC", 12),
-    CONDITION_CODE("CC", 4);
+    CONDITION_CODE("CC", 4),
+    FLOATING_POINT_REGISTER("FR", 16);
 
     private String symbol;
     private int size;
