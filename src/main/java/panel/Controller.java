@@ -53,4 +53,17 @@ public class Controller {
         Main.op.pushToScreen("Theme switch to " + themeName, false);
         Main.op.pushNewLine();
     }
+
+    public static void pushToScreen(String content, boolean isIndependentContent) {
+        Main.op.pushToScreen(content, isIndependentContent);
+    }
+
+    public static void pullFromKeyboard() {
+        Main.op.getFromKeyboard();
+    }
+
+    public static void pullFromCard() {
+        Main.op.pushToScreen("Please insert the card...", false);
+        Main.dp.readFromFile();
+    }
 }
