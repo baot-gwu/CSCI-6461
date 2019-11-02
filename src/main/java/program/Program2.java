@@ -19,21 +19,25 @@ public class Program2 {
     private int registerNumber = 0;
     private Instruction instruction;
 
-    public int readAndStoreParagraphIntoMemory(CiscComputer ciscComputer) throws IOException {
+    public int readAndStoreParagraphIntoMemory(CiscComputer ciscComputer) {
         GeneralPurposeRegister generalPurposeRegister = ciscComputer.getGeneralPurposeRegister(registerNumber);
         int address = STARTING_ADDRESS_TO_STORE_PARAGRAPH;
-        List<String> lines = Files.readAllLines(path);
-        String paragraph = makeParagraph(lines);
+        try {
+            List<String> lines = Files.readAllLines(path);
+            String paragraph = makeParagraph(lines);
 
-        byte[] paragraphBytes = paragraph.getBytes();
+            byte[] paragraphBytes = paragraph.getBytes();
 
-        for (byte paragraphByte : paragraphBytes) {
-            generalPurposeRegister.setBinaryValue(Utils.decimalToUnsignedBinary(paragraphByte));
+            for (byte paragraphByte : paragraphBytes) {
+                generalPurposeRegister.setBinaryValue(Utils.decimalToUnsignedBinary(paragraphByte));
 
-            storeValue(ciscComputer, address++, generalPurposeRegister);
+                storeValue(ciscComputer, address++, generalPurposeRegister);
+            }
+
+            return address;
+        } catch (IOException e) {
+            return 0;
         }
-
-        return address;
     }
 
     private String makeParagraph(List<String> lines) {
