@@ -3,6 +3,7 @@ package main.java.panel;
 import main.java.Main;
 import main.java.common.CiscComputer;
 import main.java.program.Program1;
+import main.java.program.Program2;
 import main.java.theme.Theme;
 import main.java.util.Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +39,7 @@ public class OperationPanel extends JFrame{
     private Object dataBufferFlag = new Object();
     private String threadType;
     private Thread pg1;
+    private Thread pg2;
     private Thread dg;
     private Theme theme;
     private final String[] COMMAND_LIST = {
@@ -217,7 +219,9 @@ public class OperationPanel extends JFrame{
             threadType = "program1";
             pg1.start();
         } else if (command.toLowerCase().equals("program2") || command.toLowerCase().equals("program 2")) {
-            program2();
+            pg2 = new Thread(new program2());
+            threadType = "program2";
+            pg2.start();
         } else if (command.toLowerCase().equals("vector test")) {
             vectorTest();
         } else if (command.toLowerCase().equals("floating test")) {
@@ -269,6 +273,37 @@ public class OperationPanel extends JFrame{
                 threadType = "";
             } catch (InterruptedException e) {
                 System.err.println("Program 1 interrupted");
+                newLine();
+            }
+
+            switchCommandMode(true);
+            Controller.update(ciscComputer);
+            Main.busy = false;
+        }
+    }
+
+    class program2 extends Thread {
+        @Override
+        public void run() {
+            Main.busy = true;
+            Program2 pg2 = new Program2();
+            switchCommandMode(false);
+
+            try {
+                CountDownLatch signal = new CountDownLatch(1);
+                dg = new Thread(new DataGetter(signal, "Please input word to match\n", 1, "string"));
+                dg.start();
+
+                signal.await();
+
+                int endAddress = pg2.readAndStoreParagraphIntoMemory(ciscComputer);
+                String output = pg2.matchWord(ciscComputer, endAddress, dataBuffer);
+
+                pushToScreen(output, false);
+                newLine();
+                threadType = "";
+            } catch (InterruptedException e) {
+                System.err.println("Program 2 interrupted");
                 newLine();
             }
 
@@ -361,6 +396,14 @@ public class OperationPanel extends JFrame{
                     dg.interrupt();
                 if (pg1 != null)
                     pg1.interrupt();
+                break;
+            case "program2":
+                System.err.println("Try to interrupt.");
+                if (dg != null)
+                    dg.interrupt();
+                if (pg2 != null)
+                    pg2.interrupt();
+                break;
         }
     }
 

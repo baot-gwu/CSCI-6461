@@ -497,7 +497,7 @@ public class DebugPanel extends JFrame {
                 if (Main.busy){
                     JOptionPane.showMessageDialog(null, "Machine is busy", "Machine is busy, please try it later.", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    Main.op.sendCommand("program2");
+                    Main.op.sendCommand("Program 2");
                 }
             }
         });
