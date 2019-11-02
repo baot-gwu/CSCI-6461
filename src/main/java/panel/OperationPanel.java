@@ -3,6 +3,7 @@ package main.java.panel;
 import main.java.Main;
 import main.java.common.CiscComputer;
 import main.java.program.Program1;
+import main.java.program.Program2;
 import main.java.theme.Theme;
 import main.java.util.Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -38,6 +40,7 @@ public class OperationPanel extends JFrame{
     private Object dataBufferFlag = new Object();
     private String threadType;
     private Thread pg1;
+    private Thread pg2;
     private Thread dg;
     private Theme theme;
     private CountDownLatch keyboardSignal = new CountDownLatch(1);
@@ -218,7 +221,9 @@ public class OperationPanel extends JFrame{
             threadType = "program1";
             pg1.start();
         } else if (command.toLowerCase().equals("program2") || command.toLowerCase().equals("program 2")) {
-            program2();
+            pg2 = new Thread(new program2());
+            threadType = "program2";
+            pg2.start();
         } else if (command.toLowerCase().equals("vector test")) {
             vectorTest();
         } else if (command.toLowerCase().equals("floating test")) {
@@ -279,8 +284,37 @@ public class OperationPanel extends JFrame{
         }
     }
 
-    private void program2() {
-        pushToScreen("Program 2 not available now", false);
+    class program2 extends Thread {
+        @Override
+        public void run() {
+            Main.busy = true;
+            Program2 pg2 = new Program2();
+            switchCommandMode(false);
+
+            try {
+                CountDownLatch signal = new CountDownLatch(1);
+                dg = new Thread(new DataGetter(signal, "Please input the word you want to match: \n", 1, "string", false));
+                dg.start();
+
+                signal.await();
+
+                int endAddress = pg2.readAndStoreParagraphIntoMemory(ciscComputer);
+                String result = pg2.matchWord(ciscComputer, endAddress, dataBuffer);
+
+                pushToScreen(result.trim().equals("")? "Given Word: " + dataBuffer + " No matches" : result, false);
+                newLine();
+                threadType = "";
+            } catch (InterruptedException e) {
+                System.err.println("Program 1 interrupted");
+                newLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            switchCommandMode(true);
+            Controller.update(ciscComputer);
+            Main.busy = false;
+        }
     }
 
     private void vectorTest() {
@@ -366,6 +400,14 @@ public class OperationPanel extends JFrame{
                     dg.interrupt();
                 if (pg1 != null)
                     pg1.interrupt();
+                break;
+            case "program2":
+                System.err.println("Try to interrupt.");
+                if (dg != null)
+                    dg.interrupt();
+                if (pg2 != null)
+                    pg2.interrupt();
+                break;
         }
     }
 
