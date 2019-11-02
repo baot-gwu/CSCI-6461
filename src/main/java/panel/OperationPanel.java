@@ -3,6 +3,7 @@ package main.java.panel;
 import main.java.Main;
 import main.java.common.CiscComputer;
 import main.java.program.Program1;
+import main.java.program.Program2;
 import main.java.theme.Theme;
 import main.java.util.Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -303,10 +304,8 @@ public class OperationPanel extends JFrame{
                 newLine();
                 threadType = "";
             } catch (InterruptedException e) {
-                System.err.println("Program 1 interrupted");
+                System.err.println("Program 2 interrupted");
                 newLine();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
 
             switchCommandMode(true);
@@ -323,12 +322,12 @@ public class OperationPanel extends JFrame{
         pushToScreen("Floating Test not available now", false);
     }
 
-    protected void reset() {
+    void reset() {
         screenContent.delete(0, screenContent.length()).append(banner).append(arrow);
         updateScreen();
     }
 
-    protected void clear() {
+    void clear() {
         screenContent.delete(0, screenContent.length()).append("").append(cleanScreenBanner).append(arrow);
         updateScreen();
     }
