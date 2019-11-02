@@ -16,6 +16,7 @@ public class Program2 {
 
     private final Path path = Paths.get("Paragraph.txt").toAbsolutePath();
     private static final int STARTING_ADDRESS_TO_STORE_PARAGRAPH = 600;
+    private int TOTAL_SENTENCES = 6;
     private int registerNumber = 0;
     private Instruction instruction;
 
@@ -41,9 +42,9 @@ public class Program2 {
     }
 
     private String makeParagraph(List<String> lines) {
-        StringBuilder sb = new StringBuilder(80 * 6);
+        StringBuilder sb = new StringBuilder(80 * TOTAL_SENTENCES);
 
-        lines.forEach(l -> sb.append(l).append("\n"));
+        lines.forEach(l -> sb.append(l).append(" "));
 
         return sb.toString();
     }
@@ -71,13 +72,13 @@ public class Program2 {
     public String matchWord(CiscComputer ciscComputer, int endAddress, String word) {
         String paragraph = loadParagraph(ciscComputer, endAddress);
 
-        String[] lines = paragraph.split("\n");
+        String[] sentences = paragraph.split("\\. ");
 
-        for (int i = 0; i < 6; i++) {
-            String[] words = lines[i].split("[^a-zA-Z0-9]+");
+        for (int i = 0; i < TOTAL_SENTENCES; i++) {
+            String[] words = sentences[i].split("[^a-zA-Z0-9]+");
             for (int j = 0; j < words.length; j++) {
                 if (word.equalsIgnoreCase(words[j])) {
-                    return "Given Word: " + word + " Line Number: " + (i + 1) + " Word Number: " + (j + 1);
+                    return "Given Word: " + word + ", Line Number: " + (i + 1) + ", Word Number: " + (j + 1);
                 }
             }
         }

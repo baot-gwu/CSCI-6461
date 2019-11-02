@@ -27,6 +27,6 @@ public class Program2Test {
     public void testProgram2() throws IOException {
         int endAddress = program2.readAndStoreParagraphIntoMemory(ciscComputer);
 
-        assertEquals("Given Word: library Line Number: 2 Word Number: 4", program2.matchWord(ciscComputer, endAddress, "library"));
+        assertEquals("Given Word: library, Line Number: 2, Word Number: 9", program2.matchWord(ciscComputer, endAddress, "library"));
     }
 }
