@@ -85,7 +85,7 @@ public class DebugPanel extends JFrame {
     private JLabel MBR_label;
     private JTextField PC_textField;
     private JTextField IR_textField;
-    private JTextField CC_textField3;
+    private JTextField CC_textField;
     private JLabel PC_label;
     private JLabel IR_label;
     private JLabel CC_label;
@@ -603,6 +603,8 @@ public class DebugPanel extends JFrame {
         ir = (String.valueOf(data.getIr()) == "null" || data.getIr().length() == 0) ? "0" : data.getIr();
         mar = (String.valueOf(data.getMar()) == "null" || data.getMar().length() == 0) ? "0" : data.getMar();
         mbr = (String.valueOf(data.getMbr()) == "null" || data.getMbr().length() == 0) ? "0" : data.getMbr();
+        mfr = (String.valueOf((data.getMfr())) == "null" || data.getMfr().length() == 0) ? "0" : data.getMfr();
+        cc = (String.valueOf((data.getCc())) == "null" || data.getCc().length() == 0) ? "0" : data.getCc();
 
         R0_textField.setText(Utils.autoFill(r0, 16));
         R1_textField.setText(Utils.autoFill(r1, 16));
@@ -613,8 +615,10 @@ public class DebugPanel extends JFrame {
         IX3_textField.setText(Utils.autoFill(ix3, 16));
         MAR_textField.setText(Utils.autoFill(mar, 16));
         MBR_textField.setText(Utils.autoFill(mbr, 16));
+        MFR_textField.setText(Utils.autoFill(mfr, 4));
         PC_textField.setText(Utils.autoFill(pc, 12));
         IR_textField.setText(Utils.autoFill(ir, 16));
+        CC_textField.setText(Utils.autoFill(cc, 4));
         getMemory();
         binaryToHex();
     }
@@ -630,8 +634,10 @@ public class DebugPanel extends JFrame {
         data.setIx3(ix3);
         data.setMar(mar);
         data.setMbr(mbr);
+        data.setMfr(mfr);
         data.setPc(pc);
         data.setIr(ir);
+        data.setCc(cc);
     }
 
     private void binaryToHex() { // convert binary code to hex code
@@ -643,9 +649,11 @@ public class DebugPanel extends JFrame {
         IX2_value.setText("x" + Utils.binaryToHex(Utils.autoFill(ix2, 16)));
         IX3_value.setText("x" + Utils.binaryToHex(Utils.autoFill(ix3, 16)));
         PC_value.setText("x" + Utils.binaryToHex(Utils.autoFill(pc, 12)));
+//        CC_value.setText("x" + Utils.binaryToHex(Utils.autoFill(cc, 4)));
         IR_value.setText("x" + Utils.binaryToHex(Utils.autoFill(ir, 16)));
         MAR_value.setText("x" + Utils.binaryToHex(Utils.autoFill(mar, 16)));
         MBR_value.setText("x" + Utils.binaryToHex(Utils.autoFill(mbr, 16)));
+        MFR_value.setText("x" + Utils.binaryToHex(Utils.autoFill(mfr, 4)));
     }
 
     protected void restart() {

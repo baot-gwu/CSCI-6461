@@ -25,6 +25,8 @@ public class Display {
     private String pc;
     private String mar;
     private String mbr;
+
+    private String mfr;
     private String ir;
 
     private String cc;
@@ -34,6 +36,7 @@ public class Display {
         setIndexRegisters(ciscComputer.getIndexRegisters(), binary);
         setMar(ciscComputer.getMemoryAddressRegister().getValue(binary));
         setMbr(ciscComputer.getMemoryBufferRegister().getValue(binary));
+        setMfr(ciscComputer.getMachineFaultRegister().getValue(binary));
         setIr(ciscComputer.getInstructionRegister().getValue(binary));
         setPc(ciscComputer.getProgramCounter().getValue(binary));
         setCc(ciscComputer.getConditionCode().toString());
@@ -148,6 +151,14 @@ public class Display {
         this.cc = cc;
     }
 
+    public String getMfr() {
+        return mfr;
+    }
+
+    public void setMfr(String mfr) {
+        this.mfr = mfr;
+    }
+
     @Override
     public String toString() {
         return ", PC=" + (pc == null ? "" : pc)
@@ -161,6 +172,7 @@ public class Display {
                 + ", IR=" + (ir == null ? "" : ir)
                 + ", MAR=" + (mar == null ? "" : mar)
                 + ", MBR=" + (mbr == null ? "" : mbr)
+                + ", MFR=" + (mfr == null ? "" : mfr)
                 + ", CC=" + (cc == null ? "" : cc);
     }
 }
