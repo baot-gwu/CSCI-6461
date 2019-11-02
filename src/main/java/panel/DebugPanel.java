@@ -887,7 +887,7 @@ public class DebugPanel extends JFrame {
             try {
                 String str = Files.readString(path);
                 int index = 1500;
-                for (int i = 0; i < Math.min(80, str.length()); i++){
+                for (int i = 0; i < Math.min(500, str.length()); i++){
                     setMemory(index++, Utils.autoFill(Utils.decimalToBinary(str.charAt(i)), 16));
                 }
                 setMemory(index++, Utils.autoFill("1111111111111111", 16));
