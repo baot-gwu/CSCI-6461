@@ -292,12 +292,16 @@ public class OperationPanel extends JFrame{
 
             try {
                 CountDownLatch signal = new CountDownLatch(1);
-                dg = new Thread(new DataGetter(signal, "Please input the word you want to match: \n", 1, "string", false));
+
+                int endAddress = pg2.readAndStoreParagraphIntoMemory(ciscComputer);
+                String paragraph = pg2.loadParagraph(ciscComputer, endAddress);
+
+                dg = new Thread(new DataGetter(signal, "Paragraph:\n" + paragraph +
+                        "\n\nPlease input the word you want to match: \n", 1, "string", false));
                 dg.start();
 
                 signal.await();
 
-                int endAddress = pg2.readAndStoreParagraphIntoMemory(ciscComputer);
                 String result = pg2.matchWord(ciscComputer, endAddress, dataBuffer);
 
                 pushToScreen(result.trim().equals("")? "Given Word: " + dataBuffer + " No matches" : result, false);

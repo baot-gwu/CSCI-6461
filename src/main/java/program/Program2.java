@@ -74,7 +74,7 @@ public class Program2 {
         String[] lines = paragraph.split("\n");
 
         for (int i = 0; i < 6; i++) {
-            String[] words = lines[i].split(" ");
+            String[] words = lines[i].split("[^a-zA-Z0-9]+");
             for (int j = 0; j < words.length; j++) {
                 if (word.equalsIgnoreCase(words[j])) {
                     return "Given Word: " + word + " Line Number: " + (i + 1) + " Word Number: " + (j + 1);
@@ -85,7 +85,7 @@ public class Program2 {
         return "";
     }
 
-    private String loadParagraph(CiscComputer ciscComputer, int endAddress) {
+    public String loadParagraph(CiscComputer ciscComputer, int endAddress) {
         byte[] bytes = new byte[endAddress - STARTING_ADDRESS_TO_STORE_PARAGRAPH + 1];
 
         for (int i = 0; i < endAddress - STARTING_ADDRESS_TO_STORE_PARAGRAPH; i++) {
