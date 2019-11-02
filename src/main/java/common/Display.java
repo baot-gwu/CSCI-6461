@@ -1,5 +1,6 @@
 package main.java.common;
 
+import main.java.register.ConditionCodeType;
 import main.java.register.GeneralPurposeRegister;
 import main.java.register.IndexRegister;
 
@@ -30,6 +31,7 @@ public class Display {
     private String ir;
 
     private String cc;
+    private String cct;
 
     public Display(CiscComputer ciscComputer, boolean binary) {
         setGeneralPurposeRegisters(ciscComputer.getGeneralPurposeRegisters(), binary);
@@ -39,7 +41,14 @@ public class Display {
         setMfr(ciscComputer.getMachineFaultRegister().getValue(binary));
         setIr(ciscComputer.getInstructionRegister().getValue(binary));
         setPc(ciscComputer.getProgramCounter().getValue(binary));
-        setCc(ciscComputer.getConditionCode().toString());
+        setCc(ciscComputer.getConditionCode().getValue(binary));
+
+        ConditionCodeType conditionCodeType = ciscComputer.getConditionCode().getConditionCodeType();
+        if (conditionCodeType != null) {
+            setCct(conditionCodeType.toString());
+        } else {
+            setCct("");
+        }
     }
 
     private void setIndexRegisters(List<IndexRegister> indexRegisters, boolean binary) {
@@ -159,6 +168,14 @@ public class Display {
         this.mfr = mfr;
     }
 
+    public String getCct() {
+        return cct;
+    }
+
+    public void setCct(String cct) {
+        this.cct = cct;
+    }
+
     @Override
     public String toString() {
         return ", PC=" + (pc == null ? "" : pc)
@@ -173,6 +190,7 @@ public class Display {
                 + ", MAR=" + (mar == null ? "" : mar)
                 + ", MBR=" + (mbr == null ? "" : mbr)
                 + ", MFR=" + (mfr == null ? "" : mfr)
-                + ", CC=" + (cc == null ? "" : cc);
+                + ", CC=" + (cc == null ? "" : cc)
+                + ", CCT=" + (cct == null ? "" : cct);
     }
 }

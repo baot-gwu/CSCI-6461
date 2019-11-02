@@ -45,8 +45,6 @@ public class CacheLine {
         for (int i = 0; i < MAX_WORD; i++) {
             int address = (tag * MAX_WORD) + i;
 
-            System.out.println("Reading from memory address: " + address + " Value: " + Memory.memoryMap.get(address));
-
             this.words[i] = Memory.memoryMap.get(address);
         }
     }

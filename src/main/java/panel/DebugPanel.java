@@ -649,7 +649,7 @@ public class DebugPanel extends JFrame {
         IX2_value.setText("x" + Utils.binaryToHex(Utils.autoFill(ix2, 16)));
         IX3_value.setText("x" + Utils.binaryToHex(Utils.autoFill(ix3, 16)));
         PC_value.setText("x" + Utils.binaryToHex(Utils.autoFill(pc, 12)));
-//        CC_value.setText("x" + Utils.binaryToHex(Utils.autoFill(cc, 4)));
+        CC_value.setText("x" + Utils.binaryToHex(Utils.autoFill(cc, 4)));
         IR_value.setText("x" + Utils.binaryToHex(Utils.autoFill(ir, 16)));
         MAR_value.setText("x" + Utils.binaryToHex(Utils.autoFill(mar, 16)));
         MBR_value.setText("x" + Utils.binaryToHex(Utils.autoFill(mbr, 16)));
