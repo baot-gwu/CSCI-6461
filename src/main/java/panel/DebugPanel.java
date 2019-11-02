@@ -891,6 +891,7 @@ public class DebugPanel extends JFrame {
                     setMemory(index++, Utils.autoFill(Utils.decimalToBinary(str.charAt(i)), 16));
                 }
                 setMemory(index++, Utils.autoFill("1111111111111111", 16));
+                setMemory(7, Utils.autoFill(Utils.decimalToBinary(1500), 16));
             } catch (IOException e) {
                 e.printStackTrace();
 
