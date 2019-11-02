@@ -1,9 +1,13 @@
 package main.java.program;
 
 import main.java.common.CiscComputer;
+import main.java.device.ConsoleKeyboard;
+import main.java.device.Device;
 import main.java.instruction.Instruction;
+import main.java.instruction.InstructionDecoder;
 import main.java.instruction.InstructionType;
 import main.java.register.GeneralPurposeRegister;
+import main.java.register.IndexRegister;
 import main.java.util.Utils;
 
 import java.io.IOException;
@@ -17,12 +21,13 @@ public class Program2 {
     private final Path path = Paths.get("Paragraph.txt").toAbsolutePath();
     private static final int STARTING_ADDRESS_TO_STORE_PARAGRAPH = 600;
     private int TOTAL_SENTENCES = 6;
-    private int registerNumber = 0;
     private Instruction instruction;
 
     public int readAndStoreParagraphIntoMemory(CiscComputer ciscComputer) {
-        GeneralPurposeRegister generalPurposeRegister = ciscComputer.getGeneralPurposeRegister(registerNumber);
-        int address = STARTING_ADDRESS_TO_STORE_PARAGRAPH;
+        IndexRegister indexRegister = ciscComputer.getIndexRegister(1);
+        Device consoleKeyboard = new ConsoleKeyboard();
+        ciscComputer.setDevice(consoleKeyboard);
+
         try {
             List<String> lines = Files.readAllLines(path);
             String paragraph = makeParagraph(lines);
@@ -30,15 +35,29 @@ public class Program2 {
             byte[] paragraphBytes = paragraph.getBytes();
 
             for (byte paragraphByte : paragraphBytes) {
-                generalPurposeRegister.setBinaryValue(Utils.decimalToUnsignedBinary(paragraphByte));
+                processInstruction(ciscComputer, "1010010001001111");
 
-                storeValue(ciscComputer, address++, generalPurposeRegister);
+                consoleKeyboard.setBinaryValue(Utils.decimalToUnsignedBinary(paragraphByte));
+
+                processInstruction(ciscComputer, "1111010000000000");
+                processInstruction(ciscComputer, "0000100001000000");
+
+                // incrementIndexRegisterValue
+                processInstruction(ciscComputer, "0000010100001111");
+                processInstruction(ciscComputer, "0001100100000001");
+                processInstruction(ciscComputer, "0000100100001111");
             }
 
-            return address;
+            return indexRegister.getDecimalValue();
         } catch (IOException e) {
             return 0;
         }
+    }
+
+    private void processInstruction(CiscComputer ciscComputer, String binaryInstruction) {
+        ciscComputer.getInstructionRegister().setBinaryInstruction(binaryInstruction);
+        instruction = new InstructionDecoder().decode(ciscComputer);
+        instruction.getType().getProcessor().process(ciscComputer, instruction);
     }
 
     private String makeParagraph(List<String> lines) {
@@ -49,22 +68,16 @@ public class Program2 {
         return sb.toString();
     }
 
-    private void storeValue(CiscComputer ciscComputer, int address, GeneralPurposeRegister generalPurposeRegister) {
-        instruction = new Instruction(generalPurposeRegister, null, InstructionType.STR, address,
+    public int loadValue(CiscComputer ciscComputer, int address) {
+        GeneralPurposeRegister generalPurposeRegister = ciscComputer.getGeneralPurposeRegister(0);
+        IndexRegister indexRegister = null;
+
+        instruction = new Instruction(generalPurposeRegister, indexRegister, InstructionType.LDR, address,
                 false, false, false, null, null, null);
 
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
         System.out.println(instruction.symbolicForm());
-    }
-
-    public int loadValue(CiscComputer ciscComputer, int address) {
-        GeneralPurposeRegister generalPurposeRegister = ciscComputer.getGeneralPurposeRegister(registerNumber);
-
-        instruction = new Instruction(generalPurposeRegister, null, InstructionType.LDR, address,
-                false, false, false, null, null, null);
-
-        instruction.getType().getProcessor().process(ciscComputer, instruction);
 
         return generalPurposeRegister.getDecimalValue();
     }
