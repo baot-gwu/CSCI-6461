@@ -13,6 +13,7 @@ import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialLiteTheme;
 
 import javax.swing.*;
+import java.util.concurrent.CountDownLatch;
 
 public class Main {
     public static final int AUTORUN_DELAY = 1000; // in milliseconds (ms)
@@ -21,6 +22,7 @@ public class Main {
     public static DebugPanel dp;
     public static OperationPanel op;
     public static Theme theme;
+    public static CountDownLatch IO = new CountDownLatch(1);
 
     public static void main(String[] args) {
         setTheme("Material Design Lighter");

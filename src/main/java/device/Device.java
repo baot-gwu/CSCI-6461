@@ -31,4 +31,5 @@ public abstract class Device {
         this.value = value;
     }
 
+    public void run() {}
 }

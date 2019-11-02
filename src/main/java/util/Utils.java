@@ -107,6 +107,11 @@ public class Utils {
         return java.util.regex.Pattern.compile(pattern).matcher(hex).matches();
     }
 
+    public static boolean numberValid(String value) {
+        String pattern = "^[0-9]+$";
+        return java.util.regex.Pattern.compile(pattern).matcher(value).matches();
+    }
+
     public static boolean isValidBinaryInstruction(String instruction) {
         return instruction != null && instruction.matches("[0-1]+");
     }

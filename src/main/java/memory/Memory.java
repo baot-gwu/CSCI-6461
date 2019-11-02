@@ -39,7 +39,7 @@ public class Memory {
             memoryMap.put(i, new Word(""));
         }
 
-        writeContent();
+        writeContent(null);
     }
 
     public void loadBackupContent() {
@@ -55,14 +55,16 @@ public class Memory {
             System.err.println("Cannot read file");
         }
 
-        writeContent();
+        writeContent(null);
     }
 
-    public void loadContent() {
+    public void loadContent(Path filepath) {
+        if (filepath == null)
+            filepath = path;
         try {
-            List<String> list = Files.readAllLines(path);
+            List<String> list = Files.readAllLines(filepath);
 
-            for (int i = 0; i < MAX_MEMORY_SIZE; i++) {
+            for (int i = 0; i < Math.min(MAX_MEMORY_SIZE, list.size()); i++) {
                 memoryMap.put(i, new Word(list.get(i)));
             }
         } catch (IOException e) {
@@ -72,9 +74,11 @@ public class Memory {
         }
     }
 
-    public void writeContent() {
+    public void writeContent(Path filepath) {
+        if (filepath == null)
+            filepath = path;
         try {
-            Files.write(path, getBytes(), StandardOpenOption.CREATE);
+            Files.write(filepath, getBytes(), StandardOpenOption.CREATE);
         } catch (IOException e) {
             e.printStackTrace();
 

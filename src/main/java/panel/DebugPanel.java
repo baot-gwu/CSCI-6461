@@ -21,11 +21,17 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -568,7 +574,14 @@ public class DebugPanel extends JFrame {
         }
     }
 
-    private void setMemory(int key, String value) { // set MEM[key] = value
+    public String getMemoryAt(int index) {
+        if (index < Main.MAX_MEMORY_SIZE) {
+            return memoryValue[index];
+        } else
+            return null;
+    }
+
+    void setMemory(int key, String value) { // set MEM[key] = value
         if (memory.memoryMap.containsKey(key))
             memory.memoryMap.replace(key, new Word(value));
         else
@@ -683,19 +696,41 @@ public class DebugPanel extends JFrame {
         backEnd.start();
     }
 
-    protected void ipl() { // import instructions from file (not available not)
-        ciscComputer.getMemory().loadContent();
-        getMemory();
+    protected void ipl() { // import instructions from file
+        JFileChooser cardReader = new JFileChooser();
+        cardReader.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        cardReader.setFileFilter(new FileNameExtensionFilter("Card Image (*.card)", "card"));
+        cardReader.addChoosableFileFilter(new FileNameExtensionFilter("Text File (*.txt)", "txt"));
+        cardReader.addChoosableFileFilter(new FileNameExtensionFilter("Memory Dump (*.dump)", "dump"));
+        cardReader.addChoosableFileFilter(new FileNameExtensionFilter("Program Disk (*.program)", "program"));
+        cardReader.showDialog(new JLabel("Choose File"), "Insert");
+        File card = cardReader.getSelectedFile();
+        if (card != null){
+            Path path = Paths.get(card.getAbsolutePath());
+            ciscComputer.getMemory().loadContent(path);
+            getMemory();
+        }
     }
 
     protected void reload() { // reload the memory file
-        ciscComputer.getMemory().loadContent();
+        ciscComputer.getMemory().loadContent(null);
         getMemory();
     }
 
     protected void save() { // save the memory file
-        ciscComputer.getMemory().writeContent();
-        getMemory();
+        JFileChooser cardWriter = new JFileChooser();
+        cardWriter.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        cardWriter.setFileFilter(new FileNameExtensionFilter("Card Image (*.card)", "card"));
+        cardWriter.addChoosableFileFilter(new FileNameExtensionFilter("Text File (*.txt)", "txt"));
+        cardWriter.addChoosableFileFilter(new FileNameExtensionFilter("Memory Dump (*.dump)", "dump"));
+        cardWriter.addChoosableFileFilter(new FileNameExtensionFilter("Program Disk (*.program)", "program"));
+        cardWriter.showDialog(new JLabel("Choose File"), "Burn");
+        File newCard = cardWriter.getSelectedFile();
+        if (newCard != null){
+            Path path = Paths.get(newCard.getAbsolutePath());
+            ciscComputer.getMemory().writeContent(path);
+            getMemory();
+        }
     }
 
     private String getSymbolicForm(String binaryInstruction) { // convert binary instruction to assemble code
@@ -838,5 +873,30 @@ public class DebugPanel extends JFrame {
 
     public CiscComputer getCiscComputer() {
         return this.ciscComputer;
+    }
+
+    public void readFromFile() {
+        JFileChooser cardReader = new JFileChooser();
+        cardReader.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        cardReader.setFileFilter(new FileNameExtensionFilter("Card Image (*.card)", "card"));
+        cardReader.addChoosableFileFilter(new FileNameExtensionFilter("Text File (*.txt)", "txt"));
+        cardReader.showDialog(new JLabel("Choose File"), "Insert");
+        File card = cardReader.getSelectedFile();
+        if (card != null){
+            Path path = Paths.get(card.getAbsolutePath());
+            try {
+                String str = Files.readString(path);
+                int index = 1500;
+                for (int i = 0; i < Math.min(80, str.length()); i++){
+                    setMemory(index++, Utils.autoFill(Utils.decimalToBinary(str.charAt(i)), 16));
+                }
+                setMemory(index++, Utils.autoFill("1111111111111111", 16));
+            } catch (IOException e) {
+                e.printStackTrace();
+
+                System.err.println("Cannot read file");
+            }
+        }
+        Main.IO.countDown();
     }
 }

@@ -79,7 +79,7 @@ public class Initializer {
     private Memory createMemory() {
         Memory memory = new Memory();
 
-        memory.loadContent();
+        memory.loadContent(null);
 
         return memory;
     }

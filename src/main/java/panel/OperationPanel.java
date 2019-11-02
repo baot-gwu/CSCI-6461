@@ -42,6 +42,7 @@ public class OperationPanel extends JFrame{
     private Thread pg2;
     private Thread dg;
     private Theme theme;
+    private CountDownLatch keyboardSignal = new CountDownLatch(1);
     private final String[] COMMAND_LIST = {
             "Command\t\tUsage\t\tDescription\t\t",
 
@@ -252,7 +253,7 @@ public class OperationPanel extends JFrame{
 
             try {
                 CountDownLatch signal = new CountDownLatch(1);
-                dg = new Thread(new DataGetter(signal, "Please input 20 numbers (using comma to split numbers): \n", 20, "int"));
+                dg = new Thread(new DataGetter(signal, "Please input 20 numbers (using comma to split numbers): \n", 20, "int", false));
                 dg.start();
 
                 signal.await();
@@ -260,7 +261,7 @@ public class OperationPanel extends JFrame{
                 int[] inputNumbers = Utils.stringToIntegerArray(dataBuffer, ",");
 
                 signal = new CountDownLatch(1);
-                dg = new Thread(new DataGetter(signal, "Please input the number you want to compare: \n", 1, "int"));
+                dg = new Thread(new DataGetter(signal, "Please input the number you want to compare: \n", 1, "int", false));
                 dg.start();
 
                 signal.await();
@@ -346,12 +347,14 @@ public class OperationPanel extends JFrame{
         private String banner;
         private int size;
         private String mode;
+        private boolean silent;
 
-        DataGetter(CountDownLatch signal, String banner, int size, String mode){
+        DataGetter(CountDownLatch signal, String banner, int size, String mode, boolean silent){
             this.signal = signal;
             this.banner = banner;
             this.size = size;
             this.mode = mode;
+            this.silent = silent;
         }
 
         @Override
@@ -376,10 +379,12 @@ public class OperationPanel extends JFrame{
                             }
                         }
                     }
-                    if (size == data_size)
-                        pushToScreen("All " + size + " data(s) got. (Now we got: " + Utils.arrayToString(dataList.toArray()) + ")\n", false);
-                    else
-                        pushToScreen(size - data_size + " data(s) need to input. (Now we got: " + Utils.arrayToString(dataList.toArray()) + ")\n", false);
+                    if (!silent) {
+                        if (size == data_size)
+                            pushToScreen("All " + size + " data(s) got. (Now we got: " + Utils.arrayToString(dataList.toArray()) + ")\n", false);
+                        else
+                            pushToScreen(size - data_size + " data(s) need to input. (Now we got: " + Utils.arrayToString(dataList.toArray()) + ")\n", false);
+                    }
                 }
                 dataBuffer = StringUtils.join(dataList.toArray(), ",");
                 signal.countDown();
@@ -432,5 +437,61 @@ public class OperationPanel extends JFrame{
 
     public void setScreenContent(StringBuilder screenContent) {
         this.screenContent = screenContent;
+    }
+
+    public void getFromKeyboard () {
+        threadType = "IN";
+        keyboardSignal = new CountDownLatch(1);
+        try {
+            new Thread(new keyboard()).start();
+            keyboardSignal.await();
+        } catch (InterruptedException e) {
+
+        }
+        Main.IO.countDown();
+    }
+
+    class keyboard extends Thread {
+        @Override
+        public void run() {
+            Main.busy = true;
+            int memoryAddressStartPoint = 2000;
+            switchCommandMode(false);
+
+            try {
+                CountDownLatch signal = new CountDownLatch(1);
+                dg = new Thread(new DataGetter(signal, "", 1, "string", true));
+                dg.start();
+
+                signal.await();
+                threadType = "";
+                Main.dp.setMemory(7, Utils.autoFill(Utils.decimalToBinary(memoryAddressStartPoint), 16));
+                if (Utils.numberValid(dataBuffer)) {
+                    Main.dp.setMemory(memoryAddressStartPoint++, Utils.autoFill(Utils.decimalToBinary(Integer.valueOf(dataBuffer)), 16));
+                    Main.dp.setMemory(memoryAddressStartPoint, Utils.autoFill("1111111111111111", 16));
+                }
+                else {
+//                    String buffer = "";
+                    for (int i = 0; i < dataBuffer.length(); i++){
+                        Main.dp.setMemory(memoryAddressStartPoint++, Utils.autoFill(Utils.decimalToBinary(dataBuffer.charAt(i)), 16));
+//                        if (i % 2 == 0 && i != 0){
+//                            Main.dp.setMemory(memoryAddressStartPoint++, Utils.autoFill(buffer + "00", 16));
+//                            buffer = "";
+//                        }
+//                        buffer += Utils.decimalToBinary(dataBuffer.charAt(i));
+                    }
+                    Main.dp.setMemory(memoryAddressStartPoint, Utils.autoFill("1111111111111111", 16));
+                }
+
+            } catch (InterruptedException e) {
+                System.err.println("INPUT interrupted");
+                newLine();
+            }
+
+            switchCommandMode(true);
+            Controller.update(ciscComputer);
+            Main.busy = false;
+            keyboardSignal.countDown();
+        }
     }
 }

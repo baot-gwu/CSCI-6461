@@ -19,7 +19,7 @@ public class Program1Test {
     public void setUp() {
         program1 = new Program1();
         ciscComputer = new Initializer().initialize();
-        new Memory().loadContent();
+        new Memory().loadContent(null);
     }
 
     @Test
