@@ -292,7 +292,7 @@ public class OperationPanel extends JFrame{
 
             try {
                 CountDownLatch signal = new CountDownLatch(1);
-                dg = new Thread(new DataGetter(signal, "Please input word to match\n", 1, "string"));
+                dg = new Thread(new DataGetter(signal, "Please input word to match\n", 1, "string", false));
                 dg.start();
 
                 signal.await();
