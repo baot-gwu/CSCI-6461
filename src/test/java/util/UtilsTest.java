@@ -51,6 +51,8 @@ public class UtilsTest {
         assertEquals(Utils.binaryInstruction("MLT 0,2"),    "0101000010000000");
         assertEquals(Utils.binaryInstruction("DVD 2,0"),    "0101011000000000");
         assertEquals(Utils.binaryInstruction("JZ 0,0,1"),   "0010100000000001");
+        assertEquals(Utils.binaryInstruction("AIR 3,10"),   "0001101100001010");
+        assertEquals(Utils.binaryInstruction("JCC 1,0,1"),  "0011000100000001");
     }
 
 }

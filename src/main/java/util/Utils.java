@@ -244,7 +244,7 @@ public class Utils {
         int count = 0;
         int lr = 0;
 
-        if (Arrays.asList(LDR, STR, LDA, JZ, JNE, SOB, JGE, AMR, SMR).contains(type)) {
+        if (Arrays.asList(LDR, STR, LDA, JZ, JNE, SOB, JGE, AMR, SMR, JCC).contains(type)) {
             r = Integer.parseInt(parts[1]);
             x = Integer.parseInt(parts[2]);
             if (parts.length == 5) {
@@ -266,18 +266,21 @@ public class Utils {
             lr = Integer.parseInt(parts[3]);
             count = Integer.parseInt(parts[4]);
 
-            binaryInstruction = binaryInstruction + trimBinaryValue(decimalToUnsignedBinary(r), 2)
+            return binaryInstruction + trimBinaryValue(decimalToUnsignedBinary(r), 2)
                     + trimBinaryValue(decimalToUnsignedBinary(al), 1)
                     + trimBinaryValue(decimalToUnsignedBinary(lr), 1) + "00"
                     + trimBinaryValue(decimalToUnsignedBinary(count), 4);
-
-            return binaryInstruction;
         } else if (Arrays.asList(MLT, DVD, TRR, AND, ORR, NOT).contains(type)) {
-            binaryInstruction = binaryInstruction + trimBinaryValue(decimalToUnsignedBinary(Integer.parseInt(parts[1])), 2)
+            return binaryInstruction + trimBinaryValue(decimalToUnsignedBinary(Integer.parseInt(parts[1])), 2)
                     + (type == NOT ? "00" : trimBinaryValue(decimalToUnsignedBinary(Integer.parseInt(parts[2])), 2))
                     + "000000";
+        } else if (Arrays.asList(AIR, SIR).contains(type)) {
+            r = Integer.parseInt(parts[1]);
+            address = Integer.parseInt(parts[2]);
 
-            return binaryInstruction;
+            return binaryInstruction + trimBinaryValue(decimalToUnsignedBinary(r), 2)
+                    + "000"
+                    + trimBinaryValue(decimalToUnsignedBinary(address), 5);
         }
 
         return binaryInstruction + trimBinaryValue(decimalToUnsignedBinary(r), 2)
