@@ -9,17 +9,21 @@ import main.java.instruction.InstructionType;
 import main.java.register.GeneralPurposeRegister;
 import main.java.register.IndexRegister;
 import main.java.util.Utils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class Program2 {
 
-    private final Path path = Paths.get("Paragraph.txt").toAbsolutePath();
+    private final Path PATH_PARAGRAPH = Paths.get("Paragraph.txt").toAbsolutePath();
+    private final Path PATH_PROGRAM_BYTE_CODE = Paths.get("Program2.binary").toAbsolutePath();
     private static final int STARTING_ADDRESS_TO_STORE_PARAGRAPH = 600;
+    private static final int MAX_LINES_OF_ASSEMBLY_CODE = 500;
     private int TOTAL_SENTENCES = 6;
     private Instruction instruction;
 
@@ -29,7 +33,7 @@ public class Program2 {
         ciscComputer.setDevice(consoleKeyboard);
 
         try {
-            List<String> lines = Files.readAllLines(path);
+            List<String> lines = Files.readAllLines(PATH_PARAGRAPH);
             String paragraph = makeParagraph(lines);
 
             byte[] paragraphBytes = paragraph.getBytes();
@@ -107,5 +111,43 @@ public class Program2 {
         }
 
         return new String(bytes);
+    }
+
+    public void encodeToBinaryAndSave(String fileName) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(fileName).toAbsolutePath());
+            StringBuilder sb = new StringBuilder(lines.size() * (80 + 1));
+            String contentOfProgram = StringUtils.join(lines, "\n");
+            byte[] contentBytes = contentOfProgram.getBytes();
+
+            for (byte content : contentBytes) {
+                sb.append(Utils.decimalToUnsignedBinary(content)).append("\n");
+            }
+
+            Files.write(PATH_PROGRAM_BYTE_CODE, sb.toString().getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            System.err.println("Cannot write file");
+        }
+    }
+
+    public String readAndDecodeFromBinary() {
+        try {
+            List<String> lines = Files.readAllLines(PATH_PROGRAM_BYTE_CODE);
+            byte[] bytes = new byte[lines.size()];
+
+            for (int i = 0; i < lines.size(); i++) {
+                bytes[i] = (byte) (Utils.unsignedBinaryToDecimal(lines.get(i)));
+            }
+
+            return new String(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            System.err.println("Cannot read file");
+        }
+
+        return null;
     }
 }
