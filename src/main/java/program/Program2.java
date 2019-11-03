@@ -91,7 +91,7 @@ public class Program2 {
             String[] words = sentences[i].split("[^a-zA-Z0-9]+");
             for (int j = 0; j < words.length; j++) {
                 if (word.equalsIgnoreCase(words[j])) {
-                    return "Given Word: " + word + ", Line Number: " + (i + 1) + ", Word Number: " + (j + 1);
+                    return "Given Word: " + word + ", Sentence Number: " + (i + 1) + ", Word Number: " + (j + 1);
                 }
             }
         }
