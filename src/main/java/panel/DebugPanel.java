@@ -893,9 +893,7 @@ public class DebugPanel extends JFrame {
         if (card != null){
             Path path = Paths.get(card.getAbsolutePath());
             try {
-                StringBuilder sb = new StringBuilder(Word.MAX_SIZE * 2018);
-                Files.readAllLines(path).forEach(l -> sb.append(l).append("\n"));
-                String str = sb.toString();
+                String str = Files.readString(path);
                 int index = 1500;
                 for (int i = 0; i < Math.min(500, str.length()); i++){
                     setMemory(index++, Utils.autoFill(Utils.decimalToBinary(str.charAt(i)), 16));

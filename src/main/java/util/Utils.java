@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
+import static main.java.instruction.InstructionType.*;
+
 /**
  * @author jalal
  * @since 12/9/19
@@ -227,5 +229,60 @@ public class Utils {
 
     public static int getMantissa(BigDecimal value) {
         return value.unscaledValue().abs().intValue();
+    }
+
+    public static String binaryInstruction(String symbolicForm) {
+        String[] parts = symbolicForm.split("[ ,]");
+        InstructionType type = InstructionType.valueOf(parts[0]);
+        String binaryInstruction = type.getOpcodeInBinary();
+
+        int r = 0;
+        int x = 0;
+        int address = 0;
+        int i = 0;
+        int al = 0;
+        int count = 0;
+        int lr = 0;
+
+        if (Arrays.asList(LDR, STR, LDA, JZ, JNE, SOB, JGE, AMR, SMR).contains(type)) {
+            r = Integer.parseInt(parts[1]);
+            x = Integer.parseInt(parts[2]);
+            if (parts.length == 5) {
+                i = Integer.parseInt(parts[4]);
+            }
+            address = Integer.parseInt(parts[3]);
+        } else if (Arrays.asList(LDX, STX, JMA, JSR).contains(type)) {
+            x = Integer.parseInt(parts[1]);
+            if (parts.length == 4) {
+                i = Integer.parseInt(parts[3]);
+            }
+            address = Integer.parseInt(parts[2]);
+        } else if (Arrays.asList(IN, OUT, CHK).contains(type)) {
+            r = Integer.parseInt(parts[1]);
+            address = Integer.parseInt(parts[2]);
+        } else if (Arrays.asList(SRC, RRC).contains(type)) {
+            r = Integer.parseInt(parts[1]);
+            al = Integer.parseInt(parts[2]);
+            lr = Integer.parseInt(parts[3]);
+            count = Integer.parseInt(parts[4]);
+
+            binaryInstruction = binaryInstruction + trimBinaryValue(decimalToUnsignedBinary(r), 2)
+                    + trimBinaryValue(decimalToUnsignedBinary(al), 1)
+                    + trimBinaryValue(decimalToUnsignedBinary(lr), 1) + "00"
+                    + trimBinaryValue(decimalToUnsignedBinary(count), 4);
+
+            return binaryInstruction;
+        } else if (Arrays.asList(MLT, DVD, TRR, AND, ORR, NOT).contains(type)) {
+            binaryInstruction = binaryInstruction + trimBinaryValue(decimalToUnsignedBinary(Integer.parseInt(parts[1])), 2)
+                    + (type == NOT ? "00" : trimBinaryValue(decimalToUnsignedBinary(Integer.parseInt(parts[2])), 2))
+                    + "000000";
+
+            return binaryInstruction;
+        }
+
+        return binaryInstruction + trimBinaryValue(decimalToUnsignedBinary(r), 2)
+                + trimBinaryValue(decimalToUnsignedBinary(x), 2)
+                + trimBinaryValue(decimalToUnsignedBinary(i), 1)
+                + trimBinaryValue(decimalToUnsignedBinary(address), 5);
     }
 }
