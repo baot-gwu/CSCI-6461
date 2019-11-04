@@ -1,0 +1,396 @@
+#50					// Store loop pointer
+#100				// General loop pointer
+#307
+#300
+#372
+#307
+#327
+#320
+#338
+0000000000000000	// number to compare
+1111111111111111
+0000000000000000    // closest number
+#331
+#349
+#354
+#344
+#366
+#359
+#381
+#374
+#394
+#383
+#315
+#50
+#125
+#138
+#184
+
+','
+' '
+'\n'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'P'
+'l'
+'e'
+'a'
+'s'
+'e'
+' '
+'i'
+'n'
+'p'
+'u'
+'t'
+' '
+'2'
+'0'
+' '
+'n'
+'u'
+'m'
+'b'
+'e'
+'r'
+'s'
+':'
+'\n'
+
+'N'
+'o'
+'w'
+' '
+'w'
+'e'
+' '
+'g'
+'o'
+'t'
+':'
+' '
+
+'P'
+'l'
+'e'
+'a'
+'s'
+'e'
+' '
+'i'
+'n'
+'p'
+'u'
+'t'
+' '
+'t'
+'h'
+'e'
+' '
+'n'
+'u'
+'m'
+'b'
+'e'
+'r'
+' '
+'y'
+'o'
+'u'
+' '
+'w'
+'a'
+'n'
+'t'
+' '
+'t'
+'o'
+' '
+'c'
+'o'
+'m'
+'p'
+'a'
+'r'
+'e'
+':'
+'\n'
+
+'T'
+'h'
+'e'
+' '
+'c'
+'l'
+'o'
+'s'
+'e'
+'s'
+'t'
+' '
+'n'
+'u'
+'m'
+'b'
+'e'
+'r'
+' '
+'i'
+'s'
+':'
+' '
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LDR 1, 0, 2, 1 					// Print asking sentence				// Print 'Please input 20 numbers:\n'
+JZ  1, 0, 3, 1					// Jump to the end if meet a blank line
+OUT 1, 1						// Print a character
+LDR 1, 0, 2
+AIR 1, 1
+STR 1, 0, 2						// MEM[2] ++
+JMA 0, 4, 1						// Jump to start
+LDA 0, 0, 0						// R0 = 0								// Input 20 numbers
+IN 	1, 1						// read from input to R1
+STR 1, 0, 1, 1 					// Store R1 to MEM[MEM[1]]
+LDR 1, 0, 1						// R1 = MEM[1]
+AIR 1, 1 						// R1 ++
+STR 1, 0, 1						// MEM[1] ++
+AIR 0, 1 						// R0 ++
+JMA 0, 5, 1 					// Jump to print_2						// Print received number
+LDA 1, 0, 20 					// R1 = 20
+TRR 0, 1 						// Test R0 == 20
+JCC 3, 0, 6, 1					// Jump to start if RO != 20
+LDR 1, 0, 26					// Initialize the pointer				// Print 'Please input the number you want to compare:\n'
+STR 1, 0, 2						// MEM[2] = #138
+LDR 1, 0, 2, 1 					// Load a number
+JZ  1, 0, 7, 1					// Jump to the end if meet a blank line 
+OUT 1, 1						// Print a character
+LDR 1, 0, 2
+AIR 1, 1
+STR 1, 0, 2						// MEM[2] ++
+JMA 0, 8, 1 					// Jump to start
+IN 	2, 1						// read from input to R2				// Input a new number
+STR 2, 0, 10 					// Store R2 to MEM[10]
+LDR 1, 0, 25					// Initialize the pointer				// Print 'Now we got: '
+STR 1, 0, 2						// MEM[2] = #125
+LDR 1, 0, 2, 1
+JZ  1, 0, 9, 1					// Jump to the end if meet a blank line
+OUT 1, 1						// Print a character
+LDR 1, 0, 2
+AIR 1, 1
+STR 1, 0, 2						// MEM[2] ++
+JMA 0, 13, 1					// Jump to start 
+OUT 2, 1
+LDR 1, 0, 31
+OUT 1, 1						// Print '\n'
+LDR 1, 0, 24					// Initialize the pointer				// Compare
+STR 1, 0, 2 					// MEM[2] = #50
+LDA 0, 0, 0						// R0 = 0
+LDR 1, 0, 2, 1 					// R1 = MEM[MEM[2]] load a number
+SMR 1, 0, 10
+JGE 1, 14, 1
+LDR 1, 0, 10 					// R1 = MEM[10] load the number to compare
+SMR 1, 0, 2, 1
+SMR 1, 0, 11
+JGE 1, 15, 1
+STR 1, 0, 11
+LDR 1, 0, 2, 1 					// R1 = MEM[MEM[2]]
+STR 1, 0, 12					// Store the closest number so far to MEM[12]
+LDA 1, 0, 20 					// R1 = 20
+TRR 0, 1 						// Test R0 == 20
+JCC 3, 0, 16, 1					// Jump to input if RO != 20
+LDR 1, 0, 27					// Initialize the pointer				// Print 'The closest number is: '
+STR 1, 0, 2						// MEM[2] = #184
+LDR 1, 0, 2, 1
+JZ  1, 0, 17, 1 				// Jump to the end if meet a blank line
+OUT 1, 1						// Print a character
+LDR 1, 0, 2
+AIR 1, 1
+STR 1, 0, 2						// MEM[2] ++
+JMA 0, 18, 1					// Jump to start 
+LDR 1, 0, 12
+OUT 1, 1
+LDR 1, 0, 31
+OUT 1, 1						// Print '\n'
+HALT
+
+LDR 1, 0, 25					// Initialize the pointer				// Print 'Now we got: '
+STR 1, 0, 2						// MEM[2] = #125
+LDR 1, 0, 2, 1
+JZ  1, 0, 19, 1
+OUT 1, 1						// Print
+LDR 1, 0, 2
+AIR 1, 1
+STR 1, 0, 2						// MEM[2] ++
+JMA 0, 20, 1
+LDR 1, 0, 24					// Initialize the pointer				// Print received numbers
+STR 1, 0, 2						// MEM[2] = #50
+LDR 1, 0, 2, 1 					// R1 = MEM[MEM[2]] load a number
+JZ  1, 0, 21, 1
+OUT 1, 1						// Print
+LDR 1, 0, 29
+OUT 1, 1						// Print ', '
+LDR 1, 0, 30
+OUT 1, 1						// Print ' '
+LDR 1, 0, 2
+AIR 1, 1
+STR 1, 0, 2						// MEM[2] ++
+JMA 0, 22, 1					// Jump to start 
+LDR 1, 0, 31
+OUT 1, 1						// Print '\n'
+JMA 0, 23, 1
