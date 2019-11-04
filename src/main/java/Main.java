@@ -1,7 +1,6 @@
 package main.java;
 
 import main.java.common.CiscComputer;
-import main.java.common.Display;
 import main.java.common.Initializer;
 import main.java.panel.DebugPanel;
 import main.java.panel.OperationPanel;
@@ -16,7 +15,7 @@ import javax.swing.*;
 import java.util.concurrent.CountDownLatch;
 
 public class Main {
-    public static final int AUTORUN_DELAY = 10; // in milliseconds (ms)
+    public static final int AUTORUN_DELAY = 0; // in milliseconds (ms)
     public static final int MAX_MEMORY_SIZE = 2048; // Memory size 2048 expand to 4096
     public static boolean busy = true; // Status of machine
     public static DebugPanel dp;
@@ -47,8 +46,8 @@ public class Main {
 
     public static void printValues(CiscComputer ciscComputer) {
         // print back-end information to console
-        System.out.println("In Binary  -> " + new Display(ciscComputer, true).toString());
-        System.out.println("In Decimal -> " + new Display(ciscComputer, false).toString());
+//        System.out.println("In Binary  -> " + new Display(ciscComputer, true).toString());
+//        System.out.println("In Decimal -> " + new Display(ciscComputer, false).toString());
     }
 
     public static void setTheme(String themeType) {
