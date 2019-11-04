@@ -4,6 +4,7 @@ import main.java.Main;
 import main.java.common.CiscComputer;
 import main.java.program.Program1;
 import main.java.program.Program2;
+import main.java.register.ProgramCounter;
 import main.java.theme.Theme;
 import main.java.util.Convert;
 import main.java.util.Utils;
@@ -12,6 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -221,9 +224,15 @@ public class OperationPanel extends JFrame{
             threadType = "program1";
             pg1.start();
         } else if (command.toLowerCase().equals("program2") || command.toLowerCase().equals("program 2")) {
-            pg2 = new Thread(new program2());
-            threadType = "program2";
-            pg2.start();
+            Path path = Paths.get("Program 2.program").toAbsolutePath();
+            ciscComputer.getMemory().loadContent(path);
+            ProgramCounter pc = new ProgramCounter();
+            pc.setDecimalValue(1000);
+            ciscComputer.setProgramCounter(pc);
+            Main.dp.setData(ciscComputer);
+//            pg2 = new Thread(new program2());
+//            threadType = "program2";
+//            pg2.start();
         } else if (command.toLowerCase().equals("vector test")) {
             vectorTest();
         } else if (command.toLowerCase().equals("floating test")) {

@@ -22,7 +22,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -137,6 +136,7 @@ public class DebugPanel extends JFrame {
     private Memory memory;
     private boolean pause = true;
     private String r0, r1, r2, r3, ix1, ix2, ix3, mar, mbr, pc, ir, cc, mfr;
+//    private FileSystemView fsv = FileSystemView.getFileSystemView();
 
     private String memoryAddress[] = new String[Main.MAX_MEMORY_SIZE];
     private String memoryValue[] = new String[Main.MAX_MEMORY_SIZE];
@@ -709,6 +709,8 @@ public class DebugPanel extends JFrame {
     protected void ipl() { // import instructions from file
         JFileChooser cardReader = new JFileChooser();
         cardReader.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        File dir = new File("");
+        cardReader.setCurrentDirectory(dir.getAbsoluteFile());
         cardReader.setFileFilter(new FileNameExtensionFilter("Card Image (*.card)", "card"));
         cardReader.addChoosableFileFilter(new FileNameExtensionFilter("Text File (*.txt)", "txt"));
         cardReader.addChoosableFileFilter(new FileNameExtensionFilter("Memory Dump (*.dump)", "dump"));
@@ -730,6 +732,8 @@ public class DebugPanel extends JFrame {
     protected void save() { // save the memory file
         JFileChooser cardWriter = new JFileChooser();
         cardWriter.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        File dir = new File("");
+        cardWriter.setCurrentDirectory(dir.getAbsoluteFile());
         cardWriter.setFileFilter(new FileNameExtensionFilter("Card Image (*.card)", "card"));
         cardWriter.addChoosableFileFilter(new FileNameExtensionFilter("Text File (*.txt)", "txt"));
         cardWriter.addChoosableFileFilter(new FileNameExtensionFilter("Memory Dump (*.dump)", "dump"));
@@ -887,9 +891,9 @@ public class DebugPanel extends JFrame {
 
     public void readFromFile() {
         JFileChooser cardReader = new JFileChooser();
-        FileSystemView fsv = FileSystemView.getFileSystemView();
         cardReader.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        cardReader.setCurrentDirectory(fsv.getHomeDirectory());
+        File dir = new File("");
+        cardReader.setCurrentDirectory(dir.getAbsoluteFile());
         cardReader.setFileFilter(new FileNameExtensionFilter("Card Image (*.card)", "card"));
         cardReader.addChoosableFileFilter(new FileNameExtensionFilter("Text File (*.txt)", "txt"));
         cardReader.showDialog(new JLabel("Choose File"), "Insert");
