@@ -448,6 +448,7 @@ public class OperationPanel extends JFrame{
 
     public void getFromKeyboard () {
         threadType = "IN";
+        System.err.println("Input from keyboard");
         new Thread(new keyboard()).start();
     }
 
@@ -482,7 +483,7 @@ public class OperationPanel extends JFrame{
                     }
                     Main.dp.setMemory(memoryAddressStartPoint, Utils.autoFill("1111111111111111", 16));
                 }
-
+                pushToScreen(dataBuffer + "\n", false);
             } catch (InterruptedException e) {
                 System.err.println("INPUT interrupted");
                 newLine();

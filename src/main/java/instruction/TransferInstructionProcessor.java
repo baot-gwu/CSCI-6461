@@ -23,7 +23,7 @@ public class TransferInstructionProcessor implements InstructionProcessor {
     public void process(CiscComputer ciscComputer, Instruction instruction) {
         Address address = AddressDecoder.decodeAddress(instruction, ciscComputer.getMachineFaultRegister());
         Register firstRegister = instruction.getFirstRegister();
-        ciscComputer.getConditionCode().setConditionCodeType(null);
+//        ciscComputer.getConditionCode().setConditionCodeType(null);
         ciscComputer.getMemoryAddressRegister().setDecimalValue(0);
         ciscComputer.getMemoryBufferRegister().setDecimalValue(0);
 
@@ -72,9 +72,11 @@ public class TransferInstructionProcessor implements InstructionProcessor {
 
     private void jumpAddressIfConditionCode(Register firstRegister, ConditionCode conditionCode, Address address, CiscComputer ciscComputer) {
         ProgramCounter pc = new ProgramCounter();
-        System.err.println(conditionCode.getConditionCodeType());
+        System.err.println(conditionCode.getConditionCodeType().getValue() == firstRegister.getRegisterNumber());
         pc.setDecimalValue(((conditionCode.getDecimalValue() == 1) && (conditionCode.getConditionCodeType() != null) && (conditionCode.getConditionCodeType().getValue() == firstRegister.getRegisterNumber())) ? address.getEffectiveAddress() : ciscComputer.getProgramCounter().getDecimalValue());
         ciscComputer.setProgramCounter(pc);
+        ciscComputer.getConditionCode().setConditionCodeType(null);
+        ciscComputer.getConditionCode().setDecimalValue(0);
     }
 
     private void jumpAddress(Address address, CiscComputer ciscComputer) {
