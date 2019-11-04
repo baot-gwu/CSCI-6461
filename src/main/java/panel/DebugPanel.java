@@ -22,6 +22,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -575,6 +576,7 @@ public class DebugPanel extends JFrame {
     }
 
     public String getMemoryAt(int index) {
+        setData(ciscComputer);
         if (index < Main.MAX_MEMORY_SIZE) {
             return memoryValue[index];
         } else
@@ -885,7 +887,9 @@ public class DebugPanel extends JFrame {
 
     public void readFromFile() {
         JFileChooser cardReader = new JFileChooser();
+        FileSystemView fsv = FileSystemView.getFileSystemView();
         cardReader.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        cardReader.setCurrentDirectory(fsv.getHomeDirectory());
         cardReader.setFileFilter(new FileNameExtensionFilter("Card Image (*.card)", "card"));
         cardReader.addChoosableFileFilter(new FileNameExtensionFilter("Text File (*.txt)", "txt"));
         cardReader.showDialog(new JLabel("Choose File"), "Insert");

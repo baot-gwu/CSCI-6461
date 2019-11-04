@@ -5,6 +5,7 @@ import main.java.common.CiscComputer;
 import main.java.program.Program1;
 import main.java.program.Program2;
 import main.java.theme.Theme;
+import main.java.util.Convert;
 import main.java.util.Utils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -230,6 +231,10 @@ public class OperationPanel extends JFrame{
         } else if (command.toLowerCase().equals("/help")) {
             pushToScreen(Utils.arrayToStringParagraph(COMMAND_LIST), false);
             newLine();
+        } else if (command.toLowerCase().equals("convert")) {
+            Convert.assembleToBinary();
+            pushToScreen("Finished", false);
+            newLine();
         } else {
             screenContent.append(command).append(" is not support. You can type \"/help\" to get command list.");
             newLine();
@@ -409,6 +414,8 @@ public class OperationPanel extends JFrame{
                 if (pg2 != null)
                     pg2.interrupt();
                 break;
+            default:
+                System.err.println("Stop");
         }
     }
 
@@ -441,14 +448,7 @@ public class OperationPanel extends JFrame{
 
     public void getFromKeyboard () {
         threadType = "IN";
-        keyboardSignal = new CountDownLatch(1);
-        try {
-            new Thread(new keyboard()).start();
-            keyboardSignal.await();
-        } catch (InterruptedException e) {
-
-        }
-        Main.IO.countDown();
+        new Thread(new keyboard()).start();
     }
 
     class keyboard extends Thread {
@@ -491,7 +491,7 @@ public class OperationPanel extends JFrame{
             switchCommandMode(true);
             Controller.update(ciscComputer);
             Main.busy = false;
-            keyboardSignal.countDown();
+            Main.IO.countDown();
         }
     }
 }
