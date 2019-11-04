@@ -1,6 +1,7 @@
 package main.java;
 
 import main.java.common.CiscComputer;
+import main.java.common.Display;
 import main.java.common.Initializer;
 import main.java.panel.DebugPanel;
 import main.java.panel.OperationPanel;
@@ -46,8 +47,8 @@ public class Main {
 
     public static void printValues(CiscComputer ciscComputer) {
         // print back-end information to console
-//        System.out.println("In Binary  -> " + new Display(ciscComputer, true).toString());
-//        System.out.println("In Decimal -> " + new Display(ciscComputer, false).toString());
+        System.out.println("In Binary  -> " + new Display(ciscComputer, true).toString());
+        System.out.println("In Decimal -> " + new Display(ciscComputer, false).toString());
     }
 
     public static void setTheme(String themeType) {
