@@ -28,5 +28,6 @@ public class CardReader extends Device {
         } catch (InterruptedException e) {
 
         }
+        setBinaryValue(Main.dp.getMemoryAt(7));
     }
 }

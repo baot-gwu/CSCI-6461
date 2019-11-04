@@ -16,7 +16,7 @@ import javax.swing.*;
 import java.util.concurrent.CountDownLatch;
 
 public class Main {
-    public static final int AUTORUN_DELAY = 1000; // in milliseconds (ms)
+    public static final int AUTORUN_DELAY = 10; // in milliseconds (ms)
     public static final int MAX_MEMORY_SIZE = 2048; // Memory size 2048 expand to 4096
     public static boolean busy = true; // Status of machine
     public static DebugPanel dp;

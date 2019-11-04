@@ -50,9 +50,11 @@ public class InputOutputInstructionProcessor implements InstructionProcessor {
 
     private void outputCharacterToDeviceFromRegister(Register register, Device device) {
         device.setBinaryValue(register.getValue(true));
+        device.run();
     }
 
     private void inputCharacterToRegisterFromDevice(Register register, Device device) {
+        device.run();
         register.setBinaryValue(device.getBinaryValue());
     }
 }

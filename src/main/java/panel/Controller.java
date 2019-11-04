@@ -63,7 +63,7 @@ public class Controller {
     }
 
     public static void pullFromCard() {
-        Main.op.pushToScreen("Please insert the card...", false);
+        Main.op.pushToScreen("Please insert the card...\n", false);
         Main.dp.readFromFile();
     }
 }
