@@ -29,7 +29,8 @@ public class Utils {
             InstructionType.CHK, InstructionType.TRAP);
 
     private static final List<InstructionType> floatingPointInstructions = Arrays.asList(
-            InstructionType.FADD, InstructionType.FSUB, InstructionType.CNVRT, InstructionType.LDFR, InstructionType.STFR);
+            InstructionType.FADD, InstructionType.FSUB, InstructionType.VADD, InstructionType.VSUB,
+            InstructionType.CNVRT, InstructionType.LDFR, InstructionType.STFR);
 
     public static int binaryToDecimal(String binary) {
         return Integer.parseInt(binary, 2);
@@ -227,8 +228,12 @@ public class Utils {
         return ("0" + expStr + mantissa);
     }
 
-    public static int getMantissa(BigDecimal value) {
-        return value.unscaledValue().abs().intValue();
+    public static boolean isOverflow(BigDecimal value) {
+        try {
+            return !binaryToFloatingPoint(floatingPointToBinary(value)).equals(value);
+        } catch (Exception e) {
+            return true;
+        }
     }
 
     public static String binaryInstruction(String symbolicForm) {

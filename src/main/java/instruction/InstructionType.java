@@ -38,11 +38,13 @@ public enum InstructionType {
     IN("111101", InputOutputInstructionProcessor.getInstance()),
     OUT("111110", InputOutputInstructionProcessor.getInstance()),
     CHK("111111", InputOutputInstructionProcessor.getInstance()),
-    FADD("100001", FloatingPointInstructionProcessor.getInstance()),
-    FSUB("100010", FloatingPointInstructionProcessor.getInstance()),
-    CNVRT("100101", FloatingPointInstructionProcessor.getInstance()),
-    LDFR("110010", FloatingPointInstructionProcessor.getInstance()),
-    STFR("110011", FloatingPointInstructionProcessor.getInstance());
+    FADD("100001", FloatingPointVectorInstructionProcessor.getInstance()),
+    FSUB("100010", FloatingPointVectorInstructionProcessor.getInstance()),
+    VADD("100011", FloatingPointVectorInstructionProcessor.getInstance()),
+    VSUB("100100", FloatingPointVectorInstructionProcessor.getInstance()),
+    CNVRT("100101", FloatingPointVectorInstructionProcessor.getInstance()),
+    LDFR("110010", FloatingPointVectorInstructionProcessor.getInstance()),
+    STFR("110011", FloatingPointVectorInstructionProcessor.getInstance());
 
     private final String opcodeInBinary;
     private final InstructionProcessor processor;

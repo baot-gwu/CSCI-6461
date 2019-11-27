@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class UtilsTest {
 
@@ -41,6 +41,14 @@ public class UtilsTest {
         assertEquals(Utils.floatingPointToBinary(BigDecimal.valueOf(219)), "0000000011011011");
         assertEquals(Utils.floatingPointToBinary(BigDecimal.valueOf(2.19E47)), "0010110111011011");
         assertEquals(Utils.floatingPointToBinary(BigDecimal.valueOf(-2.19E47)), "1010110111011011");
+    }
+
+    @Test
+    public void isOverflow() {
+        assertFalse(Utils.isOverflow(BigDecimal.valueOf(255)));
+        assertTrue(Utils.isOverflow(BigDecimal.valueOf(256))); // Just crossing 2^8-1 mantissa
+        assertFalse(Utils.isOverflow(BigDecimal.valueOf(1E31)));
+        assertTrue(Utils.isOverflow(BigDecimal.valueOf(1E32))); // Just crossing 2^6-1 exponent
     }
 
     @Test

@@ -6,12 +6,13 @@ import main.java.memory.Cache;
 import main.java.memory.Word;
 import main.java.register.ConditionCodeType;
 import main.java.register.FloatingPointRegister;
+import main.java.register.GeneralPurposeRegister;
 import main.java.register.Register;
 import main.java.util.Utils;
 
 import java.math.BigDecimal;
 
-public class FloatingPointInstructionProcessor implements InstructionProcessor {
+public class FloatingPointVectorInstructionProcessor implements InstructionProcessor {
 
     private static InstructionProcessor processor;
     private static final int MAX_MANTISSA = (int) Math.pow(2, 8);
@@ -19,7 +20,7 @@ public class FloatingPointInstructionProcessor implements InstructionProcessor {
 
     static InstructionProcessor getInstance() {
         if (processor == null) {
-            processor = new FloatingPointInstructionProcessor();
+            processor = new FloatingPointVectorInstructionProcessor();
         }
 
         return processor;
@@ -41,12 +42,60 @@ public class FloatingPointInstructionProcessor implements InstructionProcessor {
             case FSUB:
                 subtractMemoryToRegister((FloatingPointRegister) firstRegister, address, ciscComputer);
                 break;
+            case VADD:
+                vectorAdd((FloatingPointRegister) firstRegister, address);
+                break;
+            case VSUB:
+                vectorSubtract((FloatingPointRegister) firstRegister, address);
+                break;
+            case CNVRT:
+                convertToFixedOrFloatingPoint((GeneralPurposeRegister) firstRegister, address, ciscComputer);
+                break;
             case LDFR:
                 loadFloatingPointRegisterFromMemory((FloatingPointRegister) firstRegister, address);
                 break;
             case STFR:
                 storeFloatingPointRegisterToMemory((FloatingPointRegister) firstRegister, address);
                 break;
+        }
+    }
+
+    private void convertToFixedOrFloatingPoint(GeneralPurposeRegister firstRegister, Address address, CiscComputer ciscComputer) {
+        int registerValue = firstRegister.getDecimalValue();
+        String value = Cache.getWordStringValue(address);
+
+        if (registerValue == 0) {
+            firstRegister.setDecimalValue(Utils.unsignedBinaryToDecimal(value));
+        } else {
+            ciscComputer.getFloatingPointRegister(0).setFloatingPointValue(Utils.binaryToFloatingPoint(value));
+        }
+    }
+
+    private void vectorSubtract(FloatingPointRegister firstRegister, Address address) {
+        BigDecimal registerValue = Utils.binaryToFloatingPoint(firstRegister.getValue(true));
+
+        int startingAddressOfFirstVector = Cache.getWordDecimalValue(address);
+        int startingAddressOfSecondVector = Cache.getWordDecimalValue(new Address(address.getEffectiveAddress() + 1));
+
+        for (int i = 0; i < registerValue.intValue(); i++) {
+            Address addressOfFirstVector = new Address(startingAddressOfFirstVector + i);
+            int subtract = Cache.getWordDecimalValue(addressOfFirstVector) - Cache.getWordDecimalValue(new Address(startingAddressOfSecondVector + i));
+
+            Cache.writeToMemory(addressOfFirstVector, new Word(Utils.decimalToUnsignedBinary(subtract)));
+        }
+    }
+
+    private void vectorAdd(FloatingPointRegister firstRegister, Address address) {
+        BigDecimal registerValue = Utils.binaryToFloatingPoint(firstRegister.getValue(true));
+
+        int startingAddressOfFirstVector = Cache.getWordDecimalValue(address);
+        int startingAddressOfSecondVector = Cache.getWordDecimalValue(new Address(address.getEffectiveAddress() + 1));
+
+        for (int i = 0; i < registerValue.intValue(); i++) {
+            Address addressOfFirstVector = new Address(startingAddressOfFirstVector + i);
+            int sum = Cache.getWordDecimalValue(addressOfFirstVector) + Cache.getWordDecimalValue(new Address(startingAddressOfSecondVector + i));
+
+            Cache.writeToMemory(addressOfFirstVector, new Word(Utils.decimalToUnsignedBinary(sum)));
         }
     }
 
@@ -64,9 +113,7 @@ public class FloatingPointInstructionProcessor implements InstructionProcessor {
 
         BigDecimal result = registerValue.subtract(memoryValue);
 
-        if (Utils.getMantissa(result) > MAX_MANTISSA) {
-            ciscComputer.getConditionCode().setConditionCodeType(ConditionCodeType.OVERFLOW);
-        } else if (result.scale() > MAX_EXPONENT) {
+        if (Utils.isOverflow(result)) {
             ciscComputer.getConditionCode().setConditionCodeType(ConditionCodeType.OVERFLOW);
         }
 
@@ -79,9 +126,7 @@ public class FloatingPointInstructionProcessor implements InstructionProcessor {
 
         BigDecimal result = registerValue.add(memoryValue);
 
-        if (Utils.getMantissa(result) > MAX_MANTISSA) {
-            ciscComputer.getConditionCode().setConditionCodeType(ConditionCodeType.OVERFLOW);
-        } else if (result.scale() > MAX_EXPONENT) {
+        if (Utils.isOverflow(result)) {
             ciscComputer.getConditionCode().setConditionCodeType(ConditionCodeType.OVERFLOW);
         }
 
