@@ -15,7 +15,7 @@ Material Design Ocean Theme
 ## Progress
 - [x] Phase I (Complete)
 - [X] Phase II (Complete)
-- [ ] Phase III (Not Start)
+- [X] Phase III (Complete)
 - [ ] Phase IV (Not Start)
 
 ## Functions
@@ -26,7 +26,7 @@ Material Design Ocean Theme
     - [x] `IR` (16 bits)
     - [x] `MAR` (16 bits)
     - [x] `MBR` (16 bits)
-    - [ ] `MFR` (4 bits)
+    - [x] `MFR` (4 bits): No need
     - [x] `X1`...`X3` (16 bits) 
     - [x] `memory.Memory` (2048 words, expandable to 4096 words)
     - [x] `Cache` 16 Line X (8 Word + Tag + Valid)
@@ -54,18 +54,18 @@ Material Design Ocean Theme
     - [x] `NOT` (25):
     - [x] `SRC` (31):
     - [x] `RRC` (32):
-    - [ ] `FADD` (33):
-    - [ ] `FSUB` (34):
-    - [ ] `VADD` (35):
-    - [ ] `VSUB` (36):
-    - [ ] `CNVRT` (37):
+    - [x] `FADD` (33):
+    - [x] `FSUB` (34):
+    - [x] `VADD` (35):
+    - [x] `VSUB` (36):
+    - [x] `CNVRT` (37):
     - [x] `LDX` (41): Load Index register.Register from memory.Memory
     - [x] `STX` (42): Store Index register.Register to memory.Memory
-    - [ ] `LDFR` (50):
-    - [ ] `STFR` (51):
+    - [x] `LDFR` (50):
+    - [x] `STFR` (51):
     - [x] `IN` (61):
     - [x] `OUT` (62):
-    - [ ] `CHK` (63):
+    - [x] `CHK` (63):
 
 ## Memory Reserved Locations:
 
