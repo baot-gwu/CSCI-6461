@@ -56,8 +56,6 @@ public class DebugPanel extends JFrame {
     private JButton restartButton;
     private JButton program1Button;
     private JButton program2Button;
-    private JButton floatingTestButton;
-    private JButton vectorTestButton;
     private JButton IPLButton;
     private JTextField R0_textField;
     private JTextField R1_textField;
@@ -130,12 +128,13 @@ public class DebugPanel extends JFrame {
     private JLabel IR_value;
     private JPanel MemoryFullList;
     private JTabbedPane tabbedPane;
+    private JLabel PipelineCountLabel;
     private CiscComputer ciscComputer;
     private InstructionDecoder instructionDecoder = new InstructionDecoder();
     private InstructionRegister instructionRegister;
     private Memory memory;
     private boolean pause = true;
-    private String r0, r1, r2, r3, ix1, ix2, ix3, mar, mbr, pc, ir, cc, mfr;
+    private String r0, r1, r2, r3, ix1, ix2, ix3, mar, mbr, pc, ir, cc, mfr, pipelineCount;
 //    private FileSystemView fsv = FileSystemView.getFileSystemView();
 
     private String memoryAddress[] = new String[Main.MAX_MEMORY_SIZE];
@@ -508,28 +507,6 @@ public class DebugPanel extends JFrame {
                 }
             }
         });
-
-        floatingTestButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (Main.busy){
-                    JOptionPane.showMessageDialog(null, "Machine is busy", "Machine is busy, please try it later.", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    Main.op.sendCommand("floating test");
-                }
-            }
-        });
-
-        vectorTestButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (Main.busy){
-                    JOptionPane.showMessageDialog(null, "Machine is busy", "Machine is busy, please try it later.", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    Main.op.sendCommand("vector test");
-                }
-            }
-        });
     }
 
     private void writeMemory(String mar, String mbr) { // Load MBR to MEM[MAR]
@@ -607,6 +584,7 @@ public class DebugPanel extends JFrame {
         mbr = (String.valueOf(data.getMbr()) == "null" || data.getMbr().length() == 0) ? "0" : data.getMbr();
         mfr = (String.valueOf((data.getMfr())) == "null" || data.getMfr().length() == 0) ? "0" : data.getMfr();
         cc = (String.valueOf((data.getCc())) == "null" || data.getCc().length() == 0) ? "0" : data.getCc();
+        pipelineCount = (String.valueOf((data.getCount())) == "null" || data.getCount().length() == 0) ? "0" : data.getCount();
 
         R0_textField.setText(Utils.autoFill(r0, 16));
         R1_textField.setText(Utils.autoFill(r1, 16));
@@ -621,11 +599,12 @@ public class DebugPanel extends JFrame {
         PC_textField.setText(Utils.autoFill(pc, 12));
         IR_textField.setText(Utils.autoFill(ir, 16));
         CC_textField.setText(Utils.autoFill(cc, 4));
+        PipelineCountLabel.setText("Pipeline Count: " + pipelineCount);
         getMemory();
         binaryToHex();
     }
 
-    public void getData() { // update back-end from front-end
+    private void getData() { // update back-end from front-end
         Display data = new Display(this.ciscComputer, true);
         data.setR0(r0);
         data.setR1(r1);
@@ -658,22 +637,22 @@ public class DebugPanel extends JFrame {
         MFR_value.setText("x" + Utils.binaryToHex(Utils.autoFill(mfr, 4)));
     }
 
-    protected void restart() {
+    void restart() {
         pause = true;
         new Memory().clear();  // clear all memory
         new Memory().loadBackupContent(); // load the memory with backup
         clear();
     }
 
-    protected void stop() {
+    void stop() {
         pause = true;
     }
 
-    protected void pause() {
+    void pause() {
         pause = true;
     }
 
-    protected void singleRun() {
+    void singleRun() {
         int address = Integer.parseInt(pc, 2); // get current counter
         if (String.valueOf(memoryAssembleCode[address]) == "null") {
             pause = true;
@@ -700,13 +679,13 @@ public class DebugPanel extends JFrame {
         }
     }
 
-    protected void autoRun() {
+    void autoRun() {
         // multi-thread the back-end from main thread (front-end)
         Thread backEnd = new Thread(new BackEnd());
         backEnd.start();
     }
 
-    protected void ipl() { // import instructions from file
+    void ipl() { // import instructions from file
         JFileChooser cardReader = new JFileChooser();
         cardReader.setFileSelectionMode(JFileChooser.FILES_ONLY);
         File dir = new File("");
@@ -724,12 +703,12 @@ public class DebugPanel extends JFrame {
         }
     }
 
-    protected void reload() { // reload the memory file
+    void reload() { // reload the memory file
         ciscComputer.getMemory().loadContent(null);
         getMemory();
     }
 
-    protected void save() { // save the memory file
+    void save() { // save the memory file
         JFileChooser cardWriter = new JFileChooser();
         cardWriter.setFileSelectionMode(JFileChooser.FILES_ONLY);
         File dir = new File("");

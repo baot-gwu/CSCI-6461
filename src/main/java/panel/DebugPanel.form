@@ -884,26 +884,6 @@
               <toolTipText value=""/>
             </properties>
           </component>
-          <component id="f7cff" class="javax.swing.JButton" binding="floatingTestButton" default-binding="true">
-            <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <enabled value="false"/>
-              <text value="Floating Test"/>
-              <toolTipText value="Not Avaliable"/>
-            </properties>
-          </component>
-          <component id="3e3f6" class="javax.swing.JButton" binding="vectorTestButton" default-binding="true">
-            <constraints>
-              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <enabled value="false"/>
-              <text value="Vector Test"/>
-              <toolTipText value="Not Avaliable"/>
-            </properties>
-          </component>
           <component id="d6e09" class="javax.swing.JButton" binding="reloadButton" default-binding="true">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -942,6 +922,14 @@
             </constraints>
             <properties>
               <text value="Pause"/>
+            </properties>
+          </component>
+          <component id="f86f0" class="javax.swing.JLabel" binding="PipelineCountLabel">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Pipeline Count: "/>
             </properties>
           </component>
         </children>

@@ -33,6 +33,8 @@ public class Display {
     private String cc;
     private String cct;
 
+    private String count;
+
     public Display(CiscComputer ciscComputer, boolean binary) {
         setGeneralPurposeRegisters(ciscComputer.getGeneralPurposeRegisters(), binary);
         setIndexRegisters(ciscComputer.getIndexRegisters(), binary);
@@ -176,6 +178,14 @@ public class Display {
         this.cct = cct;
     }
 
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
     @Override
     public String toString() {
         return ", PC=" + (pc == null ? "" : pc)
@@ -191,6 +201,7 @@ public class Display {
                 + ", MBR=" + (mbr == null ? "" : mbr)
                 + ", MFR=" + (mfr == null ? "" : mfr)
                 + ", CC=" + (cc == null ? "" : cc)
-                + ", CCT=" + (cct == null ? "" : cct);
+                + ", CCT=" + (cct == null ? "" : cct)
+                + ", PipelineCount=" + (count == null ? "" : count);
     }
 }
