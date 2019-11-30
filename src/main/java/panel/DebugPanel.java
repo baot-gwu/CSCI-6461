@@ -674,11 +674,14 @@ public class DebugPanel extends JFrame {
                 Word word = Cache.getWord(new Address(address));
                 ciscComputer.fetch.add(word);
                 fetchUsed = true;
+
+                System.out.println("Fetching from Memory Address: " + (address + 1));
             }
 
             if (initialDecodeSize < TOTAL_PIPE_LINE) {
                 if (initialFetchSize > 0) {
                     Word word = ciscComputer.fetch.remove();
+                    System.out.println("Decoding: " + word.getValue());
                     ciscComputer.getInstructionRegister().setBinaryInstruction(word.getValue()); // set ir
                     Instruction instruction = new InstructionDecoder().decode(ciscComputer); // decode instruction
                     ciscComputer.decode.add(instruction);
@@ -688,20 +691,22 @@ public class DebugPanel extends JFrame {
             if (initialExecuteSize < TOTAL_PIPE_LINE) {
                 if (initialDecodeSize > 0) {
                     Instruction instruction = ciscComputer.decode.remove();
-                    instruction.getType().getProcessor().process(ciscComputer, instruction); // execute instruction
-                    System.out.println(instruction.symbolicForm());
+                    System.out.println("Executing: " + instruction.symbolicForm());
                     ciscComputer.execute.add(instruction);
                 }
             }
 
             if (initialWriteSize < TOTAL_PIPE_LINE) {
                 if (initialExecuteSize > 0) {
-                    ciscComputer.write.add(ciscComputer.execute.remove());
+                    Instruction instruction = ciscComputer.execute.remove();
+                    System.out.println("Writing Result: " + instruction.symbolicForm());
+                    instruction.getType().getProcessor().process(ciscComputer, instruction); // execute instruction
+                    ciscComputer.write.add(instruction);
                 }
             }
 
             if (initialWriteSize > 0) {
-                ciscComputer.write.remove();
+                System.out.println("End: " + ciscComputer.write.remove().symbolicForm());
             }
 
             setData(ciscComputer); // update front-end

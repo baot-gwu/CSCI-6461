@@ -29,9 +29,6 @@ public class Utils {
     private static final List<InstructionType> floatingPointInstructions = Arrays.asList(
             FADD, FSUB, VADD, VSUB, CNVRT, LDFR, STFR);
 
-    public static final List<InstructionType> instructionsNeedsMemoryAccess = Arrays.asList(
-            AMR, SMR, FADD, FSUB, VADD, VSUB, CNVRT, LDFR, STFR, LDR, STR, TRAP, JSR);
-
     public static int binaryToDecimal(String binary) {
         return Integer.parseInt(binary, 2);
     }
