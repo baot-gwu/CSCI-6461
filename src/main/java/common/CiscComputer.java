@@ -46,6 +46,8 @@ public class CiscComputer {
     public Queue<Instruction> decode = new LinkedList<>();
     public Queue<Instruction> execute = new LinkedList<>();
     public Queue<Instruction> write = new LinkedList<>();
+    public boolean stall;
+    public int stallClockCycle;
 
     public List<GeneralPurposeRegister> getGeneralPurposeRegisters() {
         return generalPurposeRegisters;

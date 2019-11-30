@@ -23,9 +23,6 @@ public class TransferInstructionProcessor implements InstructionProcessor {
     public void process(CiscComputer ciscComputer, Instruction instruction) {
         Address address = AddressDecoder.decodeAddress(instruction, ciscComputer.getMachineFaultRegister());
         Register firstRegister = instruction.getFirstRegister();
-//        ciscComputer.getConditionCode().setConditionCodeType(null);
-        ciscComputer.getMemoryAddressRegister().setDecimalValue(0);
-        ciscComputer.getMemoryBufferRegister().setDecimalValue(0);
 
         switch (instruction.getType()) {
             case JZ:

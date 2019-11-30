@@ -669,13 +669,25 @@ public class DebugPanel extends JFrame {
             int initialWriteSize = ciscComputer.write.size();
             boolean fetchUsed = false;
 
-            if (initialFetchSize < TOTAL_PIPE_LINE) {
+            if (ciscComputer.stallClockCycle + TOTAL_PIPE_LINE  == ciscComputer.getClockCycle()) {
+                ciscComputer.stall = false;
+            }
+
+            if (initialFetchSize < TOTAL_PIPE_LINE && !ciscComputer.stall) {
                 ciscComputer.getProgramCounter().setDecimalValue(address + 1); // set pc
                 Word word = Cache.getWord(new Address(address));
                 ciscComputer.fetch.add(word);
                 fetchUsed = true;
 
                 System.out.println("Fetching from Memory Address: " + (address + 1));
+
+                ciscComputer.getInstructionRegister().setBinaryInstruction(word.getValue());
+                Instruction instruction = new InstructionDecoder().decode(ciscComputer);
+
+                if (Utils.stallInstructions.contains(instruction.getType())) {
+                    ciscComputer.stall = true;
+                    ciscComputer.stallClockCycle = ciscComputer.getClockCycle();
+                }
             }
 
             if (initialDecodeSize < TOTAL_PIPE_LINE) {
@@ -706,7 +718,7 @@ public class DebugPanel extends JFrame {
             }
 
             if (initialWriteSize > 0) {
-                System.out.println("End: " + ciscComputer.write.remove().symbolicForm());
+                System.out.println("Exit from Pipeline: " + ciscComputer.write.remove().symbolicForm());
             }
 
             setData(ciscComputer); // update front-end

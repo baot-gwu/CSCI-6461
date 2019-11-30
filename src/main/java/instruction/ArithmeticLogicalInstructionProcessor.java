@@ -38,9 +38,6 @@ public class ArithmeticLogicalInstructionProcessor implements InstructionProcess
         Address address = AddressDecoder.decodeAddress(instruction, ciscComputer.getMachineFaultRegister());
         Register firstRegister = instruction.getFirstRegister();
         Register secondRegister = instruction.getSecondRegister();
-        ciscComputer.getConditionCode().setConditionCodeType(null);
-        ciscComputer.getMemoryAddressRegister().setDecimalValue(0);
-        ciscComputer.getMemoryBufferRegister().setDecimalValue(0);
 
         switch (instruction.getType()) {
             case AMR:
