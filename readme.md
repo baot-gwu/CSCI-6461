@@ -34,38 +34,38 @@ Material Design Ocean Theme
     - [x] `LDR` (01): Load memory.Memory to register.Register
     - [x] `STR` (02): Store register.Register to memory.Memory
     - [x] `LDA` (03): Load memory.Address to register.Register
-    - [x] `AMR` (04):
-    - [x] `SMR` (05):
-    - [x] `AIR` (06):
-    - [x] `SIR` (07):
+    - [x] `AMR` (04): Add memory to register 
+    - [x] `SMR` (05): Subtract memory from register
+    - [x] `AIR` (06): Add immediate to register
+    - [x] `SIR` (07): Subtract immediate from register
     - [x] `JZ` (10): Jump if Zero
     - [x] `JNE` (11): Jump if not equal
     - [x] `JCC` (12): Jump if Condition Code
     - [x] `JMA` (13): Unconditional Jump to memory.Address
     - [x] `JSR` (14): Jump and save Return memory.Address
-    - [x] `RFS` (15): 
-    - [x] `SOB` (16):
-    - [x] `JGE` (17):
-    - [x] `MLT` (20):
-    - [x] `DVD` (21):
-    - [x] `TRR` (22):
-    - [x] `AND` (23):
-    - [x] `ORR` (24):
-    - [x] `NOT` (25):
-    - [x] `SRC` (31):
-    - [x] `RRC` (32):
-    - [x] `FADD` (33):
-    - [x] `FSUB` (34):
-    - [x] `VADD` (35):
-    - [x] `VSUB` (36):
-    - [x] `CNVRT` (37):
-    - [x] `LDX` (41): Load Index register.Register from memory.Memory
-    - [x] `STX` (42): Store Index register.Register to memory.Memory
-    - [x] `LDFR` (50):
-    - [x] `STFR` (51):
-    - [x] `IN` (61):
-    - [x] `OUT` (62):
-    - [x] `CHK` (63):
+    - [x] `RFS` (15): Return from subroutine
+    - [x] `SOB` (16): Subtract one and branch
+    - [x] `JGE` (17): Jump address greater or equal
+    - [x] `MLT` (20): Multiply register by register
+    - [x] `DVD` (21): Divide register by register
+    - [x] `TRR` (22): Test equality of register and register
+    - [x] `AND` (23): Logical and of register and register
+    - [x] `ORR` (24): Logical or of register and register
+    - [x] `NOT` (25): Logical not of register and register
+    - [x] `SRC` (31): Shift register by count
+    - [x] `RRC` (32): Rotate register by count
+    - [x] `FADD` (33): Add memory to floating point register
+    - [x] `FSUB` (34): Subtract memory from floating point register
+    - [x] `VADD` (35): Vector add
+    - [x] `VSUB` (36): Vector subtract
+    - [x] `CNVRT` (37): Convert to fixed or floating point
+    - [x] `LDX` (41): Load Index register register from memory
+    - [x] `STX` (42): Store Index register register to memory
+    - [x] `LDFR` (50): Load floating point register from memory
+    - [x] `STFR` (51): Store floating point register to memory
+    - [x] `IN` (61): Input character to register from device
+    - [x] `OUT` (62): Output character to device from register
+    - [x] `CHK` (63): Check device status to register
 
 ## Memory Reserved Locations:
 
