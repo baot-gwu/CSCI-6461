@@ -12,11 +12,14 @@ Material Design Ocean Theme
 ![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Ocean_1.png?raw=true)
 ![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Ocean_1.png?raw=true)
 
+Basic Class Design
+![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Internal-Code-Design-basic.jpg?raw=true)
+
 ## Progress
 - [x] Phase I (Complete)
-- [X] Phase II (Complete)
-- [X] Phase III (Complete)
-- [ ] Phase IV (Not Start)
+- [x] Phase II (Complete)
+- [x] Phase III (Complete)
+- [x] Phase IV (Complete)
 
 ## Functions
 - Characteristics
