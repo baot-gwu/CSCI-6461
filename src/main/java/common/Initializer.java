@@ -45,6 +45,8 @@ public class Initializer {
 
         ciscComputer.setMachineFaultRegister(new MachineFaultRegister());
 
+        ciscComputer.setClockCycle(0);
+
         return ciscComputer;
     }
 

@@ -52,7 +52,7 @@ public class TransferInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals("000000000011", ciscComputer.getProgramCounter().getValue(true));
+        assertEquals("000000000010", ciscComputer.getProgramCounter().getValue(true));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class TransferInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals("000000000011", ciscComputer.getProgramCounter().getValue(true));
+        assertEquals("000000000010", ciscComputer.getProgramCounter().getValue(true));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class TransferInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals("000000000001", ciscComputer.getProgramCounter().getValue(true));
+        assertEquals("000000000010", ciscComputer.getProgramCounter().getValue(true));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class TransferInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals("000000000011", ciscComputer.getProgramCounter().getValue(true));
+        assertEquals("000000000010", ciscComputer.getProgramCounter().getValue(true));
     }
 
     @Test
@@ -127,7 +127,7 @@ public class TransferInstructionProcessorTest {
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
         assertEquals("000000000001", ciscComputer.getProgramCounter().getValue(true));
-        assertEquals("0000000000000011", register3.getValue(true));
+        assertEquals("0000000000000010", register3.getValue(true));
         assertEquals("0000000000010000", register0.getValue(true));
     }
 
@@ -167,7 +167,7 @@ public class TransferInstructionProcessorTest {
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
         assertEquals("0000000000000000", register0.getValue(true));
-        assertEquals("000000000011", ciscComputer.getProgramCounter().getValue(true));
+        assertEquals("000000000010", ciscComputer.getProgramCounter().getValue(true));
     }
 
     @Test
@@ -203,6 +203,6 @@ public class TransferInstructionProcessorTest {
         Instruction instruction = new InstructionDecoder().decode(ciscComputer);
         instruction.getType().getProcessor().process(ciscComputer, instruction);
 
-        assertEquals("000000000011", ciscComputer.getProgramCounter().getValue(true));
+        assertEquals("000000000010", ciscComputer.getProgramCounter().getValue(true));
     }
 }

@@ -35,7 +35,7 @@ public class Cache {
         return Utils.unsignedBinaryToDecimal(getWord(address).getValue());
     }
 
-    private static Word getWord(Address address) {
+    public static Word getWord(Address address) {
         CacheLine cacheLine = getCacheLine(address);
 
         if (cacheLine == null) {
@@ -53,8 +53,6 @@ public class Cache {
                 }
             }
         }
-
-        System.out.println("Cache Miss for address: " + address.toString());
 
         return null;
     }

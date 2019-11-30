@@ -33,7 +33,7 @@ public class Display {
     private String cc;
     private String cct;
 
-    private String count;
+    private String clockCycle;
 
     public Display(CiscComputer ciscComputer, boolean binary) {
         setGeneralPurposeRegisters(ciscComputer.getGeneralPurposeRegisters(), binary);
@@ -44,6 +44,7 @@ public class Display {
         setIr(ciscComputer.getInstructionRegister().getValue(binary));
         setPc(ciscComputer.getProgramCounter().getValue(binary));
         setCc(ciscComputer.getConditionCode().getValue(binary));
+        setClockCycle(String.valueOf(ciscComputer.getClockCycle()));
 
         ConditionCodeType conditionCodeType = ciscComputer.getConditionCode().getConditionCodeType();
         if (conditionCodeType != null) {
@@ -178,12 +179,12 @@ public class Display {
         this.cct = cct;
     }
 
-    public String getCount() {
-        return count;
+    public String getClockCycle() {
+        return clockCycle;
     }
 
-    public void setCount(String count) {
-        this.count = count;
+    public void setClockCycle(String clockCycle) {
+        this.clockCycle = clockCycle;
     }
 
     @Override
@@ -202,6 +203,6 @@ public class Display {
                 + ", MFR=" + (mfr == null ? "" : mfr)
                 + ", CC=" + (cc == null ? "" : cc)
                 + ", CCT=" + (cct == null ? "" : cct)
-                + ", PipelineCount=" + (count == null ? "" : count);
+                + ", ClockCycle=" + (clockCycle == null ? "" : clockCycle);
     }
 }

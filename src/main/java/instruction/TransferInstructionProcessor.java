@@ -72,7 +72,6 @@ public class TransferInstructionProcessor implements InstructionProcessor {
 
     private void jumpAddressIfConditionCode(Register firstRegister, ConditionCode conditionCode, Address address, CiscComputer ciscComputer) {
         ProgramCounter pc = new ProgramCounter();
-        System.err.println(conditionCode.getConditionCodeType().getValue() == firstRegister.getRegisterNumber());
         pc.setDecimalValue(((conditionCode.getDecimalValue() == 1) && (conditionCode.getConditionCodeType() != null) && (conditionCode.getConditionCodeType().getValue() == firstRegister.getRegisterNumber())) ? address.getEffectiveAddress() : ciscComputer.getProgramCounter().getDecimalValue());
         ciscComputer.setProgramCounter(pc);
         ciscComputer.getConditionCode().setConditionCodeType(null);

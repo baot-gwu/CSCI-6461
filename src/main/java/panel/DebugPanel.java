@@ -35,6 +35,8 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
 
+import static main.java.common.CiscComputer.TOTAL_PIPE_LINE;
+
 /**
  * @author baot
  * @since 9/10/19
@@ -128,13 +130,13 @@ public class DebugPanel extends JFrame {
     private JLabel IR_value;
     private JPanel MemoryFullList;
     private JTabbedPane tabbedPane;
-    private JLabel PipelineCountLabel;
+    private JLabel ClockCycleLabel;
     private CiscComputer ciscComputer;
     private InstructionDecoder instructionDecoder = new InstructionDecoder();
     private InstructionRegister instructionRegister;
     private Memory memory;
     private boolean pause = true;
-    private String r0, r1, r2, r3, ix1, ix2, ix3, mar, mbr, pc, ir, cc, mfr, pipelineCount;
+    private String r0, r1, r2, r3, ix1, ix2, ix3, mar, mbr, pc, ir, cc, mfr, clockCycle;
 //    private FileSystemView fsv = FileSystemView.getFileSystemView();
 
     private String memoryAddress[] = new String[Main.MAX_MEMORY_SIZE];
@@ -584,7 +586,7 @@ public class DebugPanel extends JFrame {
         mbr = (String.valueOf(data.getMbr()) == "null" || data.getMbr().length() == 0) ? "0" : data.getMbr();
         mfr = (String.valueOf((data.getMfr())) == "null" || data.getMfr().length() == 0) ? "0" : data.getMfr();
         cc = (String.valueOf((data.getCc())) == "null" || data.getCc().length() == 0) ? "0" : data.getCc();
-        pipelineCount = (String.valueOf((data.getCount())) == "null" || data.getCount().length() == 0) ? "0" : data.getCount();
+        clockCycle = (String.valueOf((data.getClockCycle())) == "null" || data.getClockCycle().length() == 0) ? "0" : data.getClockCycle();
 
         R0_textField.setText(Utils.autoFill(r0, 16));
         R1_textField.setText(Utils.autoFill(r1, 16));
@@ -599,7 +601,7 @@ public class DebugPanel extends JFrame {
         PC_textField.setText(Utils.autoFill(pc, 12));
         IR_textField.setText(Utils.autoFill(ir, 16));
         CC_textField.setText(Utils.autoFill(cc, 4));
-        PipelineCountLabel.setText("Pipeline Count: " + pipelineCount);
+        ClockCycleLabel.setText("Clock Cycle: " + clockCycle);
         getMemory();
         binaryToHex();
     }
@@ -619,6 +621,7 @@ public class DebugPanel extends JFrame {
         data.setPc(pc);
         data.setIr(ir);
         data.setCc(cc);
+        data.setClockCycle(clockCycle);
     }
 
     private void binaryToHex() { // convert binary code to hex code
@@ -658,16 +661,54 @@ public class DebugPanel extends JFrame {
             pause = true;
             JOptionPane.showMessageDialog(null, "Not a supported instruction!", "HALT", JOptionPane.ERROR_MESSAGE);
         } else {
-            ciscComputer.getProgramCounter().setDecimalValue(address + 1); // set pc
-            ciscComputer.getInstructionRegister().setBinaryInstruction(Cache.getWordStringValue(new Address(address))); // set ir
-            Instruction instruction = new InstructionDecoder().decode(ciscComputer); // decode instruction
-            instruction.getType().getProcessor().process(ciscComputer, instruction); // execute instruction
+            ciscComputer.incrementClockCycle();
+
+            int initialFetchSize = ciscComputer.fetch.size();
+            int initialDecodeSize = ciscComputer.decode.size();
+            int initialExecuteSize = ciscComputer.execute.size();
+            int initialWriteSize = ciscComputer.write.size();
+            boolean fetchUsed = false;
+
+            if (initialFetchSize < TOTAL_PIPE_LINE) {
+                ciscComputer.getProgramCounter().setDecimalValue(address + 1); // set pc
+                Word word = Cache.getWord(new Address(address));
+                ciscComputer.fetch.add(word);
+                fetchUsed = true;
+            }
+
+            if (initialDecodeSize < TOTAL_PIPE_LINE) {
+                if (initialFetchSize > 0) {
+                    Word word = ciscComputer.fetch.remove();
+                    ciscComputer.getInstructionRegister().setBinaryInstruction(word.getValue()); // set ir
+                    Instruction instruction = new InstructionDecoder().decode(ciscComputer); // decode instruction
+                    ciscComputer.decode.add(instruction);
+                }
+            }
+
+            if (initialExecuteSize < TOTAL_PIPE_LINE) {
+                if (initialDecodeSize > 0) {
+                    Instruction instruction = ciscComputer.decode.remove();
+                    instruction.getType().getProcessor().process(ciscComputer, instruction); // execute instruction
+                    System.out.println(instruction.symbolicForm());
+                    ciscComputer.execute.add(instruction);
+                }
+            }
+
+            if (initialWriteSize < TOTAL_PIPE_LINE) {
+                if (initialExecuteSize > 0) {
+                    ciscComputer.write.add(ciscComputer.execute.remove());
+                }
+            }
+
+            if (initialWriteSize > 0) {
+                ciscComputer.write.remove();
+            }
 
             setData(ciscComputer); // update front-end
-            syncListSelect(address + 1, true); // memory selected index jump to the pc
 
-            // print the log to console
-            System.out.println(instruction.symbolicForm());
+            if (fetchUsed) {
+                syncListSelect(address + 1, true); // memory selected index jump to the pc
+            }
 
             Main.printValues(ciscComputer);
 
@@ -880,10 +921,10 @@ public class DebugPanel extends JFrame {
         if (card != null){
             Path path = Paths.get(card.getAbsolutePath());
             try {
-                String str = Files.readString(path);
-//                StringBuilder sb = new StringBuilder(Word.MAX_SIZE * 2018);
-//                Files.readAllLines(path).forEach(l -> sb.append(l).append("\n"));
-//                String str = sb.toString();
+                //String str = Files.readString(path);
+                StringBuilder sb = new StringBuilder(Word.MAX_SIZE * 2018);
+                Files.readAllLines(path).forEach(l -> sb.append(l).append("\n"));
+                String str = sb.toString();
 
                 int index = 1500;
                 for (int i = 0; i < Math.min(500, str.length()); i++){

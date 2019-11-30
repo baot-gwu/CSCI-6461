@@ -24,13 +24,13 @@ public class Utils {
     public static final int MFR_ID_ILLEGAL_MEMORY_ADDRESS_BEYOND_SIZE = 3;
 
     private static final List<InstructionType> instructionWithNoIndexRegister = Arrays.asList(
-            InstructionType.MLT, InstructionType.DVD, InstructionType.TRR, InstructionType.AND, InstructionType.ORR,
-            InstructionType.NOT, InstructionType.SRC, InstructionType.RRC, InstructionType.IN, InstructionType.OUT,
-            InstructionType.CHK, InstructionType.TRAP);
+            MLT, DVD, TRR, AND, ORR, NOT, SRC, RRC, IN, OUT, CHK, TRAP);
 
     private static final List<InstructionType> floatingPointInstructions = Arrays.asList(
-            InstructionType.FADD, InstructionType.FSUB, InstructionType.VADD, InstructionType.VSUB,
-            InstructionType.CNVRT, InstructionType.LDFR, InstructionType.STFR);
+            FADD, FSUB, VADD, VSUB, CNVRT, LDFR, STFR);
+
+    public static final List<InstructionType> instructionsNeedsMemoryAccess = Arrays.asList(
+            AMR, SMR, FADD, FSUB, VADD, VSUB, CNVRT, LDFR, STFR, LDR, STR, TRAP, JSR);
 
     public static int binaryToDecimal(String binary) {
         return Integer.parseInt(binary, 2);
@@ -134,15 +134,15 @@ public class Utils {
     }
 
     public static boolean hasSecondRegister(InstructionType type) {
-        return InstructionType.NOT != type && !isShiftOrRotateInstruction(type) && !isIoInstruction(type) && InstructionType.TRAP != type;
+        return NOT != type && !isShiftOrRotateInstruction(type) && !isIoInstruction(type) && TRAP != type;
     }
 
     public static boolean isShiftOrRotateInstruction(InstructionType type) {
-        return (InstructionType.SRC == type || InstructionType.RRC == type);
+        return (SRC == type || RRC == type);
     }
 
     public static boolean isIoInstruction(InstructionType type) {
-        return (InstructionType.IN == type || InstructionType.OUT == type || InstructionType.CHK == type);
+        return (IN == type || OUT == type || CHK == type);
     }
 
     public static boolean isValidMultiplicationOrDivisionRegister(int registerNumber) {
@@ -238,7 +238,7 @@ public class Utils {
 
     public static String binaryInstruction(String symbolicForm) {
         String[] parts = symbolicForm.split("[ ,]");
-        InstructionType type = InstructionType.valueOf(parts[0]);
+        InstructionType type = valueOf(parts[0]);
         String binaryInstruction = type.getOpcodeInBinary();
 
         int r = 0;

@@ -1,11 +1,15 @@
 package main.java.common;
 
 import main.java.device.Device;
+import main.java.instruction.Instruction;
 import main.java.memory.Memory;
+import main.java.memory.Word;
 import main.java.register.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * @author jalal
@@ -23,6 +27,8 @@ import java.util.List;
  */
 public class CiscComputer {
 
+    public static final int TOTAL_PIPE_LINE = 4;
+
     private List<GeneralPurposeRegister> generalPurposeRegisters = new ArrayList<>(4);
     private List<FloatingPointRegister> floatingPointRegisters = new ArrayList<>(2);
     private List<IndexRegister> indexRegisters = new ArrayList<>(3);
@@ -34,6 +40,12 @@ public class CiscComputer {
     private MachineFaultRegister machineFaultRegister;
     private Memory memory;
     private List<Device> devices = new ArrayList<>(Device.MAX_DEVICES);
+    private int clockCycle;
+
+    public Queue<Word> fetch = new LinkedList<>();
+    public Queue<Instruction> decode = new LinkedList<>();
+    public Queue<Instruction> execute = new LinkedList<>();
+    public Queue<Instruction> write = new LinkedList<>();
 
     public List<GeneralPurposeRegister> getGeneralPurposeRegisters() {
         return generalPurposeRegisters;
@@ -129,6 +141,18 @@ public class CiscComputer {
 
     public Device getDevice(int deviceId) {
         return devices.get(deviceId);
+    }
+
+    public int getClockCycle() {
+        return clockCycle;
+    }
+
+    public void setClockCycle(int clockCycle) {
+        this.clockCycle = clockCycle;
+    }
+
+    public void incrementClockCycle() {
+        setClockCycle(getClockCycle() + 1);
     }
 
     public GeneralPurposeRegister getGeneralPurposeRegister(int registerNumber) {
