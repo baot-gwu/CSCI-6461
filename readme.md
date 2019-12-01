@@ -12,7 +12,10 @@ Material Design Ocean Theme
 ![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Ocean_1.png?raw=true)
 ![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Ocean_1.png?raw=true)
 
-Basic Class Design
+## Design
+[Design note](https://github.com/baoziii/CSCI-6461/blob/master/Design-note.md) 
+
+Basic Design Internal Diagram
 ![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Internal-Code-Design-basic.jpg?raw=true)
 
 ## Progress
