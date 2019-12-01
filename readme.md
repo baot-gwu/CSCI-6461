@@ -12,9 +12,6 @@ Material Design Ocean Theme
 ![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Ocean_1.png?raw=true)
 ![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Ocean_1.png?raw=true)
 
-Basic Class Design
-![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Internal-Code-Design-basic.jpg?raw=true)
-
 ## Progress
 - [x] Phase I (Complete)
 - [x] Phase II (Complete)
@@ -84,3 +81,9 @@ Basic Class Design
 |7|I/O Devices Data Buffer|
 |8|Arguments List Address|
 |9|Store PC for Subroutine|
+
+## Design
+[Design note](https://github.com/baoziii/CSCI-6461/blob/master/Design-note.md) 
+
+Basic Design Internal Diagram
+![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Internal-Code-Design-basic.jpg?raw=true)
