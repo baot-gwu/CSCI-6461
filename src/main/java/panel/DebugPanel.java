@@ -151,6 +151,7 @@ public class DebugPanel extends JFrame {
     private String memoryHexValue[] = new String[Main.MAX_MEMORY_SIZE];
     private String memoryAssembleCode[] = new String[Main.MAX_MEMORY_SIZE];
 
+    // main function of debugPanel
     public DebugPanel() {
         // create windows
         super("CISC Machine Simulator");
@@ -518,11 +519,13 @@ public class DebugPanel extends JFrame {
         });
     }
 
+    // write memory to cisc
     private void writeMemory(String mar, String mbr) { // Load MBR to MEM[MAR]
         setMemory(Utils.binaryToDecimal(mar), mbr);
         getMemory();
     }
 
+    // sync the selection in four lists
     private void syncListSelect(int selectedIndex, boolean jump) { // synchronize four memory list selected index
         if (MemoryAddressList.getSelectedIndex() != selectedIndex)
             MemoryAddressList.setSelectedIndex(selectedIndex);
@@ -541,6 +544,7 @@ public class DebugPanel extends JFrame {
         }
     }
 
+    // get memory data from cisc
     private void getMemory() { // fetch memory and show on the memory lists
         int index;
         String value;
@@ -561,6 +565,7 @@ public class DebugPanel extends JFrame {
         }
     }
 
+    // get single data from memory
     public String getMemoryAt(int index) {
         setData(ciscComputer);
         if (index < Main.MAX_MEMORY_SIZE) {
@@ -569,6 +574,7 @@ public class DebugPanel extends JFrame {
             return null;
     }
 
+    // set single data to memory
     void setMemory(int key, String value) { // set MEM[key] = value
         if (memory.memoryMap.containsKey(key))
             memory.memoryMap.replace(key, new Word(value));
@@ -576,6 +582,7 @@ public class DebugPanel extends JFrame {
             memory.memoryMap.put(key, new Word(value));
     }
 
+    // update data to cisc
     public void setData(CiscComputer ciscComputer) { // update front-end from back-end
         this.ciscComputer = ciscComputer;
         memory = ciscComputer.getMemory();
@@ -613,6 +620,7 @@ public class DebugPanel extends JFrame {
         binaryToHex();
     }
 
+    // get data from cisc
     private void getData() { // update back-end from front-end
         Display data = new Display(this.ciscComputer, true);
         data.setR0(r0);
@@ -631,6 +639,7 @@ public class DebugPanel extends JFrame {
         data.setClockCycle(clockCycle);
     }
 
+    // convert binary data to hex data
     private void binaryToHex() { // convert binary code to hex code
         R0_value.setText("x" + Utils.binaryToHex(Utils.autoFill(r0, 16)));
         R1_value.setText("x" + Utils.binaryToHex(Utils.autoFill(r1, 16)));
@@ -647,6 +656,7 @@ public class DebugPanel extends JFrame {
         MFR_value.setText("x" + Utils.binaryToHex(Utils.autoFill(mfr, 4)));
     }
 
+    // restart machine
     void restart() {
         pause = true;
         new Memory().clear();  // clear all memory
@@ -654,14 +664,17 @@ public class DebugPanel extends JFrame {
         clear();
     }
 
+    // stop the machine
     void stop() {
         pause = true;
     }
 
+    // pause the machine
     void pause() {
         pause = true;
     }
 
+    // run the machine one step
     void singleRun() {
         int address = Integer.parseInt(pc, 2); // get current counter
         if (String.valueOf(memoryAssembleCode[address]) == "null") {
@@ -744,12 +757,14 @@ public class DebugPanel extends JFrame {
         }
     }
 
+    // run the machine until HALT
     void autoRun() {
         // multi-thread the back-end from main thread (front-end)
         Thread backEnd = new Thread(new BackEnd());
         backEnd.start();
     }
 
+    // read from card
     void ipl() { // import instructions from file
         JFileChooser cardReader = new JFileChooser();
         cardReader.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -768,12 +783,14 @@ public class DebugPanel extends JFrame {
         }
     }
 
-    void reload() { // reload the memory file
+    // reload the memory file
+    void reload() {
         ciscComputer.getMemory().loadContent(null);
         getMemory();
     }
 
-    void save() { // save the memory file
+    // save the memory file
+    void save() {
         JFileChooser cardWriter = new JFileChooser();
         cardWriter.setFileSelectionMode(JFileChooser.FILES_ONLY);
         File dir = new File("");
@@ -791,7 +808,8 @@ public class DebugPanel extends JFrame {
         }
     }
 
-    private String getSymbolicForm(String binaryInstruction) { // convert binary instruction to assemble code
+    // convert binary instruction to assemble code
+    private String getSymbolicForm(String binaryInstruction) {
         // format input binary code
         if (String.valueOf(binaryInstruction) == "null" || binaryInstruction.trim().toString() == "")
             binaryInstruction = "0";
@@ -808,13 +826,14 @@ public class DebugPanel extends JFrame {
         return instruction.symbolicForm();
     }
 
-
-    protected void clear() { // reset machine and front-end (except memory)
+    // reset machine and front-end (except memory)
+    protected void clear() {
         ciscComputer = new Initializer().initialize();
         setData(ciscComputer);
     }
 
-    private void clearMemory() { // reset the memory
+    // reset the memory
+    private void clearMemory() {
         memoryAddress = new String[Main.MAX_MEMORY_SIZE];
         memoryValue = new String[Main.MAX_MEMORY_SIZE];
         memoryHexValue = new String[Main.MAX_MEMORY_SIZE];
@@ -828,6 +847,7 @@ public class DebugPanel extends JFrame {
         }
     }
 
+    // multi-thread of back-end
     class BackEnd extends Thread {
         // delay AUTORUN_DELAY ms after execute a singleRun
         @Override
@@ -843,6 +863,7 @@ public class DebugPanel extends JFrame {
         }
     }
 
+    // set the theme funtion
     public void setTheme() {
         Theme theme = Main.theme;
 //        SwingUtilities.updateComponentTreeUI(MainForm);
@@ -919,6 +940,7 @@ public class DebugPanel extends JFrame {
         // Set JList
     }
 
+    // set the title color
     private void setTitleColor(JPanel panel, Theme theme) {
         if (panel.getBorder() instanceof TitledBorder) {
             TitledBorder tb = (TitledBorder) panel.getBorder();
@@ -929,10 +951,12 @@ public class DebugPanel extends JFrame {
         }
     }
 
+    // get the cisc
     public CiscComputer getCiscComputer() {
         return this.ciscComputer;
     }
 
+    // read the file
     public void readFromFile() {
         JFileChooser cardReader = new JFileChooser();
         cardReader.setFileSelectionMode(JFileChooser.FILES_ONLY);

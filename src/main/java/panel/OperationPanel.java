@@ -61,7 +61,7 @@ public class OperationPanel extends JFrame{
             "clean\t\tclean\t\tClean The Console (Same as \"cls\")",
             "cls\t\tcls\t\tClean The Console (Same as \"clean\")",
             "exit\t\texit\t\tShutdown The Machine (Same as \"quit\" and \"power off\")",
-            "floating test\tfloating test\tRun The Floating Test",
+//            "floating test\tfloating test\tRun The Floating Test",
             "ipl\t\tipl\t\tLoad The Program From I/O",
             "pause\t\tpause\t\tPause The Workload on The Machine (not finished)",
             "power off\tpower off\tShutdown The Machine (Same as \"exit\" and \"quit\")",
@@ -80,11 +80,12 @@ public class OperationPanel extends JFrame{
             "status\t\tstatus\t\tShow The Status of The Machine",
             "stop\t\tstop\t\tStop The Workload on The Machine",
             "switch theme\tswitch theme {$THEME_NAME}\tSwitch the Theme of UI. Now Support \"Material Design Ocean\" (or \"MaterialDesignOcean\") and \"Material Design Lighter\" (or \"MaterialDesignLighter\")",
-            "vector test\tvector test\tRun The Vector Test",
+//            "vector test\tvector test\tRun The Vector Test",
             "/help\t\t/help\t\tShow The Command List",
 
     };
 
+    // main function of operation panel
     public OperationPanel() {
         // create windows
         super("CISC Machine Simulator Console");
@@ -154,24 +155,29 @@ public class OperationPanel extends JFrame{
         });
     }
 
+    // update the data from cisc
     public void setData(CiscComputer ciscComputer) { // update front-end from back-end
         this.ciscComputer = ciscComputer;
     }
 
+    // update the data to cisc
     private void updateScreen() {
         screen.setText(screenContent.toString());
         screenScroll.getVerticalScrollBar().setValue(screenScroll.getVerticalScrollBar().getMaximum() + 10);
     }
 
+    // show new line in screen
     private void newLine() {
         screenContent.append(arrow);
         updateScreen();
     }
 
+    // show new line in screen
     public void pushNewLine() {
         newLine();
     }
 
+    // show command in screen
     private void pushCommand() {
         String command = textField.getText().trim();
         if (((commandMode && command.equals(tip_command)) || (!commandMode && command.equals(tip_data))) || command.isEmpty()) {
@@ -212,6 +218,7 @@ public class OperationPanel extends JFrame{
         textField.setText("");
     }
 
+    // push message to screen
     private void pushData() {
         dataBuffer = textField.getText();
         textField.setText("");
@@ -220,6 +227,7 @@ public class OperationPanel extends JFrame{
         }
     }
 
+    // command processing
     public void sendCommand(String command){
         screenContent.append(command).append("\n");
         if (command.equals("status")){
@@ -239,10 +247,10 @@ public class OperationPanel extends JFrame{
 //            pg2 = new Thread(new program2());
 //            threadType = "program2";
 //            pg2.start();
-        } else if (command.toLowerCase().equals("vector test")) {
-            vectorTest();
-        } else if (command.toLowerCase().equals("floating test")) {
-            floatingTest();
+//        } else if (command.toLowerCase().equals("vector test")) {
+//            vectorTest();
+//        } else if (command.toLowerCase().equals("floating test")) {
+//            floatingTest();
         } else if (command.toLowerCase().equals("/help")) {
             pushToScreen(Utils.arrayToStringParagraph(COMMAND_LIST), false);
             newLine();
@@ -256,6 +264,7 @@ public class OperationPanel extends JFrame{
         }
     }
 
+    // show message in screen
     public void pushToScreen(String content, boolean isIndependentContent) {
         if (isIndependentContent)
             screenContent.delete(screenContent.length() - 2, screenContent.length());
@@ -263,6 +272,7 @@ public class OperationPanel extends JFrame{
         updateScreen();
     }
 
+    // Program 1
     class program1 extends Thread {
         @Override
         public void run() {
@@ -303,6 +313,7 @@ public class OperationPanel extends JFrame{
         }
     }
 
+    // Program 2
     class program2 extends Thread {
         @Override
         public void run() {
@@ -338,30 +349,34 @@ public class OperationPanel extends JFrame{
         }
     }
 
-    private void vectorTest() {
-        pushToScreen("Vector Test not available now", false);
-    }
+//    private void vectorTest() {
+//        pushToScreen("Vector Test not available now", false);
+//    }
+//
+//    private void floatingTest() {
+//        pushToScreen("Floating Test not available now", false);
+//    }
 
-    private void floatingTest() {
-        pushToScreen("Floating Test not available now", false);
-    }
-
+    // reset panel
     void reset() {
         screenContent.delete(0, screenContent.length()).append(banner).append(arrow);
         updateScreen();
     }
 
+    // clear screen
     void clear() {
         screenContent.delete(0, screenContent.length()).append("").append(cleanScreenBanner).append(arrow);
         updateScreen();
     }
 
+    // switch command mode
     private void switchCommandMode(boolean commandMode) {
         this.commandMode = commandMode;
         textField.setText(commandMode? tip_command: tip_data);
         textField.setForeground(theme.getComments());
     }
 
+    // multi-thread of getting data
     class DataGetter implements Runnable {
         private CountDownLatch signal;
         private String banner;
@@ -413,6 +428,7 @@ public class OperationPanel extends JFrame{
         }
     }
 
+    // try to stop sub-thread
     protected void stopThread() {
         switch (threadType) {
             case "program1":
@@ -434,10 +450,12 @@ public class OperationPanel extends JFrame{
         }
     }
 
+    // pause the machine
     protected void pause() {
 
     }
 
+    // set the theme
     public void setTheme() {
         theme = Main.theme;
 //        SwingUtilities.updateComponentTreeUI(MainForm.getRootPane());
@@ -449,24 +467,29 @@ public class OperationPanel extends JFrame{
         screenScroll.setBackground(theme.getBackground());
     }
 
+    // get cisc
     public CiscComputer getCiscComputer() {
         return this.ciscComputer;
     }
 
+    // get the content on the screen
     public StringBuilder getScreenContent() {
         return screenContent;
     }
 
+    // set the content on the screen
     public void setScreenContent(StringBuilder screenContent) {
         this.screenContent = screenContent;
     }
 
+    // switch to keyboard input model
     public void getFromKeyboard () {
         threadType = "IN";
         System.err.println("Input from keyboard");
         new Thread(new keyboard()).start();
     }
 
+    // multi-thread of keyboard input model
     class keyboard extends Thread {
         @Override
         public void run() {
