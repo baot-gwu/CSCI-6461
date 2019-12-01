@@ -4,7 +4,8 @@ package main.java.memory;
  * @author jalal
  * @since 29/9/19
  * <p>
- * Cache Lines
+ * Cache Lines of cache.
+ * Each of this contains 8 words.
  */
 public class CacheLine {
 

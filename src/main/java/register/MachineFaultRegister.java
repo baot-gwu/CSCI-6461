@@ -1,5 +1,11 @@
 package main.java.register;
 
+/**
+ * Single machine fault register,
+ *
+ * handles machine faults to execute routine work
+ *
+ */
 public class MachineFaultRegister extends Register {
 
     @Override

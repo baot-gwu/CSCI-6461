@@ -7,6 +7,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
+/**
+ * Class to convert assembly instruction to binary
+ */
 public class Convert {
     public static void assembleToBinary() {
         Path PATH_ASSEMBLE = Paths.get("in.assemble").toAbsolutePath();

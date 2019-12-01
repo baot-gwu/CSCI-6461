@@ -7,7 +7,7 @@ import main.java.util.Utils;
  * @author jalal
  * @since 10/9/19
  * <p>
- * Console Printer
+ * Console Printer for output
  * <p>
  */
 public class ConsolePrinter extends Device {

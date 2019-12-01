@@ -4,7 +4,7 @@ package main.java.device;
  * @author jalal
  * @since 10/9/19
  * <p>
- * Abstract device
+ * Abstract device, all the devices of the machine extend this.
  * <p>
  */
 public abstract class Device {

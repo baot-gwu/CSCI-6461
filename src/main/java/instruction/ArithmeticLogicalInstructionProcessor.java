@@ -15,9 +15,10 @@ import java.math.BigInteger;
  * @author jalal
  * @since 12/9/19
  * <p>
- * Class to process Arithmetic Logical Processor
+ * Class to process Arithmetic Logical Instruction Processor
  * <p>
- * Based on instruction type. AMR, SMR, AIR, SIR
+ * Based on instruction type. AMR, SMR, AIR, SIR, MLT, DVD, TRR, AND, ORR, NOT, SRC, RRC
+ * operations are executed in this class.
  */
 public class ArithmeticLogicalInstructionProcessor implements InstructionProcessor {
 

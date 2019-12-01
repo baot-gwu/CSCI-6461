@@ -4,6 +4,11 @@ import main.java.util.Utils;
 
 import java.math.BigDecimal;
 
+/*
+ * Register for floating points.
+ *
+ * In CISC there are two floating point registers
+ */
 public class FloatingPointRegister extends Register {
 
     private BigDecimal floatingPointValue;

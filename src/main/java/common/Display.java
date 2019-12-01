@@ -10,7 +10,9 @@ import java.util.List;
  * @author jalal
  * @since 12/9/19
  *
- * The class to display current values of CISC computer
+ * The class to display current values of CISC computer.
+ * To display values from from internal parts to UI,
+ * this class carries all the values
  */
 public class Display {
 

@@ -8,7 +8,7 @@ import main.java.register.Register;
  * @author jalal
  * @since 10/9/19
  * <p>
- * Input Output Instruction Processor
+ * Input Output Instruction Processor. This one executes IN, OUT and CHK instruction
  * <p>
  */
 public class InputOutputInstructionProcessor implements InstructionProcessor {
