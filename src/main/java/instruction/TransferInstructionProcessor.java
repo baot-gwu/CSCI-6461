@@ -7,6 +7,10 @@ import main.java.register.*;
 
 import java.util.List;
 
+
+/*
+ * This class process all the transfer instructions of the machine.
+ */
 public class TransferInstructionProcessor implements InstructionProcessor {
 
     private static InstructionProcessor processor;

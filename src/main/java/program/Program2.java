@@ -18,6 +18,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
+/**
+ * Java implementation of program 2
+ */
 public class Program2 {
 
     private final Path PATH_PARAGRAPH = Paths.get("Paragraph.txt").toAbsolutePath();

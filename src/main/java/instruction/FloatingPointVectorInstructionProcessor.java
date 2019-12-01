@@ -12,6 +12,9 @@ import main.java.util.Utils;
 
 import java.math.BigDecimal;
 
+/**
+ * All the floating point and vector instructions are executed through this class
+ */
 public class FloatingPointVectorInstructionProcessor implements InstructionProcessor {
 
     private static InstructionProcessor processor;

@@ -4,7 +4,7 @@ package main.java.register;
  * @author jalal
  * @since 12/9/19
  *
- * Condition Code Type
+ * Condition Code Type enum, defines four types of different condition code type
  */
 public enum ConditionCodeType {
 

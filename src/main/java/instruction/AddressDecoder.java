@@ -7,6 +7,12 @@ import main.java.register.MachineFaultRegister;
 import main.java.register.Register;
 import main.java.util.Utils;
 
+/**
+ * Address decoder of the machine for decode address from instruction.
+ * Use of index register is based on instruction type.
+ *
+ * effective address calculated using decode address machine.
+ */
 public class AddressDecoder {
 
     public static final int RESERVED_LOCATION = 6;

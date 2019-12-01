@@ -4,7 +4,8 @@ package main.java.instruction;
  * @author jalal
  * @since 12/9/19
  * <p>
- * Enum to represent types of instruction, their Symbolic form and binary values
+ * Enum to represent types of instruction, their Symbolic form and binary values and the associate
+ * processor class to execute that instruction
  */
 public enum InstructionType {
 

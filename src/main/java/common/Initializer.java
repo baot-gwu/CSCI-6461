@@ -16,6 +16,7 @@ import java.util.List;
  * @since 12/9/19
  *
  * This is the class to initialize all the class associated with {@link CiscComputer}
+ * At the beginning, this is called to initialize the machine
  */
 public class Initializer {
 

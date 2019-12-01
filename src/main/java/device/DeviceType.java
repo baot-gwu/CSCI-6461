@@ -1,5 +1,7 @@
 package main.java.device;
-
+/**
+ * Type of devices of machine defined by this enum
+ */
 public enum DeviceType {
 
     CONSOLE_KEYBOARD(0),
