@@ -1,6 +1,10 @@
 # Machine Simulator
 CSCI 6461 Session 10 Fall 2019 Group 8
 
+# Manual
+- [Simulator Manual PDF](https://github.com/baoziii/CSCI-6461/blob/master/doc/CISC_Simulator_Manual.pdf)
+- [Simulator Manual Doc](https://github.com/baoziii/CSCI-6461/blob/master/doc/CISC_Simulator_Manual.docx)
+
 ## Screenshot
 Material Design Lighter Theme
 
@@ -11,6 +15,9 @@ Material Design Ocean Theme
 
 ![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Ocean_1.png?raw=true)
 ![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Material_Design_Ocean_1.png?raw=true)
+
+## Design
+[Design Note](https://github.com/baoziii/CSCI-6461/blob/master/Design-note.md) 
 
 ## Progress
 - [x] Phase I (Complete)
@@ -81,9 +88,6 @@ Material Design Ocean Theme
 |7|I/O Devices Data Buffer|
 |8|Arguments List Address|
 |9|Store PC for Subroutine|
-
-## Design
-[Design note](https://github.com/baoziii/CSCI-6461/blob/master/Design-note.md) 
 
 Basic Design Internal Diagram
 ![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Internal-Code-Design-basic.jpg?raw=true)
