@@ -9,7 +9,8 @@ import java.util.concurrent.CountDownLatch;
  * @author jalal
  * @since 10/9/19
  * <p>
- * Card Reader
+ * Card Reader device.
+ * For taking input from external device.
  * <p>
  */
 public class CardReader extends Device {

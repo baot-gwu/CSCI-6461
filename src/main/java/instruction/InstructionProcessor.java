@@ -6,7 +6,9 @@ import main.java.common.CiscComputer;
  * @author jalal
  * @since 12/9/19
  * <p>
- * This class process and instruction.
+ * This the interface for all types of instructions.
+ *
+ * Any instruction processor must implement this class.
  *
  */
 public interface InstructionProcessor {

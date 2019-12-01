@@ -6,7 +6,9 @@ import main.java.util.Utils;
  * @author jalal
  * @since 14/9/19
  *
- * Class to represent instruction register
+ * Class to represent instruction register.
+ *
+ * Single instruction register of the machine
  */
 public class InstructionRegister extends Register {
 

@@ -14,9 +14,9 @@ Material Design Ocean Theme
 
 ## Progress
 - [x] Phase I (Complete)
-- [X] Phase II (Complete)
-- [X] Phase III (Complete)
-- [ ] Phase IV (Not Start)
+- [x] Phase II (Complete)
+- [x] Phase III (Complete)
+- [x] Phase IV (Complete)
 
 ## Functions
 - Characteristics
@@ -81,3 +81,9 @@ Material Design Ocean Theme
 |7|I/O Devices Data Buffer|
 |8|Arguments List Address|
 |9|Store PC for Subroutine|
+
+## Design
+[Design note](https://github.com/baoziii/CSCI-6461/blob/master/Design-note.md) 
+
+Basic Design Internal Diagram
+![avatar](https://github.com/baoziii/CSCI-6461/blob/master/Internal-Code-Design-basic.jpg?raw=true)

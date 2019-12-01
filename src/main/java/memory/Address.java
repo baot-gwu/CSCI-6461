@@ -5,6 +5,8 @@ package main.java.memory;
  * @since 29/9/19
  * <p>
  * memory.Memory memory.Address
+ *
+ * This class hold values for effective address, tag and offset
  */
 public class Address {
 

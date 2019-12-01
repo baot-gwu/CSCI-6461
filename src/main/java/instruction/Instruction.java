@@ -7,7 +7,9 @@ import main.java.util.Utils;
  * @author jalal
  * @since 12/9/19
  * <p>
- * This is the class to to represent an instruction
+ * This is the class to to represent an instruction and all the elements associated with instruction
+ *
+ * This also interpret instruction in symbolic form
  */
 public class Instruction {
 

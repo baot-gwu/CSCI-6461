@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
  * @author jalal
  * @since 10/9/19
  * <p>
- * Console Keyboard
+ * Console Keyboard device for input
  * <p>
  */
 public class ConsoleKeyboard extends Device {

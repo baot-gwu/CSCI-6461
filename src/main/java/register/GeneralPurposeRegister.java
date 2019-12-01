@@ -4,7 +4,9 @@ package main.java.register;
  * @author jalal
  * @since 12/9/19
  *
- * Class to represent general purpose register
+ * Class to represent general purpose register.
+ *
+ * There are four general purpose register.
  */
 public class GeneralPurposeRegister extends Register {
 

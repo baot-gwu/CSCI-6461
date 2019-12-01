@@ -1,3 +1,10 @@
+/*
+ * panel/DebugPanel.java
+ * This class is to Define the Debug Panel. You can check the status of the machine in this panel.
+ * You can get and set data of the Cisc computer, read and write of the memory, read and write files
+ * and interact with the Operation Panel
+ */
+
 package main.java.panel;
 
 import main.java.Main;

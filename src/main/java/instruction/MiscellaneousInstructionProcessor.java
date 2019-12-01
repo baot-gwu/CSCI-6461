@@ -6,6 +6,11 @@ import main.java.memory.Cache;
 import main.java.memory.Word;
 import main.java.util.Utils;
 
+/*
+ * This is class for TRAP instruction
+ *
+ * Half instruction executed by Debug Panel for integration with UI.
+ */
 import static main.java.memory.Memory.RESERVE_ADDRESS_TO_STORE_PC_FOR_TRAP;
 
 public class MiscellaneousInstructionProcessor  implements InstructionProcessor {

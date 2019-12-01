@@ -1,8 +1,20 @@
+/*
+* panel/Controller.java
+* This class is to control either Debug Panel and Operation Panel.
+ */
+
 package main.java.panel;
 
 import main.java.Main;
 import main.java.common.CiscComputer;
 
+
+/**
+ * Main controller for UI Panel.
+ *
+ * All the UI operation reset, clear, stop, run, save, load, theme
+ * controller from here.
+ */
 public class Controller {
     public static void reset() {
         Main.op.reset();

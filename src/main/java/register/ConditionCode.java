@@ -4,7 +4,7 @@ package main.java.register;
  * @author jalal
  * @since 12/9/19
  * <p>
- * Condition Code Register
+ * Condition Code Register, which contains Condition Code
  */
 public class ConditionCode extends Register {
 

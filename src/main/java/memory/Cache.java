@@ -9,7 +9,9 @@ import java.util.Queue;
  * @author jalal
  * @since 29/9/19
  *
- * Cache
+ * Cache of the machine, which contains 16 cache line.
+ *
+ * All memory related exchange done by this Class
  */
 public class Cache {
 

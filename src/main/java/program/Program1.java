@@ -11,6 +11,9 @@ import main.java.memory.Cache;
 import main.java.register.GeneralPurposeRegister;
 import main.java.util.Utils;
 
+/**
+ * Java implementation of program 1
+ */
 public class Program1 {
 
     private Instruction instruction;

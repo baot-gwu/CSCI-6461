@@ -6,7 +6,9 @@ import main.java.util.Utils;
  * @author jalal
  * @since 29/9/19
  *
- * Word
+ * Word holds value of memory of each address.
+ * Eight words in kept in each cache line.
+ * All the values of the word is binary in both Memory and Cache line
  */
 public class Word {
 
