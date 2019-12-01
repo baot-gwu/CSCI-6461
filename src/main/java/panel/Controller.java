@@ -1,3 +1,8 @@
+/*
+* panel/Controller.java
+* This class is to control either Debug Panel and Operation Panel.
+ */
+
 package main.java.panel;
 
 import main.java.Main;
